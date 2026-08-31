@@ -1,0 +1,64 @@
+---
+description: How work flows through Linear in this repo
+alwaysApply: true
+---
+
+# Issue Workflow
+
+Work flows through Linear. One issue at a time, planned before it is implemented.
+
+Planning stays in the dashi repo. The implementing agent follows `AGENTS.md`.
+
+## Stages
+
+1. An issue is picked from `Dashi F&F Launch`, respecting milestone order and
+   `blocked by` relations.
+2. A plan is written and approved. After approval, the plan is posted as a
+   Linear comment that begins with `@Cursor`, which starts the implementing
+   agent. The ticket stays at `Ready`.
+3. The implementing agent builds it and marks the PR ready. Then the human
+   reviews.
+4. Merge once checks are green and the human has approved.
+
+## Status
+
+- `Ready` means the ticket has an approved plan. `@Cursor` on that comment
+  starts the implementor and does not change the status.
+- `In Progress` means a draft PR exists. The GitHub integration sets this when
+  the agent opens the PR on init.
+- `In Review` means the PR left draft. The GitHub integration sets this when
+  `gh pr ready` takes.
+- Never set Linear status by hand. The GitHub integration moves the ticket.
+
+## Feedback
+
+- **Code-level feedback**: inline on the GitHub PR diff, then **submit it as a
+  review**. Submitting is what matters: `review-followup.yml` fires on the
+  submitted review and hands it to the agent that opened the PR. Comments left
+  without submitting a review reach nobody. A review sweeps up every thread
+  still open, including ones from earlier rounds.
+- **One agent owns a task end to end.** It keeps the conversation and workspace
+  from its first run, so it still holds the plan.
+- **Fixes go through a GitHub review.** A later `@Cursor` on Linear starts a
+  new agent from `main`, which cannot see the branch under review. Linear's
+  Automations behave the same way.
+- **Plan deviations ship in the PR.** The implementing agent lists them under
+  **Plan deviations** in the handoff comment and leaves the Linear plan as the
+  human wrote it.
+
+## Tooling
+
+`scripts/review_followup.ts` is run by `.github/workflows/review-followup.yml`.
+It talks to the Cursor Cloud Agents **v1** REST API over plain `fetch`. The
+workflow needs `CURSOR_API_KEY` as a repository secret. The follow-up script
+has no dependencies.
+
+## Shared conventions
+
+- **Quarantine with an owner.** A known failure stays greppable: suppress it as
+  narrowly as possible and name the issue that fixes it.
+- **One owner per directory at a time.** Two in-flight issues touching the same
+  directory will conflict.
+- **One way to do a thing.** No alias, twin API, or overlapping concept for a
+  job that already has a way. Planning, implementation, and review each catch
+  this; see those stages.

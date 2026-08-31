@@ -1,0 +1,41 @@
+{
+  "compilerOptions": {
+    "jsx": "precompile",
+    "jsxImportSource": "dashi"
+  },
+  "unstable": ["bundle"],
+  "nodeModulesDir": "auto",
+  "minimumDependencyAge": {
+    "age": "P1D",
+    "exclude": ["jsr:@cookingpot/dashi"]
+  },
+  "lock": {
+    "frozen": true
+  },
+  "fmt": {
+    "useBraces": "always",
+    "singleBodyPosition": "nextLine"
+  },
+  "lint": {
+    "rules": {
+      "exclude": [
+        "jsx-key"
+      ],
+      "include": [
+        "no-process-global",
+        "no-node-globals"
+      ]
+    }
+  },
+  "tasks": {
+    "css": "deno run -A css.ts",
+    "css:watch": "deno run -A css.ts --watch",
+    "dev": "DASHI_MINIFY_CLIENT=0 deno run -A --watch main.ts"
+  },
+  "imports": {
+    "dashi": "jsr:@cookingpot/dashi@^0.5.0",
+    "dashi/jsx-runtime": "jsr:@cookingpot/dashi@^0.5.0/jsx-runtime",
+    "tailwindcss": "npm:tailwindcss@4",
+    "@tailwindcss/cli": "npm:@tailwindcss/cli@4"
+  }
+}
