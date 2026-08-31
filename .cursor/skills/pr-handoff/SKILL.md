@@ -20,9 +20,8 @@ conflicts. Do not rebase or force-push.
 
 ## Checks
 
-`deno task css`, then `deno fmt --check .`, `deno lint`, and
-`deno check main.ts css.ts dev.ts` all pass locally. Those are what CI runs.
-Match them before you push.
+`deno task css`, then `deno fmt --check .`, `deno lint`, and `deno check` all
+pass locally. Those are what CI runs. Match them before you push.
 
 CI is green on the push you are handing over. `main` is green; a red check means
 you are not done. Naming another issue in the PR description is not a
