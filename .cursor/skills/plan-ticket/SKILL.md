@@ -50,13 +50,13 @@ stop: tell the human rather than silently substituting another issue.
 
    **Figma.** If this ticket must read or write Figma (design brainstorm, edits,
    or pixel-matching a design in code), do **not** post `@Cursor`. Cloud Agents
-   cannot use Figma MCP. Post the approved plan as a Linear comment **without**
+   cannot open the file. Post the approved plan as a Linear comment **without**
    that mention. Tell the human to run it in a **local** `agent` session with
-   Figma MCP connected. Leave the status at `Ready`.
+   the `using-figma` skill. Leave the status at `Ready`.
 
-   While planning those tickets, use Figma MCP in this session. Put file URLs
-   and node IDs in the plan; screenshots are for the human reviewing the plan,
-   not a stand-in spec for a cloud agent.
+   While planning those tickets, follow `using-figma` in this session. Put file
+   URLs and node IDs in the plan; screenshots are for the human reviewing the
+   plan, not a stand-in spec for a cloud agent.
 
    **Otherwise** post the plan as a Linear comment that begins with `@Cursor`,
    then the full approved plan. That mention is the only cloud handoff: Linear
@@ -78,9 +78,9 @@ stop: tell the human rather than silently substituting another issue.
 
 - **Do not start an implementor on spikes.** Design issues produce a written
   decision and stay with the human.
-- **Figma is local.** Cloud Agents cannot use Figma MCP. Design tickets and
-  tickets that must match a Figma file run in a local session. Do not `@Cursor`
-  them.
+- **Figma is local.** Cloud Agents cannot open the file. Design tickets and
+  tickets that must match a Figma file run in a local session with
+  `using-figma` and `.cursor/rules/figma.mdc`. Do not `@Cursor` them.
 - **Name the test layer.** Follow the Tests section in `AGENTS.md`. Behaviour at
   the path that actually runs — HTTP in this repo, live DOM after JS in e2e if
   client JS exists. No stubs, mocks, or a narrower harness to stand in for a

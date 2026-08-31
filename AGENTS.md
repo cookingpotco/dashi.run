@@ -10,10 +10,10 @@ Do not set Linear status. Opening the draft PR on init moves the ticket to
 
 ## Figma
 
-Cloud Agents cannot use Figma MCP. Tickets that must read or write Figma are
-implemented in a local session, not via `@Cursor`. When you have Figma MCP,
-match frames with `get_design_context`. Do not invent layout from screenshots in
-the plan.
+Cloud Agents cannot open Figma. Tickets that must read or write Figma are
+implemented in a local session, not via `@Cursor`. Follow the `using-figma`
+skill and `.cursor/rules/figma.mdc`. Do not invent layout from screenshots
+in the plan.
 
 ## Done
 
