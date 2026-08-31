@@ -15,13 +15,27 @@ function spawn(
   }).spawn();
 }
 
-const built = spawn(["run", "-A", `${ROOT}/css.ts`]);
-const builtStatus = await built.status;
-if (!builtStatus.success) {
-  Deno.exit(builtStatus.code);
+const css = spawn(["run", "-A", `${ROOT}/css.ts`, "--watch"]);
+let cssStatus: Deno.CommandStatus | undefined;
+void css.status.then((status) => {
+  cssStatus = status;
+});
+
+while (true) {
+  try {
+    await Deno.stat(`${ROOT}/styles.json`);
+    break;
+  } catch (error) {
+    if (!(error instanceof Deno.errors.NotFound)) {
+      throw error;
+    }
+  }
+  if (cssStatus !== undefined) {
+    Deno.exit(cssStatus.success ? 1 : cssStatus.code);
+  }
+  await new Promise((resolve) => setTimeout(resolve, 50));
 }
 
-const css = spawn(["run", "-A", `${ROOT}/css.ts`, "--watch"]);
 const server = spawn(["run", "-A", "--watch", `${ROOT}/main.ts`], {
   DASHI_MINIFY_CLIENT: "0",
 });
@@ -42,6 +56,13 @@ function stop() {
 Deno.addSignalListener("SIGINT", stop);
 Deno.addSignalListener("SIGTERM", stop);
 
-const status = await Promise.race([css.status, server.status]);
+void css.status.then((status) => {
+  if (!status.success) {
+    stop();
+    Deno.exit(status.code);
+  }
+});
+
+const status = await server.status;
 stop();
 Deno.exit(status.code);

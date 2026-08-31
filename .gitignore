@@ -1,5 +1,4 @@
 styles.json
-static/generated-styles-*.css
-static/styles-*.css
+generated/styles-*.css
 .deno/
 node_modules/

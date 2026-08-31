@@ -16,11 +16,10 @@ if (import.meta.main) {
             strategy: CacheStrategy.Immutable,
           }),
       }),
-      route("/assets/:file", {
+      route("/generated/:file", {
         GET: (ctx) =>
-          staticFile(ctx, `${import.meta.dirname}/assets`, ctx.params.file, {
-            strategy: CacheStrategy.Public,
-            maxAge: 3600,
+          staticFile(ctx, `${import.meta.dirname}/generated`, ctx.params.file, {
+            strategy: CacheStrategy.Immutable,
           }),
       }),
     ],

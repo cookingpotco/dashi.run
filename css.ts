@@ -1,6 +1,6 @@
 const ROOT = import.meta.dirname;
 const SOURCE = `${ROOT}/styles.css`;
-const STATIC_DIR = `${ROOT}/static`;
+const GENERATED_DIR = `${ROOT}/generated`;
 const MANIFEST = `${ROOT}/styles.json`;
 
 function runCli(outPath: string, watch: boolean): Deno.ChildProcess {
@@ -35,21 +35,21 @@ async function build(cssPath: string): Promise<void> {
   }
   const hash = btoa(binary).replaceAll("+", "-").replaceAll("/", "_")
     .replaceAll("=", "");
-  const name = `generated-styles-${hash}.css`;
-  await Deno.mkdir(STATIC_DIR, { recursive: true });
-  await Deno.writeFile(`${STATIC_DIR}/${name}`, bytes);
+  const name = `styles-${hash}.css`;
+  await Deno.mkdir(GENERATED_DIR, { recursive: true });
+  await Deno.writeFile(`${GENERATED_DIR}/${name}`, bytes);
   await Deno.writeTextFile(
     MANIFEST,
-    `${JSON.stringify({ href: `/static/${name}` }, null, 2)}\n`,
+    `${JSON.stringify({ href: `/generated/${name}` }, null, 2)}\n`,
   );
-  for await (const entry of Deno.readDir(STATIC_DIR)) {
+  for await (const entry of Deno.readDir(GENERATED_DIR)) {
     if (
       entry.isFile &&
-      entry.name.startsWith("generated-styles-") &&
+      entry.name.startsWith("styles-") &&
       entry.name.endsWith(".css") &&
       entry.name !== name
     ) {
-      await Deno.remove(`${STATIC_DIR}/${entry.name}`);
+      await Deno.remove(`${GENERATED_DIR}/${entry.name}`);
     }
   }
 }
@@ -58,14 +58,13 @@ const tempDir = await Deno.makeTempDir({ prefix: "dashi-styles-" });
 const tempPath = `${tempDir}/styles.css`;
 const watch = Deno.args.includes("--watch");
 
-const once = runCli(tempPath, false);
-const onceStatus = await once.status;
-if (!onceStatus.success) {
-  Deno.exit(onceStatus.code);
-}
-await build(tempPath);
-
 if (!watch) {
+  const once = runCli(tempPath, false);
+  const onceStatus = await once.status;
+  if (!onceStatus.success) {
+    Deno.exit(onceStatus.code);
+  }
+  await build(tempPath);
   await Deno.remove(tempDir, { recursive: true });
 } else {
   const child = runCli(tempPath, true);
