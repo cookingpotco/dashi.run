@@ -1,0 +1,122 @@
+---
+description: App layout for this dashi site
+alwaysApply: true
+---
+
+# App layout
+
+This repo is one tree. `main.ts` is the `serve()` callback and boots it.
+
+A **page** is a folder that exports handlers (`Home`, `list`, `add`). Nested,
+page-local components live in that folder. `main.ts` binds
+`route("/path", { GET: Home })`. One module = one path. One-offs such as
+`staticFile` stay on `main.ts`.
+
+`group()` is only for a prefixed subtree (nested paths, or layouts /
+middleware / `notFound` on that prefix) or a pathless wrap shell. A one-path
+page, including `/` and `/docs`, is handlers bound on the root table.
+
+## File names
+
+Deno snake_case. Feature folders match the path (`docs/` for `/docs`).
+Layout and middleware files are `{folder}_{role}`: `menu_layout.tsx`,
+`menu_middleware.ts`. Nested `reviews/` uses `reviews_layout.tsx`. At the app
+root: `root_layout.tsx`, `logger_middleware.ts`, `errors.tsx`. Client modules
+are `*_client.ts` (`clock_client.ts`) and sit beside the file that registers
+them. No `routes/` directory, no app `client/` folder, no `_` magic prefixes,
+and no `*_route.tsx`.
+
+`errors.tsx` holds the named `notFound`, `error`, and `fatal`
+exports. Those are not routes. Root `notFound` / `error` live on the root
+callback; a group's `notFound` / `error` live on that group's `mod.ts`.
+`fatal` stays on `serve()` options.
+
+Ordinary extra modules (`todos.ts`, later `db.ts`) sit beside the handlers.
+No blessed view / service / DAL layer: extract `menu_service.ts` or a
+component when needed. No `layouts/` or `middleware/` folders.
+
+## Exports
+
+A component that returns `Element` is PascalCase (`Home`, `RootLayout`,
+`ErrorPage`). Middleware and per-method handlers are camelCase (`logger`,
+`list`, `add`). Do not export `GET` as the function name. Do not export a
+`{ GET: Home }` bag.
+
+`mod.ts` (`mod.tsx` when the file contains JSX) is the page module: handlers
+in that file. No `*_route.tsx` and no `controller.ts` inside a page folder.
+Only the root table in `main.ts` names the path and the methods.
+
+## Table
+
+`main.ts` is the `serve()` callback. It binds `route()` for every page and
+any root one-offs, then calls `serve`. Page folders export handlers. The
+root table is the only place that calls `route()`. Do not `import { group }`
+inside a bag callback. Do not export `route()`.
+
+```tsx
+// home/mod.tsx
+export function Home() {
+  return <h1>dashi.run</h1>;
+}
+```
+
+`group("/", …)` is illegal. Pathless `group(({ route }) => …)` is a
+layout/middleware shell with no extra prefix. A pre-built `Group` types
+`ctx.params` from its own prefix; nested groups do not read ancestor params
+they did not declare. Shared data goes on `ctx.state`.
+
+`main.ts` is:
+
+```ts
+import { CacheStrategy, serve, staticFile } from "dashi";
+import { Home } from "./home/mod.tsx";
+import { RootLayout } from "./root_layout.tsx";
+import { error, fatal, notFound } from "./errors.tsx";
+
+if (import.meta.main) {
+  serve(({ route }) => ({
+    layouts: [RootLayout],
+    notFound,
+    error,
+    routes: [
+      route("/", { GET: Home }),
+      route("/static/:file", {
+        GET: (ctx) =>
+          staticFile(ctx, `${import.meta.dirname}/static`, ctx.params.file, {
+            strategy: CacheStrategy.Immutable,
+          }),
+      }),
+      route("/generated/:file", {
+        GET: (ctx) =>
+          staticFile(ctx, `${import.meta.dirname}/generated`, ctx.params.file, {
+            strategy: CacheStrategy.Immutable,
+          }),
+      }),
+    ],
+  }), { fatal });
+}
+```
+
+Later pages are the same: `docs/mod.tsx` exports `Docs`; `main.ts` binds
+`route("/docs", { GET: Docs })`.
+
+A prefixed group is a URL subtree. The parent drops that `Group` into
+`routes`:
+
+```ts
+import { group } from "dashi";
+
+export const account = group("/account", ({ route }) => ({
+  layouts: [AccountLayout],
+  routes: [
+    route("/", { GET: AccountHome }),
+    route("/settings", { GET: Settings }),
+  ],
+}));
+```
+
+## Imports
+
+App code imports from `dashi`. JSX types (`Element`, `HTMLAttributes`,
+`DashiNode`, `JSX`) import from `dashi/jsx-runtime`. Browser APIs import
+from `dashi/client`.

@@ -1,0 +1,124 @@
+---
+description: TypeScript and module conventions
+alwaysApply: true
+---
+
+# Conventions
+
+## Directory surface
+
+A directory's public surface is its `mod.ts` (`mod.tsx` when the file
+contains JSX). Import that file from outside the directory. Same-directory
+imports are fine.
+
+## Static JSON
+
+A known static `.json` file is imported as a module (`import x from
+"./foo.json" with { type: "json" }`). `JSON.parse` is for payloads that
+arrive at runtime.
+
+## Root import map
+
+Root `deno.json` `imports` map a bare specifier to a published dependency.
+`dashi` is `jsr:@cookingpot/dashi`. Do not path-override onto a framework
+checkout. App dependencies are allowed here (Tailwind, later a markdown
+parser).
+
+Import `dashi` / `dashi/jsx-runtime` / `dashi/client` only.
+
+## Root JSX config
+
+Root `deno.json` sets JSX `precompile` and `jsxImportSource: dashi`. Do not
+set `compilerOptions.lib`. JSX types are imported from `dashi/jsx-runtime`.
+
+## Route modules
+
+Page folders export handlers from `mod.ts` (`mod.tsx` when the file contains
+JSX), not a `Group`. `home/mod.tsx` exports `Home`. Later pages are the same
+(`Docs` from `docs/`). The root table in `main.ts` is the only place that
+calls `route()` and names the path and methods. One-offs (`staticFile`) stay
+on `main.ts`. Pathless `group()` is a wrap shell, not the `/` page. Shared
+values live in a module that is not a route.
+
+Application code never calls a handler. The router is what invokes one: a
+direct call skips the target's middleware and error boundary, applies its
+cache policy to the caller's response, and leaves it reading the caller's
+`ctx`. Share markup as a component, including between two methods of one
+route, and use `<RouteFragment src>` to include another route's rendered
+output.
+
+## Styling
+
+Tailwind v4 utilities go on `className`. There is no `class`, `tw`, or `css`
+prop, and no CSS modules or styled-components. `style` is a CSS string.
+
+Source is `styles.css` at the app root (`@import "tailwindcss"` and
+`@source`). `css.ts` runs `@tailwindcss/cli`, SHA-256s the bytes, writes
+`generated/styles-<hash>.css`, and writes `styles.json` as
+`{ "href": "/generated/styles-<hash>.css" }`. The hash alphabet matches dashi
+client JS: `+` → `-`, `/` → `_`, `=` stripped. Layout imports the JSON and
+emits `<link rel="stylesheet" href={styles.href} />`.
+
+Hashed sheets are `GET /generated/:file` with `CacheStrategy.Immutable`.
+Unhashed files (logo, favicon) are `GET /static/:file` with
+`CacheStrategy.Immutable`. Both params are one segment. Do not serve
+`styles.css`. `styles.json` and `generated/styles-*.css` are gitignored; run
+`css` before type-check and serve.
+
+## Discriminants
+
+A closed set of cases is a `const enum`. Comparisons use the enum member, not
+a string literal. Use a plain `enum` only when a const enum cannot (it must
+exist at runtime as an object).
+
+## Object types
+
+An object shape is an `interface`. `type` is for unions, aliases, mapped
+types, and everything that is not a single object shape.
+
+## Type assertions
+
+Do not assert (`as`) to silence the checker. An assertion is allowed when
+the types cannot express the fact, and only at the use that needs it, with
+a note saying why. Prefer restructuring so the assertion is unnecessary.
+
+## Helpers
+
+Do not extract a function that is a short, obvious check or a few
+straightforward lines used once. Inline it until extraction earns its keep.
+Extract when the same non-trivial shape is repeated, or when the body is long
+or not obvious (`withoutContent`). A one-line env read used once stays at the
+call site.
+
+## Conditionals
+
+Do not chain ternary operators. Use `if`.
+
+## Client JS
+
+Client TypeScript attaches only via `client.module` / `client.element` at
+module scope. Browser-safe APIs import from `dashi/client`; client modules
+do not import `dashi`. The factory throws after compile. App files are `*_client.ts`
+and sit beside the module that registers them. The factory returns a
+PascalCase component; `client.element` takes the custom element tag
+(kebab-case). Compiled files are served at `/_dashi/client/` by a reserved
+table route. Public URLs are flat `/_dashi/client/<name>-<hash>.js`.
+Relative imports in compiled files are rewritten to the matching
+bundler path. The import map is bundler path → flat hashed URL.
+Documents get one `<script type="importmap">` for that graph;
+a module script is added only when a host rendered. A lazy fragment
+`import()`s its `Link` modulepreloads before swap.
+`DASHI_MINIFY_CLIENT=1` minifies the bundle; `deno task dev` sets it to `0`.
+`staticFile` is app-mounted disk files. `/_dashi/*` is reserved.
+Client code names the DOM the way the HTML spec does. Prefer IDL properties
+(`form.method`, `submitter.formAction`): their reflection rules, meaning
+value normalisation, URL resolution, and missing-value defaults, are the
+browser behaviour being mirrored. Use `getAttribute` or `hasAttribute`
+when presence itself is the question. JSX prop spellings (`className`,
+`htmlFor`) stop at the runtime's `MAPPED_HTML_ATTR_NAMES` and never appear
+in client code.
+`mod.ts` is the server surface of a directory; client runtime modules are
+imported by file. One document-level submit listener owns interception.
+There is no per-element submit listener and no nearest-host targeting. GET
+navigates the page; a write goes through the registry. An applied patch-list
+write resets the submitting form. Client features assume the client runtime.
