@@ -9,7 +9,7 @@ export function RootLayout(
   return (
     <html>
       <head>
-        <title>dashi.run</title>
+        <title>Dashi Web Framework</title>
         <link rel="stylesheet" href={styles.href} />
       </head>
       <body>

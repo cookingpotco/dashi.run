@@ -26,7 +26,7 @@ function runCli(outPath: string, watch: boolean): Deno.ChildProcess {
   }).spawn();
 }
 
-async function publish(cssPath: string): Promise<void> {
+async function build(cssPath: string): Promise<void> {
   const bytes = await Deno.readFile(cssPath);
   const digest = new Uint8Array(await crypto.subtle.digest("SHA-256", bytes));
   let binary = "";
@@ -35,7 +35,7 @@ async function publish(cssPath: string): Promise<void> {
   }
   const hash = btoa(binary).replaceAll("+", "-").replaceAll("/", "_")
     .replaceAll("=", "");
-  const name = `styles-${hash}.css`;
+  const name = `generated-styles-${hash}.css`;
   await Deno.mkdir(STATIC_DIR, { recursive: true });
   await Deno.writeFile(`${STATIC_DIR}/${name}`, bytes);
   await Deno.writeTextFile(
@@ -45,7 +45,7 @@ async function publish(cssPath: string): Promise<void> {
   for await (const entry of Deno.readDir(STATIC_DIR)) {
     if (
       entry.isFile &&
-      entry.name.startsWith("styles-") &&
+      entry.name.startsWith("generated-styles-") &&
       entry.name.endsWith(".css") &&
       entry.name !== name
     ) {
@@ -63,7 +63,7 @@ const onceStatus = await once.status;
 if (!onceStatus.success) {
   Deno.exit(onceStatus.code);
 }
-await publish(tempPath);
+await build(tempPath);
 
 if (!watch) {
   await Deno.remove(tempDir, { recursive: true });
@@ -76,7 +76,7 @@ if (!watch) {
       continue;
     }
     try {
-      await publish(tempPath);
+      await build(tempPath);
     } catch (error) {
       if (!(error instanceof Deno.errors.NotFound)) {
         throw error;

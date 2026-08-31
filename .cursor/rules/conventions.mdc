@@ -54,16 +54,16 @@ prop, and no CSS modules or styled-components. `style` is a CSS string.
 
 Source is `styles.css` at the app root (`@import "tailwindcss"` and
 `@source`). `css.ts` runs `@tailwindcss/cli`, SHA-256s the bytes, writes
-`static/styles-<hash>.css`, and writes `styles.json` as
-`{ "href": "/static/styles-<hash>.css" }`. The hash alphabet matches dashi
-client JS: `+` → `-`, `/` → `_`, `=` stripped. Layout imports the JSON and
-emits `<link rel="stylesheet" href={styles.href} />`.
+`static/generated-styles-<hash>.css`, and writes `styles.json` as
+`{ "href": "/static/generated-styles-<hash>.css" }`. The hash alphabet matches
+dashi client JS: `+` → `-`, `/` → `_`, `=` stripped. Layout imports the JSON
+and emits `<link rel="stylesheet" href={styles.href} />`.
 
 Hashed sheets are `GET /static/:file` with `CacheStrategy.Immutable`.
 Unhashed files (logo, favicon) are `GET /assets/:file` with
 `CacheStrategy.Public`. Both params are one segment. Do not serve
-`styles.css`. `styles.json` and `static/styles-*.css` are gitignored; run
-`css` before type-check and serve.
+`styles.css`. `styles.json` and `static/generated-styles-*.css` are gitignored;
+run `css` before type-check and serve.
 
 ## Discriminants
 
