@@ -1,6 +1,6 @@
 import { CacheStrategy, serve, staticFile } from "dashi";
 import { error, fatal, notFound } from "./errors.tsx";
-import { home } from "./home/mod.tsx";
+import { Home } from "./home/mod.tsx";
 import { RootLayout } from "./root_layout.tsx";
 
 if (import.meta.main) {
@@ -9,7 +9,7 @@ if (import.meta.main) {
     notFound,
     error,
     routes: [
-      home,
+      route("/", { GET: Home }),
       route("/static/:file", {
         GET: (ctx) =>
           staticFile(ctx, `${import.meta.dirname}/static`, ctx.params.file, {
