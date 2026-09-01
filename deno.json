@@ -12,9 +12,11 @@
   "lock": {
     "frozen": true
   },
+  "exclude": [".deno", "node_modules"],
   "fmt": {
     "useBraces": "always",
-    "singleBodyPosition": "nextLine"
+    "singleBodyPosition": "nextLine",
+    "exclude": ["**/*.svg"]
   },
   "lint": {
     "rules": {

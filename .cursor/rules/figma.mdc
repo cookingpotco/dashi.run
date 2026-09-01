@@ -1,0 +1,53 @@
+---
+description: >-
+  How to read Figma and turn it into code. Use when designing in Figma,
+  matching a file, planning a visual ticket, or naming JSX from a canvas.
+alwaysApply: false
+---
+
+# Working with Figma
+
+The live file is the spec. Screenshots, Linear images, and layer lists are
+not. Follow `use-figma` to open it. This rule is how to interpret what you
+read.
+
+## Read the thing, not the label
+
+A node's `name` is a label. It is not the copy, the type role, the
+component, or proof that two nodes are the same.
+
+Read the actual characters, fills, strokes, text styles, bound variables,
+font size/weight, and unrotated width/height. Two layers named "Jeff"
+can be different styles. A "Description" layer can hold different sentences.
+
+When proposing a change, point at a place a human can find: page, nearby
+copy, and a file URL with `node-id`. Ids alone are not enough.
+
+## Names in code
+
+Figma names stay in Figma. JSX, files, and CSS names follow this repo
+(`Home`, `root_layout`, `className` utilities). Treat canvas names as
+placeholders.
+
+## Layout
+
+Figma frames are a starting point, not the HTML. Absolute children, extra
+wrappers, and auto-layout that fights the document are issues — propose a
+structure that works in the page and offer the matching Figma edit. Do not
+silently diverge, and do not copy a bad frame tree into JSX.
+
+Transformed frames: use unrotated size and spacing. Bounding-box `x`/`y`
+after rotation is not misalignment.
+
+## Units
+
+Figma numbers are px. CSS is rem, `16px = 1rem`. Convert at the token
+boundary (`24` → `1.5rem`), including strokes (`1` → `border`, `2` →
+`border-2`). Do not copy `px` into `@theme` or arbitrary utilities
+(`text-[60px]`). Spacing is Tailwind’s default scale (`p-2`, `gap-3`),
+already rem. Letter-spacing is `em` of that face (Figma px ÷ font size).
+
+## Writes
+
+Propose the concrete edit (what, why, which node). Wait for a yes on that
+edit. Then write it. A group of findings is not approval.
