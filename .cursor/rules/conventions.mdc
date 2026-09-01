@@ -52,15 +52,14 @@ output.
 Tailwind v4 utilities go on `className`. There is no `class`, `tw`, or `css`
 prop, and no CSS modules or styled-components. `style` is a CSS string.
 Token names in `styles.css` `@theme` match Figma (kebab-case). A name is
-the job: `--text-title` is the homepage title face, `--border-width` is
-the 1-stroke. A new use that is not that job gets a new token, or the
-existing name is renamed to match what it actually is. Do not reuse a
-token because the number happens to match. Lengths are rem
-(`--text-title: 3.75rem`); Figma still authors in px, convert with
-`16px = 1rem`. Letter-spacing is `em` of that face. Do not add Tailwind
-`@utility` (or other custom classes) for buttons, snippets, or sections:
-those are JSX. Compose the token utilities on `className` (`bg-pink`,
-`rounded-button`, `shadow-regular`, `text-title`).
+the job: `--text-title` is the homepage title face. A new use that is not
+that job gets a new token, or the existing name is renamed to match what
+it actually is. Do not reuse a token because the number happens to match.
+Lengths are rem (`--text-title: 3.75rem`); Figma still authors in px,
+convert with `16px = 1rem`. Letter-spacing is `em` of that face. Do not
+add Tailwind `@utility` (or other custom classes) for buttons, snippets,
+or sections: those are JSX. Compose the token utilities on `className`
+(`bg-pink`, `rounded-button`, `shadow-regular`, `text-title`).
 
 Source is `styles.css` at the app root (`@import "tailwindcss"` and
 `@source`). `css.ts` runs `@tailwindcss/cli`, SHA-256s the bytes, writes
