@@ -10,6 +10,20 @@ export function RootLayout(
     <html>
       <head>
         <title>Dashi Web Framework</title>
+        <link
+          rel="preload"
+          href="/static/plus-jakarta-sans.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin=""
+        />
+        <link
+          rel="preload"
+          href="/static/jetbrains-mono.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin=""
+        />
         <link rel="stylesheet" href={styles.href} />
       </head>
       <body>

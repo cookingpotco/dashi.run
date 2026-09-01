@@ -39,6 +39,14 @@ silently diverge, and do not copy a bad frame tree into JSX.
 Transformed frames: use unrotated size and spacing. Bounding-box `x`/`y`
 after rotation is not misalignment.
 
+## Units
+
+Figma numbers are px. CSS is rem, `16px = 1rem`. Convert at the token
+boundary (`24` → `1.5rem`), including strokes (`1` → `border`, `2` →
+`border-2`). Do not copy `px` into `@theme` or arbitrary utilities
+(`text-[60px]`). Spacing is Tailwind’s default scale (`p-2`, `gap-3`),
+already rem. Letter-spacing is `em` of that face (Figma px ÷ font size).
+
 ## Writes
 
 Propose the concrete edit (what, why, which node). Wait for a yes on that

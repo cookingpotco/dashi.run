@@ -1,4 +1,95 @@
 @import "tailwindcss";
 @source "./**/*.{ts,tsx}";
 
-@theme {}
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  src: url("/static/plus-jakarta-sans.woff2") format("woff2");
+  font-weight: 400 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/static/jetbrains-mono.woff2") format("woff2");
+  font-weight: 400 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --color-black: #18181b;
+  --color-body-text: #3f3f46;
+  --color-background: #fdf6e2;
+  --color-card-background: #fafeff;
+  --color-code-background: #ffffff;
+  --color-pink: #ffade6;
+  --color-yellow: #fde68a;
+  --color-green: #b6ffad;
+  --color-blue: #8adafd;
+
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --text-title: 3.75rem;
+  --text-title--line-height: 3.75rem;
+  --text-title--font-weight: 800;
+  --text-title--letter-spacing: -0.025em;
+
+  --text-heading-1: 1.5rem;
+  --text-heading-1--line-height: 2rem;
+  --text-heading-1--font-weight: 800;
+  --text-heading-1--letter-spacing: -0.025em;
+
+  --text-body: 1.125rem;
+  --text-body--line-height: 1.75rem;
+  --text-body--font-weight: 500;
+
+  --text-nav-link: 0.875rem;
+  --text-nav-link--line-height: 1.25rem;
+  --text-nav-link--font-weight: 700;
+
+  --text-button: 0.75rem;
+  --text-button--line-height: 1rem;
+  --text-button--font-weight: 800;
+  --text-button--letter-spacing: 0.025em;
+
+  --text-code-title: 0.75rem;
+  --text-code-title--line-height: 1rem;
+  --text-code-title--font-weight: 700;
+
+  --text-code-body: 0.75rem;
+  --text-code-body--line-height: 1.25rem;
+  --text-code-body--font-weight: 400;
+
+  --text-large-code-body: 0.875rem;
+  --text-large-code-body--line-height: 1.25rem;
+  --text-large-code-body--font-weight: 400;
+
+  --text-code-small: 0.625rem;
+  --text-code-small--line-height: 1rem;
+  --text-code-small--font-weight: 800;
+  --text-code-small--letter-spacing: 0.03em;
+
+  --radius-button: 0.5rem;
+  --radius-card: 0.75rem;
+  --radius-badge: 0.25rem;
+  --radius-section: 1rem;
+
+  --border-width: 0.0625rem;
+  --border-width-2: 0.125rem;
+
+  --shadow-thin: 0.0625rem 0.0625rem 0 var(--color-black);
+  --shadow-regular: 0.125rem 0.125rem 0 var(--color-black);
+  --shadow-extra: 0.25rem 0.25rem 0 var(--color-black);
+
+  --container-page: 78.5rem;
+  --container-header: 62.5rem;
+  --container-main: 56rem;
+}
+
+html {
+  font-family: var(--font-sans);
+  color: var(--color-black);
+  background-color: var(--color-background);
+}

@@ -79,8 +79,8 @@ stop: tell the human rather than silently substituting another issue.
 - **Do not start an implementor on spikes.** Design issues produce a written
   decision and stay with the human.
 - **Figma is local.** Cloud Agents cannot open the file. Design tickets and
-  tickets that must match a Figma file run in a local session with
-  `using-figma` and `.cursor/rules/figma.mdc`. Do not `@Cursor` them.
+  tickets that must match a Figma file run in a local session with `using-figma`
+  and `.cursor/rules/figma.mdc`. Do not `@Cursor` them.
 - **Name the test layer.** Follow the Tests section in `AGENTS.md`. Behaviour at
   the path that actually runs — HTTP in this repo, live DOM after JS in e2e if
   client JS exists. No stubs, mocks, or a narrower harness to stand in for a
