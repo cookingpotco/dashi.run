@@ -14,7 +14,8 @@
   },
   "fmt": {
     "useBraces": "always",
-    "singleBodyPosition": "nextLine"
+    "singleBodyPosition": "nextLine",
+    "exclude": ["**/*.svg"]
   },
   "lint": {
     "rules": {

@@ -16,12 +16,11 @@ The planner follows the `plan-ticket` skill. The implementing agent follows
    `blocked by` relations.
 2. A plan is written and approved. After approval:
    - **Figma** (read or write: design, edits, or pixel-matching a design in
-     code): post the plan as a Linear comment **without** `@Cursor`. The human
-     runs a local `agent` session with the `using-figma` skill. Cloud Agents
-     cannot open the file.
+     code): post the plan as a Linear comment **without** `@Cursor`. Set
+     the issue to `Ready`. The human runs a local `agent` session with the
+     `use-figma` skill. Cloud Agents cannot open the file.
    - **Otherwise**: post a comment that begins with `@Cursor`, which starts the
-     cloud implementor.
-   The ticket stays at `Ready`.
+     cloud implementor. The ticket stays at `Ready`.
 3. The implementing agent builds it and marks the PR ready. Then the human
    reviews.
 4. Merge once checks are green and the human has approved.
@@ -30,26 +29,29 @@ The planner follows the `plan-ticket` skill. The implementing agent follows
 
 Cloud Agents cannot open Figma. Brainstorm, edits, reads, and any
 implementation that must match a file run in a **local** session. Follow
-the `using-figma` skill (Chrome DevTools + the plugin API in the open tab)
+the `use-figma` skill (Chrome DevTools + the plugin API in the open tab)
 and `.cursor/rules/figma.mdc`.
 
 The planner reads (and, on design tickets, writes) Figma while planning. The
 plan may include file URLs, node IDs, and screenshots so a human can review it.
 Screenshots are not the spec: the implementor reads the live file.
 
-Do not `@Cursor` those tickets. GitHub review-followup resumes a cloud agent,
-which also has no Figma; continue visual follow-up in a local session.
+Do not `@Cursor` those tickets. After the approved plan is posted, set the
+issue to `Ready`. GitHub review-followup resumes a cloud agent, which also
+has no Figma; continue visual follow-up in a local session.
 
 ## Status
 
-- `Ready` means the ticket has an approved plan. On a non-Figma ticket,
-  `@Cursor` on that comment starts the cloud implementor and does not change
-  the status. On a Figma ticket, `Ready` means the local session can start.
+- `Ready` means the ticket has an approved plan. On a Figma ticket, the
+  planner sets this when posting the plan — there is no `@Cursor` to do it.
+  On a non-Figma ticket, `@Cursor` on that comment starts the cloud
+  implementor and does not change the status.
 - `In Progress` means a draft PR exists. The GitHub integration sets this when
   the agent opens the PR on init.
 - `In Review` means the PR left draft. The GitHub integration sets this when
   `gh pr ready` takes.
-- Never set Linear status by hand. The GitHub integration moves the ticket.
+- Do not set Linear status except that Figma `Ready` write. The GitHub
+  integration moves `In Progress`, `In Review`, and `Done`.
 
 ## Feedback
 
