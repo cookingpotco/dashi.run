@@ -106,3 +106,15 @@ html {
   color: var(--color-black);
   background-color: var(--color-background);
 }
+
+[data-slide] {
+  transition: transform 0.45s ease-out;
+}
+
+[data-slide="left"]:not([data-in]) {
+  transform: translateX(-2rem);
+}
+
+[data-slide="right"]:not([data-in]) {
+  transform: translateX(2rem);
+}

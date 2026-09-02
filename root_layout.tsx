@@ -1,15 +1,19 @@
-import type { WrapperCtx } from "dashi";
+import { NavigationRoot, type WrapperCtx } from "dashi";
 import type { Element } from "dashi/jsx-runtime";
+import { SiteFooter } from "./site_footer.tsx";
+import { SiteHeader } from "./site_header.tsx";
 import styles from "./styles.json" with { type: "json" };
 
 export function RootLayout(
-  _ctx: WrapperCtx,
+  ctx: WrapperCtx,
   children: Element,
 ): Element {
   return (
     <html>
       <head>
+        <meta charSet="utf-8" />
         <title>Dashi Web Framework</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link
           rel="preload"
           href="/static/plus-jakarta-sans.woff2"
@@ -27,7 +31,9 @@ export function RootLayout(
         <link rel="stylesheet" href={styles.href} />
       </head>
       <body>
-        {children}
+        <SiteHeader path={ctx.url.pathname} />
+        <NavigationRoot>{children}</NavigationRoot>
+        <SiteFooter />
       </body>
     </html>
   );

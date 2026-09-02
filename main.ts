@@ -1,7 +1,9 @@
 import { CacheStrategy, serve, staticFile } from "dashi";
 import { error, fatal, notFound } from "./errors.tsx";
-import { Home } from "./home/mod.tsx";
+import { Home, join } from "./home/mod.tsx";
 import { RootLayout } from "./root_layout.tsx";
+import { list, write } from "./todos/mod.tsx";
+import { users } from "./users/mod.tsx";
 
 if (import.meta.main) {
   serve(({ route }) => ({
@@ -9,7 +11,9 @@ if (import.meta.main) {
     notFound,
     error,
     routes: [
-      route("/", { GET: Home }),
+      route("/", { GET: Home, POST: join }),
+      route("/todos", { GET: list, POST: write }),
+      users,
       route("/static/:file", {
         GET: (ctx) =>
           staticFile(ctx, `${import.meta.dirname}/static`, ctx.params.file, {
