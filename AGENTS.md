@@ -13,7 +13,7 @@ Do not set Linear status. Opening the draft PR on init moves the ticket to
 Cloud Agents cannot open Figma. Tickets that must read or write Figma are
 implemented in a local session, not via `@Cursor`. Follow the `use-figma` skill
 and `.cursor/rules/figma.mdc`. Do not invent layout from screenshots in the
-plan.
+plan; screenshot the live canvas instead.
 
 ## Done
 
