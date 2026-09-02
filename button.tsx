@@ -11,7 +11,7 @@ interface ButtonProps extends HTMLAttributes {
 function classes(success: boolean | undefined, className: string | undefined) {
   const tone = success === true ? "bg-green" : "bg-pink";
   const extra = className === undefined ? "" : ` ${className}`;
-  return `inline-flex cursor-pointer items-center justify-center rounded-button border-2 border-black px-2 py-1 font-mono text-button uppercase no-underline shadow-regular outline-none focus:outline-none ${tone}${extra}`;
+  return `inline-flex cursor-pointer items-center justify-center rounded-button border-2 border-black px-2 py-1 font-mono text-button uppercase no-underline shadow-regular outline-none transition duration-150 ease-out focus:outline-none active:translate-x-0.5 active:translate-y-0.5 active:shadow-none ${tone}${extra}`;
 }
 
 export function Button(

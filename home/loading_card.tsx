@@ -4,8 +4,8 @@ const STAR_PATH =
 export function LoadingCard() {
   return (
     <div className="relative flex h-40 w-[8.5rem] flex-col items-center justify-center overflow-visible rounded-card border-2 border-black bg-code-background p-4">
-      <p className="font-mono text-large-code-body font-extrabold">
-        Loading...
+      <p data-loading className="font-mono text-large-code-body font-extrabold">
+        Loading
       </p>
       <svg
         width="46"

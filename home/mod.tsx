@@ -1,4 +1,4 @@
-import { type Ctx, patch, RouteFragment } from "dashi";
+import { client, type Ctx, patch, RouteFragment } from "dashi";
 import { Button } from "../button.tsx";
 import { CommandSnippet } from "./command_snippet.tsx";
 import { HeartButton } from "./heart_button.tsx";
@@ -9,6 +9,10 @@ import { SectionBoard } from "./section_board.tsx";
 import { Snippet, SnippetStack, SnippetTone } from "./snippet.tsx";
 
 const emails: string[] = [];
+
+const FormValidity = client.module(
+  new URL("./form_client.ts", import.meta.url),
+);
 
 function Hero() {
   return (
@@ -43,7 +47,7 @@ function PatchesForm() {
     <form
       method="POST"
       action="/todos"
-      className="flex min-h-[10.125rem] w-full flex-col overflow-hidden rounded-card border-2 border-black bg-code-background has-[:user-invalid]:border-error lg:w-[20rem] lg:self-stretch"
+      className="flex h-[10.125rem] w-full flex-col overflow-hidden rounded-card border-2 border-black bg-code-background has-[:user-invalid]:border-error lg:absolute lg:inset-0 lg:h-auto"
     >
       <div className="flex items-center justify-between gap-2 border-b border-black bg-blue px-4 py-3">
         <input
@@ -141,6 +145,7 @@ function EmailCapture() {
 export function Home() {
   return (
     <main className="mx-auto flex w-full max-w-main flex-col items-center gap-12 px-4 py-8 lg:gap-16 lg:px-6 lg:pb-16">
+      <FormValidity />
       <Hero />
       <div className="flex w-full flex-col items-center gap-8 lg:gap-16">
         <SectionBoard>
@@ -178,7 +183,7 @@ export function Home() {
           <Section
             badge="02"
             title="Fragments"
-            description="A fragment is a route. Compose pages through eager or lazy server-rendered includes that drive precise updates."
+            description="A fragment is a route. Compose pages through eager or lazy server-rendered components that drive precise updates."
             rotate="rotate-[1deg]"
             slide="right"
             top="lg:top-[28.6875rem]"
@@ -220,6 +225,7 @@ export function Home() {
             rotate="-rotate-[0.5deg]"
             slide="left"
             top="lg:top-[62.75rem]"
+            fill
             left={
               <Snippet
                 title="postTodo.tsx"

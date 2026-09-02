@@ -10,6 +10,7 @@ interface SectionProps {
   left: DashiNode;
   right: DashiNode;
   equal?: boolean;
+  fill?: boolean;
 }
 
 export function Section(
@@ -23,39 +24,49 @@ export function Section(
     left,
     right,
     equal,
+    fill,
   }: SectionProps,
 ) {
-  const aside = equal === true
-    ? "flex w-full justify-center lg:min-w-0 lg:flex-1"
-    : "flex w-full justify-center lg:w-auto lg:shrink-0 lg:self-stretch lg:items-center";
+  let aside =
+    "flex w-full justify-center lg:w-auto lg:shrink-0 lg:self-stretch lg:items-center";
+  if (equal === true) {
+    aside = "flex w-full justify-center lg:min-w-0 lg:flex-1";
+  } else if (fill === true) {
+    aside =
+      "flex w-full justify-center lg:relative lg:w-[19rem] lg:shrink-0 lg:self-stretch lg:min-h-0";
+  }
   return (
     <div
       data-slide={slide}
       className={`relative z-10 w-full lg:absolute lg:left-3 lg:w-[calc(100%-1.5rem)] ${top}`}
     >
-      <section
-        data-face
-        className={`flex flex-col gap-3 rounded-section border-2 border-black bg-card-background p-8 shadow-extra ${rotate}`}
-      >
-        <div className="flex items-center gap-2">
-          <span className="rounded-badge border border-black bg-yellow px-2 py-1 font-mono text-code-title shadow-thin">
-            {badge}
-          </span>
-          <h2 className="text-heading-1">{title}</h2>
-        </div>
-        <p className="border-b border-black/10 pb-4 text-body-small text-body-text lg:whitespace-nowrap">
-          {description}
-        </p>
-        <div className="flex flex-col items-center pt-3 lg:flex-row lg:items-center">
-          <div className="w-full lg:min-w-0 lg:flex-1">{left}</div>
-          <p className="flex shrink-0 items-center justify-center px-6 py-6 font-mono text-nav-link font-extrabold rotate-90 lg:rotate-0 lg:py-0">
-            -&gt;
-          </p>
-          <div className={aside}>
-            {right}
+      <div data-face className="relative">
+        <div
+          aria-hidden
+          data-plate
+          className={`pointer-events-none absolute inset-0 rounded-section border-2 border-black bg-card-background shadow-extra ${rotate}`}
+        />
+        <section className="relative flex flex-col gap-3 p-8">
+          <div className="flex items-center gap-2">
+            <span className="rounded-badge border border-black bg-yellow px-2 py-1 font-mono text-code-title shadow-thin">
+              {badge}
+            </span>
+            <h2 className="text-heading-1">{title}</h2>
           </div>
-        </div>
-      </section>
+          <p className="border-b border-black/10 pb-4 text-body-small text-body-text lg:whitespace-nowrap">
+            {description}
+          </p>
+          <div className="flex flex-col items-center pt-3 lg:flex-row lg:items-center">
+            <div className="w-full lg:min-w-0 lg:flex-1">{left}</div>
+            <p className="flex shrink-0 items-center justify-center px-6 py-6 font-mono text-nav-link font-extrabold rotate-90 lg:rotate-0 lg:py-0">
+              -&gt;
+            </p>
+            <div className={aside}>
+              {right}
+            </div>
+          </div>
+        </section>
+      </div>
     </div>
   );
 }

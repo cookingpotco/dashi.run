@@ -16,7 +16,10 @@ const copy: Record<ProfileName, ProfileCopy> = {
     about: "Jorji builds pages out of routes.",
     posts: [
       ["A fragment is just a URL", "The card on the homepage is this page."],
-      ["Shipped the loading card", "Fallback first, then the include."],
+      [
+        "Cached independently",
+        "If I load on my own, I can be cached by myself!",
+      ],
     ],
   },
   [ProfileName.Duck]: {

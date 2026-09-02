@@ -6,7 +6,9 @@ function isControl(target: EventTarget | null): boolean {
   if (!(target instanceof Element)) {
     return false;
   }
-  return target.closest("a, button, input, textarea, select, label") !== null;
+  return target.closest(
+    "a, button, input, textarea, select, label, pre, code, h2, p",
+  ) !== null;
 }
 
 customElements.define(
@@ -65,9 +67,8 @@ customElements.define(
     }
 
     #onBreakpoint = () => {
-      const desktop = this.#media.matches;
-      this.style.cursor = desktop ? "grab" : "";
-      if (!desktop) {
+      this.style.cursor = this.#media.matches ? "grab" : "";
+      if (!this.#media.matches) {
         for (const card of this.#cards()) {
           card.style.left = "";
           card.style.top = "";
@@ -97,8 +98,8 @@ customElements.define(
         offsetX: event.clientX - box.left,
         offsetY: event.clientY - box.top,
       };
-      card.style.left = `${box.left - board.left}px`;
-      card.style.top = `${box.top - board.top}px`;
+      card.style.left = `${Math.round(box.left - board.left)}px`;
+      card.style.top = `${Math.round(box.top - board.top)}px`;
       card.style.zIndex = "20";
       this.#face(card).dataset.lift = "";
       card.style.cursor = "grabbing";
@@ -112,10 +113,10 @@ customElements.define(
       }
       const board = this.getBoundingClientRect();
       this.#drag.card.style.left = `${
-        event.clientX - board.left - this.#drag.offsetX
+        Math.round(event.clientX - board.left - this.#drag.offsetX)
       }px`;
       this.#drag.card.style.top = `${
-        event.clientY - board.top - this.#drag.offsetY
+        Math.round(event.clientY - board.top - this.#drag.offsetY)
       }px`;
     };
 

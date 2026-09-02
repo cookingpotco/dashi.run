@@ -11,7 +11,7 @@ const Host = client.element(
 export function CommandSnippet() {
   return (
     <Host className="flex w-full max-w-[28rem] items-center justify-between rounded-card border-2 border-black bg-code-background p-4 shadow-extra">
-      <code data-command className="font-mono text-large-code-body">
+      <code data-command className="cursor-text font-mono text-large-code-body">
         {COMMAND}
       </code>
       <Button type="button">copy</Button>
