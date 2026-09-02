@@ -27,6 +27,7 @@
   --color-yellow: #fde68a;
   --color-green: #b6ffad;
   --color-blue: #8adafd;
+  --color-error: #fd8a8a;
 
   --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
@@ -105,16 +106,32 @@ html {
   font-family: var(--font-sans);
   color: var(--color-black);
   background-color: var(--color-background);
+  overflow-x: clip;
 }
 
-[data-slide] {
-  transition: transform 0.45s ease-out;
+navigation-root {
+  display: block;
 }
 
-[data-slide="left"]:not([data-in]) {
-  transform: translateX(-2rem);
+button,
+a,
+input {
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
-[data-slide="right"]:not([data-in]) {
-  transform: translateX(2rem);
+[data-face] {
+  transition: box-shadow 0.15s ease, transform 0.5s ease-out;
+}
+
+[data-face][data-lift] {
+  --tw-shadow: 0.375rem 0.375rem 0 var(--color-black);
+}
+
+[data-slide="left"]:not([data-in]) [data-face] {
+  transform: translateX(-6rem);
+}
+
+[data-slide="right"]:not([data-in]) [data-face] {
+  transform: translateX(6rem);
 }

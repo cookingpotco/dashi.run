@@ -13,10 +13,16 @@ export function SectionBoard(
   { children }: { children: DashiNode | DashiNode[] },
 ) {
   return (
-    <Host
-      className="relative flex w-full flex-col items-center gap-8 lg:block lg:h-[133.375rem] lg:p-3"
-      style={dots}
-    >
+    <Host className="relative flex w-full flex-col items-center gap-8 lg:block lg:h-[133.375rem] lg:p-3">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 rounded-[2rem] p-3"
+      >
+        <div
+          className="h-full w-full overflow-hidden rounded-[1.5rem]"
+          style={dots}
+        />
+      </div>
       {children}
     </Host>
   );

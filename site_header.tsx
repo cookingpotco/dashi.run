@@ -6,8 +6,8 @@ const social =
 export function SiteHeader({ path }: { path: string }) {
   const home = path === "/";
   return (
-    <header className="mx-auto w-full max-w-page px-4 py-4 lg:px-32">
-      <div className="mx-auto flex max-w-header items-center justify-between border-black lg:border-b-2 lg:pb-4">
+    <header className="mx-auto w-full max-w-header px-4 py-4">
+      <div className="flex items-center justify-between border-black md:border-b-2 md:pb-4">
         <a href="/" className="block">
           <img
             src="/static/logo-transp.svg"
@@ -16,7 +16,7 @@ export function SiteHeader({ path }: { path: string }) {
             height="42"
           />
         </a>
-        <nav className="hidden items-center gap-6 lg:flex">
+        <nav className="hidden items-center gap-6 md:flex">
           <a
             href="/"
             className={`px-0 py-1 text-nav-link no-underline ${
@@ -34,7 +34,7 @@ export function SiteHeader({ path }: { path: string }) {
         </nav>
         <Button href="/docs">get started</Button>
       </div>
-      <div className="mx-auto hidden max-w-header justify-between pt-2 lg:flex">
+      <div className="hidden justify-between pt-2 md:flex">
         <a href="https://x.com/cookingpotco" className={social}>Twitter</a>
         <div className="flex gap-2">
           <a href="https://github.com/cookingpotco/dashi" className={social}>

@@ -20,7 +20,10 @@ arrive at runtime.
 ## Root import map
 
 Root `deno.json` `imports` map a bare specifier to a published dependency.
-`dashi` is `jsr:@cookingpot/dashi`. Do not path-override onto a framework
+`dashi` is one key, `jsr:@cookingpot/dashi`, the same line `deno add`
+writes (renamed from `@cookingpot/dashi` so `jsxImportSource` is `dashi`).
+Do not add `dashi/jsx-runtime` or `dashi/client` rows; Deno resolves those
+subpaths from the one entry. Do not path-override onto a framework
 checkout. App dependencies are allowed here (Tailwind, later a markdown
 parser).
 

@@ -16,7 +16,7 @@ const profiles: Record<
     photo: "/static/jorji.svg",
   },
   [ProfileName.Duck]: {
-    handle: "@Duck",
+    handle: "@LazyDuck",
     photo: "/static/duck.svg",
   },
 };
@@ -27,7 +27,7 @@ export async function Profile(ctx: Ctx<{ name: string }>) {
     return <p>Page not found</p>;
   }
   if (name === ProfileName.Duck && ctx.isFragment) {
-    await new Promise((resolve) => setTimeout(resolve, 800));
+    await new Promise((resolve) => setTimeout(resolve, 3000));
   }
   const profile = profiles[name];
   const card = (

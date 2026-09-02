@@ -7,8 +7,8 @@ interface ProfileCardProps {
 export function ProfileCard(
   { handle, photo, clickMe }: ProfileCardProps,
 ) {
-  const card = (
-    <div className="flex w-[8.5rem] flex-col items-center gap-2 rounded-card border-2 border-black bg-code-background p-4">
+  return (
+    <div className="relative overflow-visible flex w-[8.5rem] flex-col items-center gap-2 rounded-card border-2 border-black bg-code-background p-4">
       <img
         src={photo}
         alt=""
@@ -19,12 +19,11 @@ export function ProfileCard(
       <p className="font-mono text-large-code-body font-extrabold">{handle}</p>
       {clickMe
         ? (
-          <span className="-rotate-[15deg] rounded-badge border border-black bg-yellow px-2 py-1 font-mono text-code-title shadow-thin">
+          <span className="absolute -top-[1.11875rem] left-[4.29375rem] z-10 flex h-[1.625rem] w-[5.1875rem] rotate-[15deg] items-center justify-center rounded-badge border border-black bg-yellow font-mono text-code-title shadow-thin">
             click me!
           </span>
         )
         : null}
     </div>
   );
-  return card;
 }

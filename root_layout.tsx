@@ -32,7 +32,7 @@ export function RootLayout(
       </head>
       <body>
         <SiteHeader path={ctx.url.pathname} />
-        <NavigationRoot>{children}</NavigationRoot>
+        <NavigationRoot className="block">{children}</NavigationRoot>
         <SiteFooter />
       </body>
     </html>

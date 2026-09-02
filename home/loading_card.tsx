@@ -1,20 +1,23 @@
+const STAR_PATH =
+  "M22.3132 1.76228C22.5663 0.727412 24.0472 0.753247 24.2641 1.79633L25.9345 9.84136C26.3557 11.87 28.6574 12.8712 30.4284 11.7961L37.4511 7.53028C38.362 6.97734 39.3911 8.04306 38.8067 8.93403L34.2985 15.8037C33.1621 17.5361 34.0825 19.8713 36.0951 20.3631L44.077 22.3132C45.1118 22.5663 45.086 24.0472 44.0429 24.2641L35.9979 25.9345C33.9693 26.3557 32.968 28.6574 34.0432 30.4284L38.309 37.4512C38.8619 38.362 37.7962 39.3912 36.9052 38.8068L30.0356 34.2985C28.3032 33.1621 25.968 34.0825 25.4762 36.0952L23.526 44.077C23.2729 45.1119 21.792 45.086 21.5752 44.0429L19.9048 35.9979C19.4835 33.9693 17.1819 32.968 15.4109 34.0432L8.38808 38.309C7.47727 38.8619 6.44809 37.7962 7.03249 36.9052L11.5408 30.0356C12.6771 28.3032 11.7568 25.968 9.74408 25.4762L1.76225 23.5261C0.727387 23.2729 0.753222 21.7921 1.7963 21.5752L9.84133 19.9048C11.87 19.4835 12.8712 17.1819 11.796 15.4109L7.53025 8.3881C6.97731 7.4773 8.04304 6.44811 8.93401 7.03251L15.8036 11.5408C17.536 12.6771 19.8712 11.7568 20.363 9.74411L22.3132 1.76228Z";
+
 export function LoadingCard() {
   return (
-    <div className="flex h-40 w-[8.5rem] flex-col items-center justify-center gap-2 rounded-card border-2 border-black bg-code-background p-4">
+    <div className="relative flex h-40 w-[8.5rem] flex-col items-center justify-center overflow-visible rounded-card border-2 border-black bg-code-background p-4">
       <p className="font-mono text-large-code-body font-extrabold">
         Loading...
       </p>
       <svg
-        width="60"
-        height="60"
-        viewBox="0 0 24 24"
-        className="h-[3.75rem] w-[3.75rem]"
+        width="46"
+        height="46"
+        viewBox="0 0 46 46"
+        className="absolute -left-[1.1875rem] top-[7.9375rem] h-[2.875rem] w-[2.875rem]"
       >
-        <polygon
+        <path
+          d={STAR_PATH}
           fill="#ffade6"
           stroke="#18181b"
-          strokeWidth="1.25"
-          points="12,2 15,9 22,9.5 17,14.5 18.5,22 12,18 5.5,22 7,14.5 2,9.5 9,9"
+          strokeWidth="2"
         />
       </svg>
     </div>

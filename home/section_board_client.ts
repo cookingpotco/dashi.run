@@ -41,12 +41,21 @@ customElements.define(
       return [...this.querySelectorAll<HTMLElement>(":scope > [data-slide]")];
     }
 
+    #face(card: HTMLElement): HTMLElement {
+      return card.querySelector<HTMLElement>("[data-face]") ?? card;
+    }
+
     #observeSlides() {
       const observer = new IntersectionObserver((entries) => {
         for (const entry of entries) {
           if (entry.isIntersecting && entry.target instanceof HTMLElement) {
-            entry.target.dataset.in = "";
-            observer.unobserve(entry.target);
+            const target = entry.target;
+            observer.unobserve(target);
+            requestAnimationFrame(() => {
+              requestAnimationFrame(() => {
+                target.dataset.in = "";
+              });
+            });
           }
         }
       }, { threshold: 0 });
@@ -63,7 +72,7 @@ customElements.define(
           card.style.left = "";
           card.style.top = "";
           card.style.zIndex = "";
-          card.style.boxShadow = "";
+          delete this.#face(card).dataset.lift;
         }
       }
     };
@@ -90,8 +99,8 @@ customElements.define(
       };
       card.style.left = `${box.left - board.left}px`;
       card.style.top = `${box.top - board.top}px`;
-      card.style.zIndex = "2";
-      card.style.boxShadow = "0.375rem 0.375rem 0 var(--color-black)";
+      card.style.zIndex = "20";
+      this.#face(card).dataset.lift = "";
       card.style.cursor = "grabbing";
       this.setPointerCapture(event.pointerId);
       event.preventDefault();
@@ -114,7 +123,7 @@ customElements.define(
       if (this.#drag === null) {
         return;
       }
-      this.#drag.card.style.boxShadow = "";
+      delete this.#face(this.#drag.card).dataset.lift;
       this.#drag.card.style.cursor = "";
       this.#drag = null;
     };

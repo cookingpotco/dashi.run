@@ -12,24 +12,24 @@ const emails: string[] = [];
 
 function Hero() {
   return (
-    <section className="flex w-full flex-col items-center gap-6 pb-8 lg:pb-0">
-      <p className="-rotate-1 rounded-button border-2 border-black bg-yellow px-3 py-1 font-mono text-button shadow-regular">
+    <section className="flex w-full flex-col items-center gap-6 pb-8 md:pb-0">
+      <p className="rotate-1 rounded-button border-2 border-black bg-yellow px-3 py-1 font-mono text-button uppercase shadow-regular">
         Pure code, zero magic
       </p>
       <h1 className="flex flex-col items-center text-center">
-        <span className="hidden text-title lg:block">
+        <span className="hidden text-title md:block">
           Modern framework built on
         </span>
-        <span className="text-title-compact lg:hidden">Modern framework</span>
-        <span className="relative hidden lg:block">
-          <span className="absolute bottom-2 left-0 h-3 w-full rotate-1 bg-yellow" />
+        <span className="text-title-compact md:hidden">Modern framework</span>
+        <span className="relative hidden md:block">
+          <span className="absolute bottom-2 left-0 h-3 w-full -rotate-1 bg-yellow" />
           <span className="relative text-title">old ideas.</span>
         </span>
-        <span className="text-title-compact lg:hidden">
+        <span className="text-title-compact md:hidden">
           built on old ideas.
         </span>
       </h1>
-      <p className="max-w-xl pb-2 text-center text-body-small text-body-text lg:text-body">
+      <p className="max-w-xl pb-2 text-center text-body-small text-body-text md:max-w-none md:text-body">
         Built for composable pages that drive precise updates through the
         server.
       </p>
@@ -43,18 +43,19 @@ function PatchesForm() {
     <form
       method="POST"
       action="/todos"
-      className="w-80 overflow-hidden rounded-card border-2 border-black bg-code-background"
+      className="flex min-h-[10.125rem] w-full flex-col overflow-hidden rounded-card border-2 border-black bg-code-background has-[:user-invalid]:border-error lg:w-[20rem] lg:self-stretch"
     >
       <div className="flex items-center justify-between gap-2 border-b border-black bg-blue px-4 py-3">
         <input
           name="title"
+          required
           placeholder="Something to do..."
           className="min-w-0 flex-1 cursor-text bg-transparent font-mono text-code-title outline-none placeholder:text-black"
         />
         <Button type="submit">ADD</Button>
       </div>
-      <div className="flex flex-col items-end px-4">
-        <div className="w-full py-4">
+      <div className="flex min-h-0 flex-1 flex-col items-end px-4">
+        <div className="min-h-0 w-full flex-1 overflow-y-auto py-4">
           <RouteFragment
             src="/todos"
             className="flex w-full flex-col gap-4"
@@ -75,37 +76,37 @@ function Closer() {
         label="Small"
         description="Small API with no runtime dependencies"
         color={PointColor.Pink}
-        rotate="rotate-[4deg]"
+        rotate="-rotate-[4deg]"
       />
       <Point
         label="Caching"
         description="Each page and fragment is cached on its own"
         color={PointColor.Yellow}
-        rotate="-rotate-[5deg]"
+        rotate="rotate-[5deg]"
       />
       <Point
         label="Navigation"
         description="Soft navigation with in-place document swaps"
         color={PointColor.Green}
-        rotate="-rotate-[3deg]"
+        rotate="rotate-[3deg]"
       />
       <Point
         label="SSR"
         description="HTML first, for SEO, LCP, and link previews"
         color={PointColor.Blue}
-        rotate="rotate-[2deg]"
+        rotate="-rotate-[2deg]"
       />
       <Point
         label="Standards"
         description="Built on web standards, not a parallel stack"
         color={PointColor.Green}
-        rotate="-rotate-[3deg]"
+        rotate="rotate-[3deg]"
       />
       <Point
         label="Layouts"
         description="Wrap paths with layouts and middleware"
         color={PointColor.Pink}
-        rotate="rotate-[4deg]"
+        rotate="-rotate-[4deg]"
       />
     </div>
   );
@@ -121,10 +122,11 @@ function EmailCapture() {
       <p className="text-center text-body lg:text-left">
         If you made it this far, you must be interested.
       </p>
-      <div className="flex w-full max-w-[22.375rem] items-center gap-4 rounded-card border-2 border-black bg-code-background p-4 shadow-extra lg:w-[22.375rem]">
+      <div className="flex w-full max-w-[22.375rem] items-center gap-4 rounded-card border-2 border-black bg-code-background p-4 shadow-extra has-[:user-invalid]:border-error lg:w-[22.375rem]">
         <input
           type="email"
           name="email"
+          required
           placeholder="you@example.com"
           className="min-w-0 flex-1 bg-transparent font-mono text-large-code-body outline-none placeholder:text-body-text"
         />
@@ -138,7 +140,7 @@ function EmailCapture() {
 
 export function Home() {
   return (
-    <main className="mx-auto flex w-full max-w-main flex-col items-center gap-12 px-4 py-8 lg:gap-32 lg:px-6 lg:pb-16">
+    <main className="mx-auto flex w-full max-w-main flex-col items-center gap-12 px-4 py-8 lg:gap-16 lg:px-6 lg:pb-16">
       <Hero />
       <div className="flex w-full flex-col items-center gap-8 lg:gap-16">
         <SectionBoard>
@@ -146,9 +148,10 @@ export function Home() {
             badge="01"
             title="JSX to plain old HTML"
             description="JSX is precompiled and transformed into plain HTML strings, no hydration, no abstraction. Just hypertext."
-            rotate="rotate-[1deg]"
+            rotate="-rotate-[1deg]"
             slide="left"
             top="lg:top-3"
+            equal
             left={
               <Snippet
                 title="page.tsx"
@@ -176,7 +179,7 @@ export function Home() {
             badge="02"
             title="Fragments"
             description="A fragment is a route. Compose pages through eager or lazy server-rendered includes that drive precise updates."
-            rotate="-rotate-[1deg]"
+            rotate="rotate-[1deg]"
             slide="right"
             top="lg:top-[28.6875rem]"
             left={
@@ -200,7 +203,7 @@ export function Home() {
               </SnippetStack>
             }
             right={
-              <div className="flex gap-4">
+              <div className="flex w-[18rem] gap-4 overflow-visible">
                 <RouteFragment src="/users/jorji" />
                 <RouteFragment
                   src="/users/duck"
@@ -214,7 +217,7 @@ export function Home() {
             badge="03"
             title="Patches"
             description="A patch is HTML aimed at a fragment or an element. A form POST can return several, and the page updates in place."
-            rotate="rotate-[0.5deg]"
+            rotate="-rotate-[0.5deg]"
             slide="left"
             top="lg:top-[62.75rem]"
             left={
@@ -237,7 +240,7 @@ export function Home() {
             badge="04"
             title="Client JS"
             description="Progressive enhancement by design. Add client-side logic only where needed using TS and standard Web APIs."
-            rotate="-rotate-[0.75deg]"
+            rotate="rotate-[0.75deg]"
             slide="right"
             top="lg:top-[91.9375rem]"
             left={
@@ -285,7 +288,9 @@ export async function join(ctx: Ctx) {
     typeof email !== "string" ||
     !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
   ) {
-    return [];
+    return [
+      patch.replace("#join", <Button type="submit">join</Button>),
+    ];
   }
   emails.push(email);
   return [

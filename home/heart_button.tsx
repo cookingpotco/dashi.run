@@ -10,7 +10,7 @@ export function HeartButton() {
     <Host>
       <button
         type="button"
-        className="inline-flex -rotate-[0.75deg] cursor-pointer flex-col items-center rounded-section border-2 border-black bg-pink px-4 py-4 shadow-extra"
+        className="inline-flex cursor-pointer flex-col items-center rounded-section border-2 border-black bg-pink px-4 py-4 shadow-extra"
       >
         <span className="font-mono text-heading-1">CLICK ME</span>
         <span className="font-mono text-code-small">(if you dare)</span>
