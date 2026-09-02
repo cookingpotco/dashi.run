@@ -1,5 +1,3 @@
-/// <reference lib="dom" />
-
 const DESKTOP = "(min-width: 64rem)";
 
 function isControl(target: EventTarget | null): boolean {

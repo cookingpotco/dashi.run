@@ -1,5 +1,3 @@
-/// <reference lib="dom" />
-
 customElements.define(
   "command-snippet",
   class extends HTMLElement {

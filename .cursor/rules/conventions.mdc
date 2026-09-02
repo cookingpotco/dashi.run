@@ -31,8 +31,11 @@ Import `dashi` / `dashi/jsx-runtime` / `dashi/client` only.
 
 ## Root JSX config
 
-Root `deno.json` sets JSX `precompile` and `jsxImportSource: dashi`. Do not
-set `compilerOptions.lib`. JSX types are imported from `dashi/jsx-runtime`.
+Root `deno.json` sets JSX `precompile`, `jsxImportSource: dashi`, and
+`lib`: `["dom", "deno.ns", "deno.unstable"]`. That list is complete:
+`dom` types client modules; the Deno entries are what `Deno.bundle`
+needs. Do not add `/// <reference lib="dom" />`. JSX types are imported
+from `dashi/jsx-runtime`.
 
 ## Route modules
 

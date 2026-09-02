@@ -1,5 +1,3 @@
-/// <reference lib="dom" />
-
 customElements.define(
   "heart-button",
   class extends HTMLElement {
