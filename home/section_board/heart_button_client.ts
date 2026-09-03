@@ -3,11 +3,21 @@ customElements.define(
   class extends HTMLElement {
     connectedCallback() {
       this.addEventListener("click", this.#shoot);
+      this.addEventListener("keydown", this.#onKey);
     }
 
     disconnectedCallback() {
       this.removeEventListener("click", this.#shoot);
+      this.removeEventListener("keydown", this.#onKey);
     }
+
+    #onKey = (event: KeyboardEvent) => {
+      if (event.key !== "Enter" && event.key !== " ") {
+        return;
+      }
+      event.preventDefault();
+      this.#shoot();
+    };
 
     #shoot = () => {
       const template = this.querySelector("template");

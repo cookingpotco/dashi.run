@@ -23,7 +23,10 @@ export function Hero() {
         Built for composable pages that drive precise updates through the
         server.
       </p>
-      <CommandSnippet command="deno add jsr:@cookingpot/dashi" />
+      <CommandSnippet
+        id="install-command"
+        command="deno add jsr:@cookingpot/dashi"
+      />
     </section>
   );
 }
