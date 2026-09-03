@@ -1,4 +1,4 @@
-import { cached, type Ctx, group } from "dashi";
+import { cached, type Ctx, group, status } from "dashi";
 import { pageCache } from "../cache.ts";
 import { ProfileCard } from "./profile_card.tsx";
 import { UsersLayout } from "./users_layout.tsx";
@@ -25,7 +25,7 @@ const profiles: Record<
 export async function Profile(ctx: Ctx<{ name: string }>) {
   const name = ctx.params.name;
   if (name !== ProfileName.Jorji && name !== ProfileName.Duck) {
-    return <p>Page not found</p>;
+    return status(404, <p>Page not found</p>);
   }
   if (name === ProfileName.Duck && ctx.isFragment) {
     await new Promise((resolve) => setTimeout(resolve, 3000));
