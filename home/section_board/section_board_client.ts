@@ -5,7 +5,7 @@ function isControl(target: EventTarget | null): boolean {
     return false;
   }
   return target.closest(
-    "a, button, input, textarea, select, label, pre, code, h2, p",
+    "a, button, input, textarea, select, label, pre, code, h2, p, heart-button",
   ) !== null;
 }
 

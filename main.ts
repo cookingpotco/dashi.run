@@ -1,7 +1,7 @@
 import { CacheStrategy, serve, staticFile } from "dashi";
 import { error, fatal, notFound } from "./errors.tsx";
 import { Home, join } from "./home/mod.tsx";
-import { RootLayout } from "./root_layout.tsx";
+import { RootLayout } from "./root/mod.ts";
 import { list, write } from "./todos/mod.tsx";
 import { users } from "./users/mod.tsx";
 

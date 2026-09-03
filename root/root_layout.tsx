@@ -1,8 +1,8 @@
 import { NavigationRoot, type WrapperCtx } from "dashi";
 import type { Element } from "dashi/jsx-runtime";
+import styles from "../styles.json" with { type: "json" };
 import { SiteFooter } from "./site_footer.tsx";
 import { SiteHeader } from "./site_header.tsx";
-import styles from "./styles.json" with { type: "json" };
 
 export function RootLayout(
   ctx: WrapperCtx,

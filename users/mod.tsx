@@ -1,6 +1,6 @@
 import { cached, type Ctx, group, status } from "dashi";
 import { pageCache } from "../cache.ts";
-import { ProfileCard } from "./profile_card.tsx";
+import { ProfileCard } from "../components/mod.ts";
 import { UsersLayout } from "./users_layout.tsx";
 
 const enum ProfileName {

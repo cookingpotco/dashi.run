@@ -1,5 +1,5 @@
 import { client } from "dashi";
-import { Button } from "./button.tsx";
+import { Button } from "../components/mod.ts";
 
 const NavCurrent = client.module(
   new URL("./site_header_client.ts", import.meta.url),
