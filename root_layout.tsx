@@ -9,7 +9,7 @@ export function RootLayout(
   children: Element,
 ): Element {
   return (
-    <html>
+    <html className="overflow-x-hidden">
       <head>
         <meta charSet="utf-8" />
         <title>Dashi Web Framework</title>
@@ -30,7 +30,7 @@ export function RootLayout(
         />
         <link rel="stylesheet" href={styles.href} />
       </head>
-      <body>
+      <body className="overflow-x-hidden">
         <SiteHeader path={ctx.url.pathname} />
         <NavigationRoot className="block">{children}</NavigationRoot>
         <SiteFooter />

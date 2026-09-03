@@ -106,7 +106,6 @@ html {
   font-family: var(--font-sans);
   color: var(--color-black);
   background-color: var(--color-background);
-  overflow-x: clip;
 }
 
 navigation-root {
