@@ -1,5 +1,6 @@
-import { client, type Ctx, patch, RouteFragment } from "dashi";
+import { cached, client, type Ctx, patch, RouteFragment } from "dashi";
 import { Button } from "../button.tsx";
+import { pageCache } from "../cache.ts";
 import { CommandSnippet } from "./command_snippet.tsx";
 import { HeartButton } from "./heart_button.tsx";
 import { LoadingCard } from "./loading_card.tsx";
@@ -143,7 +144,7 @@ function EmailCapture() {
 }
 
 export function Home() {
-  return (
+  return cached(
     <main className="mx-auto flex w-full max-w-main flex-col items-center gap-12 px-4 py-8 lg:gap-16 lg:px-6 lg:pb-16">
       <FormValidity />
       <Hero />
@@ -235,7 +236,7 @@ export function Home() {
   const count = await service.addTodo(todo);
   return [
     patch.append("/todos", <Todo data={todo} />),
-    patch.replace("#count", <Count c={count} />),
+    patch.replace("#count", <>{count}</>),
   ];
 }`}
               />
@@ -283,7 +284,8 @@ customElements.define(
         <Closer />
         <EmailCapture />
       </div>
-    </main>
+    </main>,
+    pageCache,
   );
 }
 

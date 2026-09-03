@@ -1,4 +1,5 @@
-import { type Ctx, group } from "dashi";
+import { cached, type Ctx, group } from "dashi";
+import { pageCache } from "../cache.ts";
 import { ProfileCard } from "./profile_card.tsx";
 import { UsersLayout } from "./users_layout.tsx";
 
@@ -40,7 +41,7 @@ export async function Profile(ctx: Ctx<{ name: string }>) {
   if (ctx.isFragment) {
     return <a href={`/users/${name}`} className="no-underline">{card}</a>;
   }
-  return card;
+  return cached(card, pageCache);
 }
 
 export const users = group("/users", ({ route }) => ({

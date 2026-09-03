@@ -1,6 +1,5 @@
-import { cached, NavigationRoot, type WrapperCtx } from "dashi";
+import { NavigationRoot, type WrapperCtx } from "dashi";
 import type { Element } from "dashi/jsx-runtime";
-import { pageCache } from "./cache.ts";
 import { SiteFooter } from "./site_footer.tsx";
 import { SiteHeader } from "./site_header.tsx";
 import styles from "./styles.json" with { type: "json" };
@@ -8,8 +7,8 @@ import styles from "./styles.json" with { type: "json" };
 export function RootLayout(
   ctx: WrapperCtx,
   children: Element,
-) {
-  return cached(
+): Element {
+  return (
     <html>
       <head>
         <meta charSet="utf-8" />
@@ -36,7 +35,6 @@ export function RootLayout(
         <NavigationRoot className="block">{children}</NavigationRoot>
         <SiteFooter />
       </body>
-    </html>,
-    pageCache,
+    </html>
   );
 }

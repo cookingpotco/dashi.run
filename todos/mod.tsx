@@ -43,17 +43,9 @@ function TodoRow({ item }: { item: Item }) {
   );
 }
 
-function CountLabel({ list }: { list: Item[] }) {
-  const left = list.filter((item) => !item.done).length;
-  return (
-    <span id="count" className="pb-2 font-mono text-code-small">
-      {`${left}/${list.length}`}
-    </span>
-  );
-}
-
 function countPatch() {
-  return patch.replace("#count", <CountLabel list={items} />);
+  const left = items.filter((item) => !item.done).length;
+  return patch.replace("#count", <>{`${left}/${items.length}`}</>);
 }
 
 export function list() {
