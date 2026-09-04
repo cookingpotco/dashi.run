@@ -1,10 +1,13 @@
+import { type Ctx, patch } from "dashi";
 import { Button } from "../components/mod.ts";
 
-export function EmailCapture() {
+const emails: string[] = [];
+
+export function Join() {
   return (
     <form
       method="POST"
-      action="/"
+      action="/join"
       className="flex w-full flex-col items-center gap-4 lg:flex-row lg:justify-center"
     >
       <p className="text-center text-body lg:text-left">
@@ -24,4 +27,21 @@ export function EmailCapture() {
       </div>
     </form>
   );
+}
+
+export async function submit(ctx: Ctx) {
+  const data = await ctx.req.formData();
+  const email = data.get("email");
+  if (
+    typeof email !== "string" ||
+    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+  ) {
+    return [
+      patch.replace("#join", <Button type="submit">join</Button>),
+    ];
+  }
+  emails.push(email);
+  return [
+    patch.replace("#join", <Button success type="submit">JOINED!</Button>),
+  ];
 }
