@@ -108,10 +108,6 @@ html {
   background-color: var(--color-background);
 }
 
-navigation-root {
-  display: block;
-}
-
 button,
 a,
 input {
@@ -139,15 +135,15 @@ input {
   transform: translateX(6rem);
 }
 
-[data-loading]::after {
+[data-loading-card]::after {
   content: "";
   display: inline-block;
   width: 3ch;
   text-align: left;
-  animation: loading-dots 1.2s infinite;
+  animation: loading-card-dots 1.2s infinite;
 }
 
-@keyframes loading-dots {
+@keyframes loading-card-dots {
   0% {
     content: "";
   }

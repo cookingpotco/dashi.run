@@ -21,7 +21,10 @@ function Star() {
 export function LoadingCard() {
   return (
     <Card className="h-40 justify-center">
-      <p data-loading className="font-mono text-large-code-body font-extrabold">
+      <p
+        data-loading-card
+        className="font-mono text-large-code-body font-extrabold"
+      >
         Loading
       </p>
       <Star />
