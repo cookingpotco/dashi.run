@@ -1,10 +1,10 @@
-import { type Ctx, patch } from "dashi";
+import { patch, type ReadArgs, type WriteArgs } from "dashi";
 import { Button } from "../components/mod.ts";
 
 const emails: string[] = [];
 
-export function getJoin() {
-  return (
+export function getJoin({ html }: ReadArgs) {
+  return html(
     <form
       method="POST"
       action="/join"
@@ -25,23 +25,23 @@ export function getJoin() {
           <Button type="submit">join</Button>
         </span>
       </div>
-    </form>
+    </form>,
   );
 }
 
-export async function postSubmitJoinRequest(ctx: Ctx) {
+export async function postSubmitJoinRequest({ ctx, patches }: WriteArgs) {
   const data = await ctx.req.formData();
   const email = data.get("email");
   if (
     typeof email !== "string" ||
     !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
   ) {
-    return [
+    return patches([
       patch.replace("#join", <Button type="submit">join</Button>),
-    ];
+    ]);
   }
   emails.push(email);
-  return [
+  return patches([
     patch.replace("#join", <Button success type="submit">JOINED!</Button>),
-  ];
+  ]);
 }

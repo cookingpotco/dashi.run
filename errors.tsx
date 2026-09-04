@@ -1,28 +1,26 @@
-import type { WrapperCtx } from "dashi";
-import type { Element } from "dashi/jsx-runtime";
+import type { ErrorArgs, FatalArgs, NotFoundArgs } from "dashi";
 
-export function notFound(): Element {
-  return (
+export function notFound({ html }: NotFoundArgs) {
+  return html(
     <p>
       Page not found
-    </p>
+    </p>,
   );
 }
 
-export function error(
-  _ctx: WrapperCtx,
-  thrown: unknown,
-): Element {
+export function error({ thrown, html }: ErrorArgs) {
   const message = thrown instanceof Error ? thrown.message : "Unknown error";
-  return (
+  return html(
     <p>
       {message}
-    </p>
+    </p>,
   );
 }
 
-export const fatal = (
-  <html>
-    <body>Something went wrong</body>
-  </html>
-);
+export function fatal({ html }: FatalArgs) {
+  return html(
+    <html>
+      <body>Something went wrong</body>
+    </html>,
+  );
+}

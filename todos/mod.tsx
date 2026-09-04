@@ -1,4 +1,4 @@
-import { type Ctx, patch } from "dashi";
+import { patch, type ReadArgs, type WriteArgs } from "dashi";
 import { TodoCheck, type TodoItem, TodoRow } from "./item.tsx";
 
 function seed(): TodoItem[] {
@@ -16,35 +16,35 @@ function countPatch() {
   return patch.replace("#count", <>{`${left}/${items.length}`}</>);
 }
 
-export function getTodoList() {
+export function getTodoList({ html }: ReadArgs) {
   items = seed();
   nextId = 3;
-  return (
+  return html(
     <>
       {items.map((item) => <TodoRow item={item} />)}
-    </>
+    </>,
   );
 }
 
-export async function postSubmitTodo(ctx: Ctx) {
+export async function postSubmitTodo({ ctx, patches }: WriteArgs) {
   const data = await ctx.req.formData();
   const check = data.get("check");
   if (typeof check === "string") {
     const item = items.find((row) => row.id === check);
     if (item === undefined) {
-      return [countPatch()];
+      return patches([countPatch()]);
     }
     if (!item.done) {
       item.done = true;
     }
-    return [
+    return patches([
       patch.replace(`#todo-${item.id}`, <TodoCheck item={item} />),
       countPatch(),
-    ];
+    ]);
   }
   const title = data.get("title");
   if (typeof title !== "string" || title.trim() === "") {
-    return [countPatch()];
+    return patches([countPatch()]);
   }
   const item: TodoItem = {
     id: String(nextId++),
@@ -52,8 +52,8 @@ export async function postSubmitTodo(ctx: Ctx) {
     done: false,
   };
   items.push(item);
-  return [
+  return patches([
     patch.append("/todos", <TodoRow item={item} />),
     countPatch(),
-  ];
+  ]);
 }

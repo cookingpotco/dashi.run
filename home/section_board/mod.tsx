@@ -2,7 +2,7 @@ import { client, RouteFragment } from "dashi";
 import { LoadingCard } from "../../components/mod.ts";
 import { HeartButton } from "./heart_button.tsx";
 import { PatchesForm } from "./patches_form.tsx";
-import { Section } from "./section.tsx";
+import { Section, SectionMark } from "./section.tsx";
 import { Snippet, SnippetStack, SnippetTone } from "./snippet.tsx";
 
 const Host = client.element(
@@ -15,7 +15,7 @@ const dots =
 
 export function SectionBoard() {
   return (
-    <Host className="relative flex w-full flex-col items-center gap-8 lg:block lg:h-[133.375rem]">
+    <Host className="relative flex w-full flex-col items-center gap-8 lg:block lg:h-[164.875rem]">
       <div
         aria-hidden
         className="pointer-events-none absolute -inset-x-4 -inset-y-4 lg:-inset-x-12 lg:-top-6 lg:-bottom-6"
@@ -25,13 +25,13 @@ export function SectionBoard() {
         badge="01"
         title="JSX to plain old HTML"
         description="JSX is precompiled and transformed into plain HTML strings, no hydration, no abstraction. Just hypertext."
-        rotate="-rotate-[1deg]"
-        slide="left"
-        top="lg:top-3"
+        rotate="rotate-[1deg]"
+        slide="right"
+        top="lg:top-[1.6875rem]"
         equal
         left={
           <Snippet
-            title="page.tsx"
+            title="component.tsx"
             tone={SnippetTone.Pink}
             code={`export function Hello() {
   return (
@@ -54,19 +54,57 @@ export function SectionBoard() {
       />
       <Section
         badge="02"
+        title="Pages are just handlers"
+        description={
+          <>
+            A page is a GET handler that returns{" "}
+            <span className="text-error">`Response`</span>, same as JSON, one
+            helper seals HTML.
+          </>
+        }
+        rotate="-rotate-[1.2deg]"
+        slide="left"
+        top="lg:top-[29.625rem]"
+        equal
+        mark={SectionMark.Versus}
+        left={
+          <Snippet
+            title="page.tsx"
+            tone={SnippetTone.Green}
+            code={`export function getPage({ html }): Response {
+  return html(
+    <main>
+      <PageContent />
+    </main>
+  );
+}`}
+          />
+        }
+        right={
+          <Snippet
+            title="jsonEndpoint.ts"
+            tone={SnippetTone.Pink}
+            code={`export function getJson(): Response {
+  return Response.json({ ok: true });
+}`}
+          />
+        }
+      />
+      <Section
+        badge="03"
         title="Fragments"
-        description="A fragment is a route. Compose pages through eager or lazy server-rendered components that drive precise updates."
-        rotate="rotate-[1deg]"
+        description="A fragment is a route. Compose pages through eager or lazy server-rendered UI."
+        rotate="rotate-[1.2deg]"
         slide="right"
-        top="lg:top-[28.6875rem]"
+        top="lg:top-[59.75rem]"
         left={
           <SnippetStack>
             <Snippet
               title="userRoute.tsx"
               tone={SnippetTone.Pink}
-              code={`export async function UserProfile(ctx: Ctx) {
+              code={`export async function UserProfile({ ctx, html }) {
   const user = await service.getUser(ctx);
-  return (
+  return html(
     <User userData={user} />
   );
 }`}
@@ -91,36 +129,36 @@ export function SectionBoard() {
         }
       />
       <Section
-        badge="03"
+        badge="04"
         title="Patches"
         description="A patch is HTML aimed at a fragment or an element. A form POST can return several, and the page updates in place."
         rotate="-rotate-[0.5deg]"
         slide="left"
-        top="lg:top-[62.75rem]"
+        top="lg:top-[93.8125rem]"
         fill
         left={
           <Snippet
             title="postTodo.tsx"
             tone={SnippetTone.Pink}
-            code={`export async function addTodo(ctx: Ctx) {
+            code={`export async function addTodo({ ctx, patches }) {
   const { todo } = ctx.state;
   const count = await service.addTodo(todo);
-  return [
+  return patches([
     patch.append("/todos", <Todo data={todo} />),
-    patch.replace("#count", <>{count}</>),
-  ];
+    patch.replace("#count", <Count c={count} />),
+  ]);
 }`}
           />
         }
         right={<PatchesForm />}
       />
       <Section
-        badge="04"
+        badge="05"
         title="Client JS"
         description="Progressive enhancement by design. Add client-side logic only where needed using TS and standard Web APIs."
         rotate="rotate-[0.75deg]"
         slide="right"
-        top="lg:top-[91.9375rem]"
+        top="lg:top-[124.1875rem]"
         left={
           <SnippetStack>
             <Snippet

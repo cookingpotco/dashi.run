@@ -17,13 +17,13 @@ if (import.meta.main) {
       route("/todos", { GET: getTodoList, POST: postSubmitTodo }),
       users,
       route("/static/:file", {
-        GET: (ctx) =>
+        GET: ({ ctx }) =>
           staticFile(ctx, `${import.meta.dirname}/static`, ctx.params.file, {
             strategy: CacheStrategy.Immutable,
           }),
       }),
       route("/generated/:file", {
-        GET: (ctx) =>
+        GET: ({ ctx }) =>
           staticFile(ctx, `${import.meta.dirname}/generated`, ctx.params.file, {
             strategy: CacheStrategy.Immutable,
           }),

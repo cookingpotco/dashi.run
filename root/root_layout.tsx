@@ -1,13 +1,10 @@
-import { NavigationRoot, type WrapperCtx } from "dashi";
+import { type LayoutArgs, NavigationRoot } from "dashi";
 import type { Element } from "dashi/jsx-runtime";
 import styles from "../styles.json" with { type: "json" };
 import { SiteFooter } from "./site_footer.tsx";
 import { SiteHeader } from "./site_header.tsx";
 
-export function RootLayout(
-  ctx: WrapperCtx,
-  children: Element,
-): Element {
+export function RootLayout({ ctx, children }: LayoutArgs): Element {
   return (
     <html className="overflow-x-hidden">
       <head>

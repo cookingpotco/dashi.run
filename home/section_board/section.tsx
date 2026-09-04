@@ -1,9 +1,14 @@
 import type { DashiNode } from "dashi/jsx-runtime";
 
+const enum SectionMark {
+  Arrow = "arrow",
+  Versus = "versus",
+}
+
 interface SectionProps {
   badge: string;
   title: string;
-  description: string;
+  description: DashiNode;
   rotate: string;
   slide: "left" | "right";
   top: string;
@@ -11,7 +16,10 @@ interface SectionProps {
   right: DashiNode;
   equal?: boolean;
   fill?: boolean;
+  mark?: SectionMark;
 }
+
+export { SectionMark };
 
 export function Section(
   {
@@ -25,6 +33,7 @@ export function Section(
     right,
     equal,
     fill,
+    mark = SectionMark.Arrow,
   }: SectionProps,
 ) {
   let aside =
@@ -35,6 +44,7 @@ export function Section(
     aside =
       "flex w-full justify-center lg:relative lg:w-[19rem] lg:shrink-0 lg:self-stretch lg:min-h-0";
   }
+  const divider = mark === SectionMark.Versus ? "vs." : "->";
   return (
     <div
       data-slide={slide}
@@ -59,7 +69,7 @@ export function Section(
           <div className="flex flex-col items-center pt-3 lg:flex-row lg:items-center">
             <div className="w-full lg:min-w-0 lg:flex-1">{left}</div>
             <p className="flex shrink-0 items-center justify-center px-6 py-6 font-mono text-nav-link font-extrabold rotate-90 lg:rotate-0 lg:py-0">
-              -&gt;
+              {divider}
             </p>
             <div className={aside}>
               {right}

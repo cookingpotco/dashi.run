@@ -1,4 +1,4 @@
-import { cached, type Ctx, group, status } from "dashi";
+import { group, type ReadArgs } from "dashi";
 import { pageCache } from "../cache.ts";
 import { ProfileCard } from "../components/mod.ts";
 import { UsersLayout } from "./users_layout.tsx";
@@ -22,10 +22,10 @@ const profiles: Record<
   },
 };
 
-export async function getProfile(ctx: Ctx<{ name: string }>) {
+export async function getProfile({ ctx, html }: ReadArgs<{ name: string }>) {
   const name = ctx.params.name;
   if (name !== ProfileName.Jorji && name !== ProfileName.Duck) {
-    return status(404, <p>Page not found</p>);
+    return html(<p>Page not found</p>, { status: 404 });
   }
   if (name === ProfileName.Duck && ctx.isFragment) {
     await new Promise((resolve) => setTimeout(resolve, 3000));
@@ -39,9 +39,11 @@ export async function getProfile(ctx: Ctx<{ name: string }>) {
     />
   );
   if (ctx.isFragment) {
-    return <a href={`/users/${name}`} className="no-underline">{card}</a>;
+    return html(
+      <a href={`/users/${name}`} className="no-underline">{card}</a>,
+    );
   }
-  return cached(card, pageCache);
+  return html(card, { cache: pageCache });
 }
 
 export const users = group("/users", ({ route }) => ({

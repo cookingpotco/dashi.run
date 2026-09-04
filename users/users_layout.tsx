@@ -1,4 +1,4 @@
-import type { WrapperCtx } from "dashi";
+import type { LayoutArgs } from "dashi";
 import type { Element } from "dashi/jsx-runtime";
 
 const enum ProfileName {
@@ -31,10 +31,7 @@ const copy: Record<ProfileName, ProfileCopy> = {
   },
 };
 
-export function UsersLayout(
-  ctx: WrapperCtx,
-  children: Element,
-): Element {
+export function UsersLayout({ ctx, children }: LayoutArgs): Element {
   const name = ctx.params.name;
   if (name !== ProfileName.Jorji && name !== ProfileName.Duck) {
     return children;
