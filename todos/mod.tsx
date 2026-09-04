@@ -3,8 +3,8 @@ import { TodoCheck, type TodoItem, TodoRow } from "./item.tsx";
 
 function seed(): TodoItem[] {
   return [
-    { id: "1", title: "Already done", done: false },
-    { id: "2", title: "Already done", done: true },
+    { id: "1", title: "Clicking me sends a patch", done: false },
+    { id: "2", title: "No client side JS written", done: true },
   ];
 }
 

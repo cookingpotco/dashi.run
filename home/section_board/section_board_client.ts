@@ -98,7 +98,7 @@ class SectionBoard extends HTMLElement {
     card.style.top = `${Math.round(box.top - board.top)}px`;
     card.style.zIndex = "20";
     this.#face(card).dataset.lift = "";
-    card.style.cursor = "grabbing";
+    this.style.cursor = "grabbing";
     this.setPointerCapture(event.pointerId);
     event.preventDefault();
   };
@@ -121,7 +121,7 @@ class SectionBoard extends HTMLElement {
       return;
     }
     delete this.#face(this.#drag.card).dataset.lift;
-    this.#drag.card.style.cursor = "";
+    this.style.cursor = this.#media.matches ? "grab" : "";
     this.#drag = null;
   };
 }

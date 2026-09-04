@@ -68,7 +68,11 @@ export function Section(
           </p>
           <div className="flex flex-col items-center pt-3 lg:flex-row lg:items-center">
             <div className="w-full lg:min-w-0 lg:flex-1">{left}</div>
-            <p className="flex shrink-0 items-center justify-center px-6 py-6 font-mono text-nav-link font-extrabold rotate-90 lg:rotate-0 lg:py-0">
+            <p
+              className={`flex shrink-0 items-center justify-center px-6 py-6 font-mono text-nav-link font-extrabold lg:py-0 ${
+                mark === SectionMark.Versus ? "" : "rotate-90 lg:rotate-0"
+              }`}
+            >
               {divider}
             </p>
             <div className={aside}>
