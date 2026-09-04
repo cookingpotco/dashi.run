@@ -22,7 +22,7 @@ const profiles: Record<
   },
 };
 
-export async function Profile(ctx: Ctx<{ name: string }>) {
+export async function getProfile(ctx: Ctx<{ name: string }>) {
   const name = ctx.params.name;
   if (name !== ProfileName.Jorji && name !== ProfileName.Duck) {
     return status(404, <p>Page not found</p>);
@@ -47,6 +47,6 @@ export async function Profile(ctx: Ctx<{ name: string }>) {
 export const users = group("/users", ({ route }) => ({
   layouts: [UsersLayout],
   routes: [
-    route("/:name", { GET: Profile }),
+    route("/:name", { GET: getProfile }),
   ],
 }));

@@ -1,6 +1,6 @@
 import { CacheStrategy, serve, staticFile } from "dashi";
 import { error, fatal, notFound } from "./errors.tsx";
-import { Home } from "./home/mod.tsx";
+import { getHome } from "./home/mod.tsx";
 import { getJoin, postSubmitJoinRequest } from "./join/mod.tsx";
 import { RootLayout } from "./root/mod.ts";
 import { getTodoList, postSubmitTodo } from "./todos/mod.tsx";
@@ -12,7 +12,7 @@ if (import.meta.main) {
     notFound,
     error,
     routes: [
-      route("/", { GET: Home }),
+      route("/", { GET: getHome }),
       route("/join", { GET: getJoin, POST: postSubmitJoinRequest }),
       route("/todos", { GET: getTodoList, POST: postSubmitTodo }),
       users,

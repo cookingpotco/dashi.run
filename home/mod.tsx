@@ -9,7 +9,7 @@ const FormValidity = client.element(
   new URL("./form_validity_client.ts", import.meta.url),
 );
 
-export function Home() {
+export function getHome() {
   return cached(
     <main className="mx-auto flex w-full max-w-main flex-col items-center gap-12 px-4 py-8 lg:gap-16 lg:px-6 lg:pb-16">
       <FormValidity />
