@@ -13,7 +13,7 @@ Do not set Linear status. Opening the draft PR on init moves the ticket to
 Cloud Agents cannot open Figma. Tickets that must read or write Figma are
 implemented in a local session, not via `@Cursor`. Follow the `use-figma` skill
 and `.cursor/rules/figma.mdc`. Do not invent layout from screenshots in the
-plan.
+plan; screenshot the live canvas instead.
 
 ## Done
 
@@ -91,7 +91,8 @@ which cannot see the branch.
 
 ## Constraints
 
-Import `dashi` / `dashi/jsx-runtime` / `dashi/client` only. App dependencies are
-allowed here (Tailwind, later a markdown parser). Do not path-override `dashi`
-onto a framework checkout. Use the Cursor Cloud Agents **v1** REST API if you
-touch `scripts/review_followup.ts`; v1 rejects `branchName`.
+The `dashi` import map is one key. Import `dashi` / `dashi/jsx-runtime` /
+`dashi/client` only. App dependencies are allowed here (Tailwind, later a
+markdown parser). Do not path-override `dashi` onto a framework checkout. Use
+the Cursor Cloud Agents **v1** REST API if you touch
+`scripts/review_followup.ts`; v1 rejects `branchName`.

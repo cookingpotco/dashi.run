@@ -2,7 +2,8 @@
 name: use-figma
 description: >-
   Talks to an open Figma file in Chrome through chrome-devtools
-  evaluate_script and the Figma plugin API. Use when reading, creating,
+  evaluate_script and the Figma plugin API, and screenshots the canvas
+  to catch visual issues plugin data misses. Use when reading, creating,
   editing, or verifying a Figma design in a local session. Not for Cloud
   Agents. Not for the Figma REST API.
 ---
@@ -11,7 +12,9 @@ description: >-
 
 Local sessions only. The file must be open in the Chrome tab that
 `chrome-devtools` controls. How to interpret the file (live content over layer
-names, JSX names, layout) is `.cursor/rules/figma.mdc`.
+names, JSX names, layout) is `.cursor/rules/figma.mdc`. Plugin properties are
+not a picture of the page: screenshot the canvas you are editing, creating,
+reviewing, or comparing against.
 
 ## Prerequisite
 
@@ -64,7 +67,41 @@ Plugin API:
 `figma.notify` is fine here. Colors are 0–1, not 0–255. Clone fills/strokes
 before mutating. Text edits: load fonts, await, then write.
 
-Writes only when the user asked for that change.
+Writes only when the user asked for that change. After a read or write, follow
+**Look at it** before you judge or finish.
+
+## Look at it
+
+Plugin JSON does not show overlap, misalignment, type or color that drifts from
+siblings, crowding, clipping, or whether the page is ugly or hard to use.
+Screenshot the actual canvas — and the running UI, when the other side is code.
+Do this before you judge a frame, after every write, and when you compare two
+surfaces.
+
+1. Clear selection and point the viewport at the nodes with the plugin API. Do
+   not pan by clicking:
+
+```js
+(async () => {
+  const node = await figma.getNodeByIdAsync("12:34");
+  if (!node) {
+    return { error: "missing" };
+  }
+  figma.currentPage.selection = [];
+  figma.viewport.scrollAndZoomIntoView([node]);
+  return { id: node.id, name: node.name };
+});
+```
+
+2. `take_screenshot` that Figma `pageId` (the viewport, not `fullPage`). Read
+   the image. If it is mid-pan, blank, or cropped oddly, wait and shoot again.
+3. A frame taller than the viewport needs a zoomed-to-fit shot of the whole
+   thing plus closer shots of each section.
+4. Matching code: screenshot the live page the same way and compare the two
+   images.
+
+Fix what you see through the plugin API, then screenshot again. Do not finish on
+properties you have not looked at.
 
 ## Troubleshooting
 

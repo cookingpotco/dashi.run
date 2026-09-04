@@ -1,13 +1,13 @@
 {
   "version": "5",
   "specifiers": {
-    "jsr:@cookingpot/dashi@0.5": "0.5.0",
+    "jsr:@cookingpot/dashi@0.11": "0.11.0",
     "npm:@tailwindcss/cli@4": "4.3.3",
     "npm:tailwindcss@4": "4.3.3"
   },
   "jsr": {
-    "@cookingpot/dashi@0.5.0": {
-      "integrity": "8d32014d872674d3eba976ba49ef88b8a08457ff35fd4625e9dd681fac3b53e1"
+    "@cookingpot/dashi@0.11.0": {
+      "integrity": "c1f0aa2d0b3f6847b5eda0d0d09eaa47e9c514fc9a45659549f00bc5b27ca14f"
     }
   },
   "npm": {
@@ -391,7 +391,7 @@
   },
   "workspace": {
     "dependencies": [
-      "jsr:@cookingpot/dashi@0.5",
+      "jsr:@cookingpot/dashi@0.11",
       "npm:@tailwindcss/cli@4",
       "npm:tailwindcss@4"
     ]

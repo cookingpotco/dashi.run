@@ -7,9 +7,19 @@ alwaysApply: false
 
 # Working with Figma
 
-The live file is the spec. Screenshots, Linear images, and layer lists are
-not. Follow `use-figma` to open it. This rule is how to interpret what you
-read.
+The live file is the spec. Stale Linear images, plan attachments, and
+layer lists are not. Follow `use-figma` to open it and to screenshot the
+canvas. This rule is how to interpret what you read and what you draw.
+
+## Look at the canvas
+
+Plugin fields are numbers and names. They do not show how the page
+reads. Overlap, misalignment, uneven gaps, type or color that drifts
+from siblings, crowding, clipping, and awkward UX only show up on the
+rendered canvas. Screenshot the frame you are editing, creating,
+reviewing, or matching — and the running UI when the other side is
+code — and judge that image. A node dump is not a review. A write is
+not done until the screenshot looks right.
 
 ## Read the thing, not the label
 

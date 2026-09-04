@@ -54,9 +54,10 @@ stop: tell the human rather than silently substituting another issue.
    that mention, then set the issue state to `Ready`. Tell the human to run it
    in a **local** `agent` session with the `use-figma` skill.
 
-   While planning those tickets, follow `use-figma` in this session. Put file
-   URLs and node IDs in the plan; screenshots are for the human reviewing the
-   plan, not a stand-in spec for a cloud agent.
+   While planning those tickets, follow `use-figma` in this session, including
+   live canvas screenshots. Put file URLs and node IDs in the plan; attachments
+   in the plan are for the human reviewing it, not a stand-in spec for a cloud
+   agent.
 
    **Otherwise** post the plan as a Linear comment that begins with `@Cursor`,
    then the full approved plan. That mention is the only cloud handoff: Linear
