@@ -1,12 +1,7 @@
 import { type Ctx, patch } from "dashi";
+import { TodoCheck, type TodoItem, TodoRow } from "./item.tsx";
 
-interface Item {
-  id: string;
-  title: string;
-  done: boolean;
-}
-
-function seed(): Item[] {
+function seed(): TodoItem[] {
   return [
     { id: "1", title: "Already done", done: false },
     { id: "2", title: "Already done", done: true },
@@ -16,39 +11,12 @@ function seed(): Item[] {
 let items = seed();
 let nextId = 3;
 
-function TodoCheck({ item }: { item: Item }) {
-  const mark = item.done ? "bg-green" : "bg-transparent";
-  const done = item.done ? "line-through decoration-2" : "";
-  return (
-    <button
-      type="submit"
-      name="check"
-      value={item.id}
-      formNoValidate
-      className="flex w-full cursor-pointer items-center gap-2 bg-transparent p-0 text-left"
-    >
-      <span
-        className={`h-3.5 w-3.5 shrink-0 rounded-full border-2 border-black ${mark}`}
-      />
-      <span className={`font-mono text-code-title ${done}`}>{item.title}</span>
-    </button>
-  );
-}
-
-function TodoRow({ item }: { item: Item }) {
-  return (
-    <div id={`todo-${item.id}`}>
-      <TodoCheck item={item} />
-    </div>
-  );
-}
-
 function countPatch() {
   const left = items.filter((item) => !item.done).length;
   return patch.replace("#count", <>{`${left}/${items.length}`}</>);
 }
 
-export function list() {
+export function getTodoList() {
   items = seed();
   nextId = 3;
   return (
@@ -58,7 +26,7 @@ export function list() {
   );
 }
 
-export async function write(ctx: Ctx) {
+export async function postSubmitTodo(ctx: Ctx) {
   const data = await ctx.req.formData();
   const check = data.get("check");
   if (typeof check === "string") {
@@ -78,7 +46,7 @@ export async function write(ctx: Ctx) {
   if (typeof title !== "string" || title.trim() === "") {
     return [countPatch()];
   }
-  const item: Item = {
+  const item: TodoItem = {
     id: String(nextId++),
     title: title.trim(),
     done: false,

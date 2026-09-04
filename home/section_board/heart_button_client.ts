@@ -1,30 +1,32 @@
 customElements.define(
   "heart-button",
   class extends HTMLElement {
-    connectedCallback() {
-      this.addEventListener("click", this.#shoot);
-      this.addEventListener("keydown", this.#onKey);
-    }
+    #button: HTMLButtonElement | null = null;
 
-    disconnectedCallback() {
-      this.removeEventListener("click", this.#shoot);
-      this.removeEventListener("keydown", this.#onKey);
-    }
-
-    #onKey = (event: KeyboardEvent) => {
-      if (event.key !== "Enter" && event.key !== " ") {
-        return;
-      }
-      event.preventDefault();
+    #onClick = () => {
       this.#shoot();
     };
 
-    #shoot = () => {
-      const template = this.querySelector("template");
-      if (template === null) {
+    connectedCallback() {
+      const button = this.querySelector("button");
+      if (!(button instanceof HTMLButtonElement)) {
         return;
       }
-      const origin = this.getBoundingClientRect();
+      this.#button = button;
+      button.addEventListener("click", this.#onClick);
+    }
+
+    disconnectedCallback() {
+      this.#button?.removeEventListener("click", this.#onClick);
+      this.#button = null;
+    }
+
+    #shoot() {
+      const template = this.querySelector("template");
+      const origin = this.#button?.getBoundingClientRect();
+      if (template === null || origin === undefined) {
+        return;
+      }
       const x = origin.left + origin.width / 2;
       const y = origin.top + origin.height / 2;
       for (let i = 0; i < 10; i++) {
@@ -47,6 +49,6 @@ customElements.define(
         });
         setTimeout(() => heart.remove(), 750);
       }
-    };
+    }
   },
 );

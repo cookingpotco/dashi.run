@@ -3,7 +3,7 @@ import { Button } from "../components/mod.ts";
 
 const emails: string[] = [];
 
-export function Join() {
+export function getJoin() {
   return (
     <form
       method="POST"
@@ -29,7 +29,7 @@ export function Join() {
   );
 }
 
-export async function submit(ctx: Ctx) {
+export async function postSubmitJoinRequest(ctx: Ctx) {
   const data = await ctx.req.formData();
   const email = data.get("email");
   if (

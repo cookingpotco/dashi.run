@@ -1,8 +1,9 @@
 import { client } from "dashi";
 import { Button } from "../components/mod.ts";
 
-const NavCurrent = client.module(
-  new URL("./site_header_client.ts", import.meta.url),
+const NavLinkHost = client.element(
+  "nav-link",
+  new URL("./nav_link_client.ts", import.meta.url),
 );
 
 const social =
@@ -15,20 +16,21 @@ function NavLink(
   { href, label, current }: { href: string; label: string; current: boolean },
 ) {
   return (
-    <a
-      href={href}
-      className={navLink}
-      aria-current={current ? "page" : undefined}
-    >
-      {label}
-    </a>
+    <NavLinkHost>
+      <a
+        href={href}
+        className={navLink}
+        aria-current={current ? "page" : undefined}
+      >
+        {label}
+      </a>
+    </NavLinkHost>
   );
 }
 
 export function SiteHeader({ path }: { path: string }) {
   return (
     <header className="mx-auto w-full max-w-header px-4 py-4">
-      <NavCurrent />
       <div className="flex items-center justify-between border-black md:border-b-2 md:pb-4">
         <a href="/" className="block">
           <img
