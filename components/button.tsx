@@ -3,7 +3,6 @@ import type { HTMLAttributes } from "dashi/jsx-runtime";
 interface ButtonProps extends HTMLAttributes {
   success?: boolean;
   type?: "button" | "submit";
-  href?: string;
   name?: string;
   value?: string;
 }
@@ -15,15 +14,8 @@ function classes(success: boolean | undefined, className: string | undefined) {
 }
 
 export function Button(
-  { success, className, children, href, ...rest }: ButtonProps,
+  { success, className, children, ...rest }: ButtonProps,
 ) {
-  if (href !== undefined) {
-    return (
-      <a href={href} className={classes(success, className)}>
-        {children}
-      </a>
-    );
-  }
   return (
     <button className={classes(success, className)} {...rest}>
       {children}
