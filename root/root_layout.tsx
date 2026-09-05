@@ -6,7 +6,7 @@ import { SiteHeader } from "./site_header.tsx";
 
 export function RootLayout({ ctx, children }: LayoutArgs): Element {
   return (
-    <html className="min-h-screen overflow-x-hidden">
+    <html>
       <head>
         <meta charSet="utf-8" />
         <title>Dashi Web Framework</title>
@@ -29,7 +29,7 @@ export function RootLayout({ ctx, children }: LayoutArgs): Element {
       </head>
       <body className="flex min-h-screen flex-col overflow-x-hidden">
         <SiteHeader path={ctx.url.pathname} />
-        <NavigationRoot className="block flex-1">{children}</NavigationRoot>
+        <NavigationRoot className="block grow">{children}</NavigationRoot>
         <SiteFooter />
       </body>
     </html>
