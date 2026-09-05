@@ -15,7 +15,6 @@ interface SectionProps {
   left: DashiNode;
   right: DashiNode;
   equal?: boolean;
-  hug?: boolean;
   fill?: boolean;
   mark?: SectionMark;
 }
@@ -33,15 +32,10 @@ export function Section(
     left,
     right,
     equal,
-    hug,
     fill,
     mark = SectionMark.Arrow,
   }: SectionProps,
 ) {
-  let main = "w-full lg:min-w-0 lg:flex-1";
-  if (hug === true) {
-    main = "w-full lg:w-max lg:shrink-0";
-  }
   let aside =
     "flex w-full justify-center lg:w-auto lg:shrink-0 lg:self-stretch lg:items-center";
   if (equal === true) {
@@ -73,7 +67,7 @@ export function Section(
             {description}
           </p>
           <div className="flex flex-col items-center pt-3 lg:flex-row lg:items-center">
-            <div className={main}>{left}</div>
+            <div className="w-full lg:min-w-0 lg:flex-1">{left}</div>
             <p
               className={`flex shrink-0 items-center justify-center px-6 py-6 font-mono text-nav-link font-extrabold lg:py-0 ${
                 mark === SectionMark.Versus ? "" : "rotate-90 lg:rotate-0"
