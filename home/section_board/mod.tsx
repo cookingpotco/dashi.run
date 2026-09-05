@@ -65,7 +65,6 @@ export function SectionBoard() {
         rotate="-rotate-[1.2deg]"
         slide="left"
         top="lg:top-[29.625rem]"
-        equal
         mark={SectionMark.Versus}
         left={
           <Snippet
