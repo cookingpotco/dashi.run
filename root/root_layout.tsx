@@ -17,7 +17,6 @@ export function RootLayout({ ctx, children }: LayoutArgs<AppState>): Element {
   return (
     <html lang="en" className="overflow-x-hidden scrollbar-gutter-stable">
       <head>
-        <meta charSet="utf-8" />
         <title>{title}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         {description !== undefined && (
