@@ -166,7 +166,9 @@ write resets the submitting form. Client features assume the client runtime.
 A push to `main` deploys the GHCR image (`ghcr.io/cookingpotco/dashi.run:main`)
 through Compose on the VPS. CSS is built in CI and copied into that image. The
 published port is host loopback only. Email storage is the `/var/lib/dashi`
-bind-mount (`DASHI_KV_HOST`) and `DASHI_KV_PATH`. Root `deno.json` includes
+bind-mount (`DASHI_KV_HOST`) and `DASHI_KV_PATH`. `GET /emails` lists them
+behind Basic auth (`DASHI_EMAILS_USER` / `DASHI_EMAILS_PASSWORD`); unset
+credentials make that path 404. Root `deno.json` includes
 `kv` in `unstable` so `Deno.openKv` is available. `GET /health` is the compose
 probe (204, no layout). The probe uses `deno eval` with no permission flags;
 `eval` already has implicit permissions.

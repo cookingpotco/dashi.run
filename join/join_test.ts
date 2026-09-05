@@ -53,3 +53,40 @@ Deno.test({
     }
   },
 });
+
+Deno.test({
+  name: "GET /emails is a credentialed list of stored addresses",
+  async fn() {
+    Deno.env.delete("DASHI_EMAILS_USER");
+    Deno.env.delete("DASHI_EMAILS_PASSWORD");
+    const missing = await fetch(`${origin}/emails`);
+    await missing.body?.cancel();
+    if (missing.status !== 404) {
+      throw new Error(
+        `expected 404 without credentials, got ${missing.status}`,
+      );
+    }
+
+    Deno.env.set("DASHI_EMAILS_USER", "inbox");
+    Deno.env.set("DASHI_EMAILS_PASSWORD", "secret");
+    const unauthorized = await fetch(`${origin}/emails`);
+    await unauthorized.body?.cancel();
+    if (unauthorized.status !== 401) {
+      throw new Error(`expected 401, got ${unauthorized.status}`);
+    }
+
+    await postJoin("listed@example.com");
+    const authorized = await fetch(`${origin}/emails`, {
+      headers: {
+        authorization: `Basic ${btoa("inbox:secret")}`,
+      },
+    });
+    const body = await authorized.text();
+    if (authorized.status !== 200) {
+      throw new Error(`expected 200, got ${authorized.status}`);
+    }
+    if (!body.includes("listed@example.com")) {
+      throw new Error("missing stored email");
+    }
+  },
+});

@@ -2,6 +2,12 @@ import { patch, type ReadArgs, type WriteArgs } from "dashi";
 import { Button } from "../components/mod.ts";
 import type { AppState } from "../state.ts";
 
+function openEmailsKv() {
+  return Deno.openKv(
+    Deno.env.get("DASHI_KV_PATH") ?? `${import.meta.dirname}/.kv`,
+  );
+}
+
 export function getJoin({ html }: ReadArgs<{ state: AppState }>) {
   return html(
     <form
@@ -41,9 +47,7 @@ export async function postSubmitJoinRequest(
       patch.replace("#join", <Button type="submit">join</Button>),
     ]);
   }
-  const kv = await Deno.openKv(
-    Deno.env.get("DASHI_KV_PATH") ?? `${import.meta.dirname}/.kv`,
-  );
+  const kv = await openEmailsKv();
   try {
     await kv.set(["emails", email], { email, at: Date.now() });
   } finally {
@@ -52,4 +56,69 @@ export async function postSubmitJoinRequest(
   return patches([
     patch.replace("#join", <Button success type="submit">JOINED!</Button>),
   ]);
+}
+
+export async function getEmails({ ctx }: ReadArgs<{ state: AppState }>) {
+  const user = Deno.env.get("DASHI_EMAILS_USER");
+  const password = Deno.env.get("DASHI_EMAILS_PASSWORD");
+  if (
+    user === undefined || user === "" ||
+    password === undefined || password === ""
+  ) {
+    return new Response(null, { status: 404 });
+  }
+  const header = ctx.req.headers.get("authorization");
+  let permitted = false;
+  if (header !== null && header.startsWith("Basic ")) {
+    const decoded = atob(header.slice("Basic ".length));
+    const colon = decoded.indexOf(":");
+    if (
+      colon !== -1 &&
+      decoded.slice(0, colon) === user &&
+      decoded.slice(colon + 1) === password
+    ) {
+      permitted = true;
+    }
+  }
+  if (!permitted) {
+    return new Response(null, {
+      status: 401,
+      headers: {
+        "www-authenticate": 'Basic realm="emails"',
+        "cache-control": "no-store",
+      },
+    });
+  }
+  const kv = await openEmailsKv();
+  const lines: string[] = [];
+  try {
+    for await (const entry of kv.list({ prefix: ["emails"] })) {
+      const value = entry.value;
+      if (
+        value === null ||
+        typeof value !== "object" ||
+        !("email" in value) ||
+        typeof value.email !== "string"
+      ) {
+        continue;
+      }
+      if ("at" in value && typeof value.at === "number") {
+        lines.push(`${value.email}\t${new Date(value.at).toISOString()}`);
+      } else {
+        lines.push(value.email);
+      }
+    }
+  } finally {
+    kv.close();
+  }
+  lines.sort();
+  const body = lines.length === 0 ? "" : `${lines.join("\n")}\n`;
+  return new Response(body, {
+    status: 200,
+    headers: {
+      "content-type": "text/plain; charset=utf-8",
+      "cache-control": "no-store",
+      "x-robots-tag": "noindex",
+    },
+  });
 }

@@ -40,12 +40,15 @@ commit and push to roll back.
 
 On the box, not in the repo:
 
-| File                    | Keys                                                      |
-| ----------------------- | --------------------------------------------------------- |
-| `/etc/dashi/tunnel.env` | `TUNNEL_TOKEN`                                            |
-| `/opt/dashi.run/.env`   | `DASHI_KV_HOST=/var/lib/dashi`, `COMPOSE_PROFILES=tunnel` |
+| File                    | Keys                                                                                                    |
+| ----------------------- | ------------------------------------------------------------------------------------------------------- |
+| `/etc/dashi/tunnel.env` | `TUNNEL_TOKEN`                                                                                          |
+| `/opt/dashi.run/.env`   | `DASHI_KV_HOST=/var/lib/dashi`, `COMPOSE_PROFILES=tunnel`, `DASHI_EMAILS_USER`, `DASHI_EMAILS_PASSWORD` |
 
-The app reads `DASHI_KV_PATH` (set in the image to `/var/lib/dashi/kv`) and
+`GET /emails` is a Basic-auth list of join addresses (`text/plain`). Without
+those two keys the path is 404. Bookmark `https://dashi.run/emails`.
+
+The app also reads `DASHI_KV_PATH` (set in the image to `/var/lib/dashi/kv`) and
 `DASHI_MINIFY_CLIENT`. Repo secrets for the deploy job: `CF_ACCESS_CLIENT_ID`,
 `CF_ACCESS_CLIENT_SECRET`, `SSH_PRIVATE_KEY`, `CF_API_TOKEN`, `CF_ZONE_ID`.
 

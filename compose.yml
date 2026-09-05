@@ -6,6 +6,9 @@ services:
       - "127.0.0.1:8000:8000"
     volumes:
       - ${DASHI_KV_HOST:-./data}:/var/lib/dashi
+    environment:
+      DASHI_EMAILS_USER: ${DASHI_EMAILS_USER:-}
+      DASHI_EMAILS_PASSWORD: ${DASHI_EMAILS_PASSWORD:-}
     restart: unless-stopped
     healthcheck:
       test:
