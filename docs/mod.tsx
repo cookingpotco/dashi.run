@@ -1,7 +1,7 @@
 import type { ReadArgs } from "dashi";
 import { pageCache } from "../cache.ts";
 import { Button } from "../components/mod.ts";
-import type { AppState } from "../seo.ts";
+import type { AppState } from "../state.ts";
 
 export function getDocs({ html }: ReadArgs<Record<string, never>, AppState>) {
   return html(

@@ -61,8 +61,9 @@ Origin well-known crawl files live in `crawl/`, served by dedicated
 
 ## Page SEO
 
-Document title, description, and index flag live on `ctx.state.seo`
-(`seo.ts`). `RootLayout` emits title, description, canonical, robots,
+Document title, description, and index flag live on `ctx.state.seo`.
+`Seo` and the public origin live in `seo.ts`. `AppState` lives in
+`state.ts`. `RootLayout` emits title, description, canonical, robots,
 Open Graph, and X tags. Handlers set state; the layout does not.
 
 ## Styling

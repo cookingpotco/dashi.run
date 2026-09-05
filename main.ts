@@ -4,7 +4,7 @@ import { error, fatal, notFound } from "./errors.tsx";
 import { getHome } from "./home/mod.tsx";
 import { getJoin, postSubmitJoinRequest } from "./join/mod.tsx";
 import { RootLayout } from "./root/mod.ts";
-import type { AppState } from "./seo.ts";
+import type { AppState } from "./state.ts";
 import { getTodoList, postSubmitTodo } from "./todos/mod.tsx";
 import { users } from "./users/mod.tsx";
 

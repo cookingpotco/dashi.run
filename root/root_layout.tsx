@@ -1,6 +1,7 @@
 import { type LayoutArgs, NavigationRoot } from "dashi";
 import type { Element } from "dashi/jsx-runtime";
-import { type AppState, defaultTitle, siteOrigin } from "../seo.ts";
+import { defaultTitle, siteOrigin } from "../seo.ts";
+import type { AppState } from "../state.ts";
 import styles from "../styles.json" with { type: "json" };
 import { SiteFooter } from "./site_footer.tsx";
 import { SiteHeader } from "./site_header.tsx";

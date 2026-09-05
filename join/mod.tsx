@@ -1,6 +1,6 @@
 import { patch, type ReadArgs, type WriteArgs } from "dashi";
 import { Button } from "../components/mod.ts";
-import type { AppState } from "../seo.ts";
+import type { AppState } from "../state.ts";
 
 const emails: string[] = [];
 

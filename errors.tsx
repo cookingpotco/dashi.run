@@ -1,5 +1,5 @@
 import type { ErrorArgs, FatalArgs, NotFoundArgs } from "dashi";
-import type { AppState } from "./seo.ts";
+import type { AppState } from "./state.ts";
 
 export function notFound({ html }: NotFoundArgs<AppState>) {
   return html(

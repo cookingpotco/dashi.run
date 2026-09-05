@@ -6,7 +6,3 @@ export interface Seo {
   description: string;
   index: boolean;
 }
-
-export interface AppState extends Record<string, unknown> {
-  seo: Seo;
-}

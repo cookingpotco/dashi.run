@@ -1,5 +1,5 @@
 import { patch, type ReadArgs, type WriteArgs } from "dashi";
-import type { AppState } from "../seo.ts";
+import type { AppState } from "../state.ts";
 import { TodoCheck, type TodoItem, TodoRow } from "./item.tsx";
 
 function seed(): TodoItem[] {

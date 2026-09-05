@@ -1,7 +1,7 @@
 import { group, type ReadArgs } from "dashi";
 import { pageCache } from "../cache.ts";
 import { ProfileCard } from "../components/mod.ts";
-import type { AppState } from "../seo.ts";
+import type { AppState } from "../state.ts";
 import { UsersLayout } from "./users_layout.tsx";
 
 const enum ProfileName {

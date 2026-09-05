@@ -1,6 +1,6 @@
 import type { LayoutArgs } from "dashi";
 import type { Element } from "dashi/jsx-runtime";
-import type { AppState } from "../seo.ts";
+import type { AppState } from "../state.ts";
 
 const enum ProfileName {
   Jorji = "jorji",
