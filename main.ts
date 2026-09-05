@@ -14,35 +14,39 @@ const crawlCache = {
   maxAge: 3600,
 };
 
+type SiteBuild = Parameters<typeof serve<AppState>>[0];
+
+export const createSite: SiteBuild = ({ route }) => ({
+  layouts: [RootLayout],
+  notFound,
+  error,
+  routes: [
+    route("/", { GET: getHome }),
+    route("/docs", { GET: getDocs }),
+    route("/join", { GET: getJoin, POST: postSubmitJoinRequest }),
+    route("/todos", { GET: getTodoList, POST: postSubmitTodo }),
+    users,
+    route("/robots.txt", {
+      GET: ({ ctx }) => staticFile(ctx, crawlDir, "robots.txt", crawlCache),
+    }),
+    route("/sitemap.xml", {
+      GET: ({ ctx }) => staticFile(ctx, crawlDir, "sitemap.xml", crawlCache),
+    }),
+    route("/static/:file", {
+      GET: ({ ctx }) =>
+        staticFile(ctx, `${import.meta.dirname}/static`, ctx.params.file, {
+          strategy: CacheStrategy.Immutable,
+        }),
+    }),
+    route("/generated/:file", {
+      GET: ({ ctx }) =>
+        staticFile(ctx, `${import.meta.dirname}/generated`, ctx.params.file, {
+          strategy: CacheStrategy.Immutable,
+        }),
+    }),
+  ],
+});
+
 if (import.meta.main) {
-  serve<AppState>(({ route }) => ({
-    layouts: [RootLayout],
-    notFound,
-    error,
-    routes: [
-      route("/", { GET: getHome }),
-      route("/docs", { GET: getDocs }),
-      route("/join", { GET: getJoin, POST: postSubmitJoinRequest }),
-      route("/todos", { GET: getTodoList, POST: postSubmitTodo }),
-      users,
-      route("/robots.txt", {
-        GET: ({ ctx }) => staticFile(ctx, crawlDir, "robots.txt", crawlCache),
-      }),
-      route("/sitemap.xml", {
-        GET: ({ ctx }) => staticFile(ctx, crawlDir, "sitemap.xml", crawlCache),
-      }),
-      route("/static/:file", {
-        GET: ({ ctx }) =>
-          staticFile(ctx, `${import.meta.dirname}/static`, ctx.params.file, {
-            strategy: CacheStrategy.Immutable,
-          }),
-      }),
-      route("/generated/:file", {
-        GET: ({ ctx }) =>
-          staticFile(ctx, `${import.meta.dirname}/generated`, ctx.params.file, {
-            strategy: CacheStrategy.Immutable,
-          }),
-      }),
-    ],
-  }), { fatal });
+  serve(createSite, { fatal });
 }

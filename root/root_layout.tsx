@@ -63,9 +63,11 @@ export function RootLayout({ ctx, children }: LayoutArgs<AppState>): Element {
         />
         <link rel="stylesheet" href={styles.href} />
       </head>
-      <body className="flex min-h-screen flex-col">
+      <body className="flex min-h-screen flex-col overflow-x-hidden">
         <SiteHeader path={ctx.url.pathname} />
-        <NavigationRoot className="block grow">{children}</NavigationRoot>
+        <NavigationRoot className="flex grow flex-col">
+          {children}
+        </NavigationRoot>
         <SiteFooter />
       </body>
     </html>
