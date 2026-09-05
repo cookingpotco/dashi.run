@@ -9,7 +9,7 @@ export function getDocs({ html }: ReadArgs) {
         Coming soon
       </p>
       <p className="text-center text-body-small text-body-text lg:text-body">
-        For now, checkout the{" "}
+        For now, check out the{" "}
         <a
           href="https://github.com/cookingpotco/dashi"
           className="font-bold no-underline hover:underline"
