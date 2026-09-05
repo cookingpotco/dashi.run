@@ -18,7 +18,7 @@ function countPatch() {
 }
 
 export function getTodoList(
-  { html }: ReadArgs<Record<string, never>, AppState>,
+  { html }: ReadArgs<{ state: AppState }>,
 ) {
   items = seed();
   nextId = 3;
@@ -30,7 +30,7 @@ export function getTodoList(
 }
 
 export async function postSubmitTodo(
-  { ctx, patches }: WriteArgs<Record<string, never>, AppState>,
+  { ctx, patches }: WriteArgs<{ state: AppState }>,
 ) {
   const data = await ctx.req.formData();
   const check = data.get("check");

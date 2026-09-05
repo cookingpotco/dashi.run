@@ -36,7 +36,7 @@
     "dev": "deno run -A dev.ts"
   },
   "imports": {
-    "dashi": "jsr:@cookingpot/dashi@^0.11.0",
+    "dashi": "jsr:@cookingpot/dashi@^0.12.0",
     "tailwindcss": "npm:tailwindcss@4",
     "@tailwindcss/cli": "npm:@tailwindcss/cli@4"
   }

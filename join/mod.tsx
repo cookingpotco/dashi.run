@@ -4,7 +4,7 @@ import type { AppState } from "../state.ts";
 
 const emails: string[] = [];
 
-export function getJoin({ html }: ReadArgs<Record<string, never>, AppState>) {
+export function getJoin({ html }: ReadArgs<{ state: AppState }>) {
   return html(
     <form
       method="POST"
@@ -31,7 +31,7 @@ export function getJoin({ html }: ReadArgs<Record<string, never>, AppState>) {
 }
 
 export async function postSubmitJoinRequest(
-  { ctx, patches }: WriteArgs<Record<string, never>, AppState>,
+  { ctx, patches }: WriteArgs<{ state: AppState }>,
 ) {
   const data = await ctx.req.formData();
   const email = data.get("email");

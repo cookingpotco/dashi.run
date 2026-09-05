@@ -24,7 +24,7 @@ const profiles: Record<
 };
 
 export async function getProfile(
-  { ctx, html }: ReadArgs<{ name: string }, AppState>,
+  { ctx, html }: ReadArgs<{ state: AppState; params: { name: string } }>,
 ) {
   const name = ctx.params.name;
   if (name !== ProfileName.Jorji && name !== ProfileName.Duck) {

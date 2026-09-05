@@ -11,7 +11,7 @@ const FormValidity = client.element(
 );
 
 export function getHome(
-  { ctx, html }: ReadArgs<Record<string, never>, AppState>,
+  { ctx, html }: ReadArgs<{ state: AppState }>,
 ) {
   ctx.state.seo = {
     title: "Dashi — Modern framework built on old ideas",
