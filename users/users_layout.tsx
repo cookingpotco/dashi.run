@@ -1,5 +1,6 @@
 import type { LayoutArgs } from "dashi";
 import type { Element } from "dashi/jsx-runtime";
+import type { AppState } from "../state.ts";
 
 const enum ProfileName {
   Jorji = "jorji",
@@ -31,7 +32,7 @@ const copy: Record<ProfileName, ProfileCopy> = {
   },
 };
 
-export function UsersLayout({ ctx, children }: LayoutArgs): Element {
+export function UsersLayout({ ctx, children }: LayoutArgs<AppState>): Element {
   const name = ctx.params.name;
   if (name !== ProfileName.Jorji && name !== ProfileName.Duck) {
     return children;

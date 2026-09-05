@@ -1,9 +1,10 @@
 import { patch, type ReadArgs, type WriteArgs } from "dashi";
 import { Button } from "../components/mod.ts";
+import type { AppState } from "../state.ts";
 
 const emails: string[] = [];
 
-export function getJoin({ html }: ReadArgs) {
+export function getJoin({ html }: ReadArgs<Record<string, never>, AppState>) {
   return html(
     <form
       method="POST"
@@ -29,7 +30,9 @@ export function getJoin({ html }: ReadArgs) {
   );
 }
 
-export async function postSubmitJoinRequest({ ctx, patches }: WriteArgs) {
+export async function postSubmitJoinRequest(
+  { ctx, patches }: WriteArgs<Record<string, never>, AppState>,
+) {
   const data = await ctx.req.formData();
   const email = data.get("email");
   if (

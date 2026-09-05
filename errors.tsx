@@ -1,6 +1,7 @@
 import type { ErrorArgs, FatalArgs, NotFoundArgs } from "dashi";
+import type { AppState } from "./state.ts";
 
-export function notFound({ html }: NotFoundArgs) {
+export function notFound({ html }: NotFoundArgs<AppState>) {
   return html(
     <p>
       Page not found
@@ -8,7 +9,7 @@ export function notFound({ html }: NotFoundArgs) {
   );
 }
 
-export function error({ thrown, html }: ErrorArgs) {
+export function error({ thrown, html }: ErrorArgs<AppState>) {
   const message = thrown instanceof Error ? thrown.message : "Unknown error";
   return html(
     <p>
