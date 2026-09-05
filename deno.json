@@ -33,7 +33,8 @@
   "tasks": {
     "css": "deno run -A css.ts",
     "css:watch": "deno run -A css.ts --watch",
-    "dev": "deno run -A dev.ts"
+    "dev": "deno run -A dev.ts",
+    "test": "deno test -A"
   },
   "imports": {
     "dashi": "jsr:@cookingpot/dashi@^0.12.0",

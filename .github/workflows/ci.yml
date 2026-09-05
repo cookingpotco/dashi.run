@@ -1,6 +1,6 @@
 name: CI
 
-# Format, lint, and type-check. A violation of any of those goes red.
+# Format, lint, type-check, and test. A violation of any of those goes red.
 on:
   push:
     branches: [main]
@@ -49,3 +49,6 @@ jobs:
 
       - name: Type check
         run: deno check
+
+      - name: Test
+        run: deno task test

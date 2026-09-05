@@ -42,6 +42,16 @@
   --text-title-compact--font-weight: 800;
   --text-title-compact--letter-spacing: -0.025em;
 
+  --text-status: 3.75rem;
+  --text-status--line-height: 3.75rem;
+  --text-status--font-weight: 800;
+  --text-status--letter-spacing: 0em;
+
+  --text-status-compact: 2.25rem;
+  --text-status-compact--line-height: 2.25rem;
+  --text-status-compact--font-weight: 800;
+  --text-status-compact--letter-spacing: 0em;
+
   --text-heading-1: 1.5rem;
   --text-heading-1--line-height: 2rem;
   --text-heading-1--font-weight: 800;
