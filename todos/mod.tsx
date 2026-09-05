@@ -1,4 +1,5 @@
 import { patch, type ReadArgs, type WriteArgs } from "dashi";
+import type { AppState } from "../seo.ts";
 import { TodoCheck, type TodoItem, TodoRow } from "./item.tsx";
 
 function seed(): TodoItem[] {
@@ -16,7 +17,9 @@ function countPatch() {
   return patch.replace("#count", <>{`${left}/${items.length}`}</>);
 }
 
-export function getTodoList({ html }: ReadArgs) {
+export function getTodoList(
+  { html }: ReadArgs<Record<string, never>, AppState>,
+) {
   items = seed();
   nextId = 3;
   return html(
@@ -26,7 +29,9 @@ export function getTodoList({ html }: ReadArgs) {
   );
 }
 
-export async function postSubmitTodo({ ctx, patches }: WriteArgs) {
+export async function postSubmitTodo(
+  { ctx, patches }: WriteArgs<Record<string, never>, AppState>,
+) {
   const data = await ctx.req.formData();
   const check = data.get("check");
   if (typeof check === "string") {

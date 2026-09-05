@@ -1,6 +1,7 @@
 import { group, type ReadArgs } from "dashi";
 import { pageCache } from "../cache.ts";
 import { ProfileCard } from "../components/mod.ts";
+import type { AppState } from "../seo.ts";
 import { UsersLayout } from "./users_layout.tsx";
 
 const enum ProfileName {
@@ -22,7 +23,9 @@ const profiles: Record<
   },
 };
 
-export async function getProfile({ ctx, html }: ReadArgs<{ name: string }>) {
+export async function getProfile(
+  { ctx, html }: ReadArgs<{ name: string }, AppState>,
+) {
   const name = ctx.params.name;
   if (name !== ProfileName.Jorji && name !== ProfileName.Duck) {
     return html(<p>Page not found</p>, { status: 404 });
@@ -46,7 +49,7 @@ export async function getProfile({ ctx, html }: ReadArgs<{ name: string }>) {
   return html(card, { cache: pageCache });
 }
 
-export const users = group("/users", ({ route }) => ({
+export const users = group<AppState>("/users", ({ route }) => ({
   layouts: [UsersLayout],
   routes: [
     route("/:name", { GET: getProfile }),

@@ -1,8 +1,9 @@
 import type { ReadArgs } from "dashi";
 import { pageCache } from "../cache.ts";
 import { Button } from "../components/mod.ts";
+import type { AppState } from "../seo.ts";
 
-export function getDocs({ html }: ReadArgs) {
+export function getDocs({ html }: ReadArgs<Record<string, never>, AppState>) {
   return html(
     <main className="mx-auto flex w-full max-w-main flex-col items-center gap-6 px-4 py-8 lg:px-6 lg:pb-16">
       <p className="rotate-1 rounded-button border-2 border-black bg-yellow px-3 py-1 font-mono text-button uppercase shadow-regular">

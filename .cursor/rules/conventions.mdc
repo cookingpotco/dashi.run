@@ -53,6 +53,18 @@ cache policy to the caller's response, and leaves it reading the caller's
 route, and use `<RouteFragment src>` to include another route's rendered
 output.
 
+## Crawl files
+
+Origin well-known crawl files live in `crawl/`, served by dedicated
+`main.ts` routes at `/robots.txt` and `/sitemap.xml` with
+`CacheStrategy.Public`. Not under `/static/:file`, not Immutable.
+
+## Page SEO
+
+Document title, description, and index flag live on `ctx.state.seo`
+(`seo.ts`). `RootLayout` emits title, description, canonical, robots,
+Open Graph, and X tags. Handlers set state; the layout does not.
+
 ## Styling
 
 Tailwind v4 utilities go on `className`. There is no `class`, `tw`, or `css`
