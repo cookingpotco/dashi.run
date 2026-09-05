@@ -5,3 +5,4 @@ node_modules/
 .kv
 .kv-shm
 .kv-wal
+/data/

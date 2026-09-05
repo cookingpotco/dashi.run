@@ -12,14 +12,26 @@ deno task dev
 
 Open http://localhost:8000.
 
-`dev` builds the hashed stylesheet, watches it, and serves the app. `css` and
-`css:watch` are the CSS pipeline on their own. Do not use Compose on a laptop.
+`dev` is the watch loop: hashed stylesheet plus the app.
+
+To exercise the image you ship — healthcheck, loopback publish, KV mount — build
+CSS into the context, then Compose:
+
+```sh
+deno task css
+docker compose up --build
+```
+
+That does not start `cloudflared` and does not read a tunnel token. The tunnel
+profile is only for the VPS (`COMPOSE_PROFILES=tunnel` in
+`/opt/dashi.run/.env`).
 
 ## Deploy
 
 A merge to `main` (or a `workflow_dispatch` on `main`) is the deploy. CI builds
 CSS, pushes `ghcr.io/cookingpotco/dashi.run:main`, rsyncs `compose.yml` over
-Access SSH, and runs `docker compose pull && docker compose up -d --wait`.
+Access SSH, and runs `docker compose pull && docker compose up -d --wait` (the
+box `.env` enables the tunnel profile).
 
 A dashi bump is a PR that updates `deno.json` and the lockfile. Revert that
 commit and push to roll back.
@@ -28,9 +40,10 @@ commit and push to roll back.
 
 On the box, not in the repo:
 
-| File                    | Keys           |
-| ----------------------- | -------------- |
-| `/etc/dashi/tunnel.env` | `TUNNEL_TOKEN` |
+| File                    | Keys                                                      |
+| ----------------------- | --------------------------------------------------------- |
+| `/etc/dashi/tunnel.env` | `TUNNEL_TOKEN`                                            |
+| `/opt/dashi.run/.env`   | `DASHI_KV_HOST=/var/lib/dashi`, `COMPOSE_PROFILES=tunnel` |
 
 The app reads `DASHI_KV_PATH` (set in the image to `/var/lib/dashi/kv`) and
 `DASHI_MINIFY_CLIENT`. Repo secrets for the deploy job: `CF_ACCESS_CLIENT_ID`,
@@ -48,8 +61,9 @@ Once, before the first green `deploy` job:
 4. DNS: apex and `ssh` CNAME to `<tunnel-id>.cfargotunnel.com`. Single Redirect
    `www` → `https://dashi.run`.
 5. Access app on `ssh.dashi.run`, policy **Service Auth**, service token.
-6. `/opt/dashi.run/compose.yml`, `/etc/dashi/tunnel.env`, and
-   `/var/lib/dashi/kv` (a file owned by uid `1993`, the image user).
+6. `/opt/dashi.run/compose.yml`, `/opt/dashi.run/.env` (see above),
+   `/etc/dashi/tunnel.env`, and `/var/lib/dashi` (directory owned by uid
+   `1993`).
 7. The repo secrets above. GHCR push enabled; after the first image lands, set
    `ghcr.io/cookingpotco/dashi.run` public. Cloudflare Web Analytics automatic
    injection on the zone.

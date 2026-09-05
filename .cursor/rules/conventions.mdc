@@ -165,7 +165,13 @@ write resets the submitting form. Client features assume the client runtime.
 
 A push to `main` deploys the GHCR image (`ghcr.io/cookingpotco/dashi.run:main`)
 through Compose on the VPS. CSS is built in CI and copied into that image. The
-published port is host loopback only. Email storage is the `/var/lib/dashi/kv`
-bind-mount and `DASHI_KV_PATH`. Root `deno.json` includes `kv` in `unstable`
-so `Deno.openKv` is available. `GET /health` is the compose probe (204, no
-layout). Do not add a second host, a host-Deno unit, or a laptop deploy twin.
+published port is host loopback only. Email storage is the `/var/lib/dashi`
+bind-mount (`DASHI_KV_HOST`) and `DASHI_KV_PATH`. Root `deno.json` includes
+`kv` in `unstable` so `Deno.openKv` is available. `GET /health` is the compose
+probe (204, no layout).
+
+`deno task dev` is the watch loop. `docker compose up --build` is how you run
+that same image on a laptop (no tunnel profile, local `./data`). The box
+`.env` sets `COMPOSE_PROFILES=tunnel` and `DASHI_KV_HOST=/var/lib/dashi`. Do
+not point a laptop compose at production tokens. Do not add a second host or
+a host-Deno unit.

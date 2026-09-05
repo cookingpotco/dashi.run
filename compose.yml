@@ -1,10 +1,11 @@
 services:
   dashi:
+    build: .
     image: ghcr.io/cookingpotco/dashi.run:main
     ports:
       - "127.0.0.1:8000:8000"
     volumes:
-      - /var/lib/dashi/kv:/var/lib/dashi/kv
+      - ${DASHI_KV_HOST:-./data}:/var/lib/dashi
     restart: unless-stopped
     healthcheck:
       test:
@@ -21,9 +22,10 @@ services:
       start_period: 40s
 
   cloudflared:
+    profiles: [tunnel]
     image: cloudflare/cloudflared:2026.8.2
     network_mode: host
     env_file:
-      - /etc/dashi/tunnel.env
+      - ${TUNNEL_ENV:-/etc/dashi/tunnel.env}
     restart: unless-stopped
     command: tunnel --no-autoupdate run
