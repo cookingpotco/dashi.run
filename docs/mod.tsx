@@ -8,7 +8,6 @@ export function getDocs({ html }: ReadArgs) {
       <p className="rotate-1 rounded-button border-2 border-black bg-yellow px-3 py-1 font-mono text-button uppercase shadow-regular">
         Coming soon
       </p>
-      <h1 className="text-center text-title-compact lg:text-title">Docs</h1>
       <p className="text-center text-body-small text-body-text lg:text-body">
         For now, checkout the{" "}
         <a
