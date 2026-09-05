@@ -13,7 +13,6 @@ services:
           "CMD",
           "deno",
           "eval",
-          "--allow-net=127.0.0.1:8000",
           "const r = await fetch('http://127.0.0.1:8000/health'); if (r.status !== 204) Deno.exit(1);",
         ]
       interval: 10s
