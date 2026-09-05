@@ -5,7 +5,7 @@ export function SiteFooter() {
     <footer className="flex w-full flex-col items-center gap-4 p-4 md:flex-row md:justify-center md:gap-2">
       <div className="flex h-20 items-center gap-2 md:h-8">
         <img
-          src="/static/logo-icon-transp.svg"
+          src="/static/logo-icon-transp.png"
           alt=""
           width="42"
           height="32"

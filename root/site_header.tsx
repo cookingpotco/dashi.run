@@ -12,7 +12,7 @@ export function SiteHeader({ path }: { path: string }) {
       <div className="flex items-center justify-between border-black md:border-b-2 md:pb-4">
         <a href="/" className="block">
           <img
-            src="/static/logo-transp.svg"
+            src="/static/logo-transp.png"
             alt="dashi"
             width="114"
             height="42"
