@@ -26,6 +26,13 @@ export const createSite: SiteBuild = ({ route }) => ({
     route("/join", { GET: getJoin, POST: postSubmitJoinRequest }),
     route("/todos", { GET: getTodoList, POST: postSubmitTodo }),
     users,
+    route("/health", {
+      GET: () =>
+        new Response(null, {
+          status: 204,
+          headers: { "cache-control": "no-store" },
+        }),
+    }),
     route("/robots.txt", {
       GET: ({ ctx }) => staticFile(ctx, crawlDir, "robots.txt", crawlCache),
     }),
@@ -48,5 +55,5 @@ export const createSite: SiteBuild = ({ route }) => ({
 });
 
 if (import.meta.main) {
-  serve(createSite, { fatal });
+  serve(createSite, { fatal, hostname: "0.0.0.0", port: 8000 });
 }

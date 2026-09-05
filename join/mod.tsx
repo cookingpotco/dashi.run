@@ -2,8 +2,6 @@ import { patch, type ReadArgs, type WriteArgs } from "dashi";
 import { Button } from "../components/mod.ts";
 import type { AppState } from "../state.ts";
 
-const emails: string[] = [];
-
 export function getJoin({ html }: ReadArgs<{ state: AppState }>) {
   return html(
     <form
@@ -43,7 +41,14 @@ export async function postSubmitJoinRequest(
       patch.replace("#join", <Button type="submit">join</Button>),
     ]);
   }
-  emails.push(email);
+  const kv = await Deno.openKv(
+    Deno.env.get("DASHI_KV_PATH") ?? `${import.meta.dirname}/.kv`,
+  );
+  try {
+    await kv.set(["emails", email], { email, at: Date.now() });
+  } finally {
+    kv.close();
+  }
   return patches([
     patch.replace("#join", <Button success type="submit">JOINED!</Button>),
   ]);

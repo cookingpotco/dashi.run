@@ -2,3 +2,6 @@ styles.json
 generated/styles-*.css
 .deno/
 node_modules/
+.kv
+.kv-shm
+.kv-wal

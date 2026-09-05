@@ -1,0 +1,29 @@
+services:
+  dashi:
+    image: ghcr.io/cookingpotco/dashi.run:main
+    ports:
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - /var/lib/dashi/kv:/var/lib/dashi/kv
+    restart: unless-stopped
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "deno",
+          "eval",
+          "--allow-net=127.0.0.1:8000",
+          "const r = await fetch('http://127.0.0.1:8000/health'); if (r.status !== 204) Deno.exit(1);",
+        ]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 40s
+
+  cloudflared:
+    image: cloudflare/cloudflared:2026.8.2
+    network_mode: host
+    env_file:
+      - /etc/dashi/tunnel.env
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run

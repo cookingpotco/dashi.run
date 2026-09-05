@@ -4,7 +4,7 @@
     "jsxImportSource": "dashi",
     "lib": ["dom", "deno.ns", "deno.unstable"]
   },
-  "unstable": ["bundle", "no-legacy-abort"],
+  "unstable": ["bundle", "kv", "no-legacy-abort"],
   "nodeModulesDir": "auto",
   "minimumDependencyAge": {
     "age": "P1D",

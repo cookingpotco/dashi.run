@@ -45,6 +45,25 @@ async function get(path: string) {
 }
 
 Deno.test({
+  name: "GET /health returns 204 without chrome",
+  async fn() {
+    const { response, body } = await get("/health");
+    if (response.status !== 204) {
+      throw new Error(`expected 204, got ${response.status}`);
+    }
+    if (body !== "") {
+      throw new Error("health response was not empty");
+    }
+    if (body.includes("go home") || body.includes("Dashi")) {
+      throw new Error("health response included site chrome");
+    }
+    if (response.headers.get("cache-control") !== "no-store") {
+      throw new Error("health response was cacheable");
+    }
+  },
+});
+
+Deno.test({
   name: "a missing path returns the notFound page",
   async fn() {
     const { response, body } = await get("/no-such-page");
