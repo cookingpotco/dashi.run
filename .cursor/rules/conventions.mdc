@@ -175,7 +175,7 @@ probe (204, no layout). The probe uses `deno eval` with no permission flags;
 `eval` already has implicit permissions.
 
 `deno task dev` is the watch loop. `docker compose up --build` is how you run
-that same image on a laptop (no tunnel profile, local `./data`). The box
-`.env` sets `COMPOSE_PROFILES=tunnel` and `DASHI_KV_HOST=/var/lib/dashi`. Do
-not point a laptop compose at production tokens. Do not add a second host or
-a host-Deno unit.
+that same image on a laptop (local `./data`). The box `.env` sets
+`DASHI_KV_HOST=/var/lib/dashi`. `cloudflared` is a host systemd unit reading
+`/etc/dashi/tunnel.env`, so `compose down` does not drop Access SSH. Do not
+point a laptop compose at production tokens. Do not add a host-Deno unit.

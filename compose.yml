@@ -22,12 +22,3 @@ services:
       timeout: 3s
       retries: 5
       start_period: 40s
-
-  cloudflared:
-    profiles: [tunnel]
-    image: cloudflare/cloudflared:2026.8.2
-    network_mode: host
-    env_file:
-      - ${TUNNEL_ENV:-/etc/dashi/tunnel.env}
-    restart: unless-stopped
-    command: tunnel --no-autoupdate run

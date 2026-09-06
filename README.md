@@ -20,18 +20,14 @@ To exercise the image you ship — healthcheck, loopback publish, KV mount:
 docker compose up --build
 ```
 
-That does not start `cloudflared` and does not read a tunnel token. The tunnel
-profile is only for the VPS (`COMPOSE_PROFILES=tunnel` in
-`/opt/dashi.run/.env`).
-
 ## Deploy
 
 A merge to `main` is the deploy. After CI succeeds, the Deploy workflow builds
 the image (CSS in the Dockerfile), pushes `ghcr.io/cookingpotco/dashi.run:main`,
 rsyncs `compose.yml` over Access SSH, and runs
-`docker compose pull && docker compose up -d --wait` (the box `.env` enables the
-tunnel profile). `workflow_dispatch` on Deploy retries that without an empty
-commit.
+`docker compose pull && docker compose up -d --wait`. `workflow_dispatch` on
+Deploy retries that without an empty commit. The tunnel is a host systemd unit,
+not this Compose file.
 
 A dashi bump is a PR that updates `deno.json` and the lockfile. Revert that
 commit and push to roll back.
@@ -40,10 +36,10 @@ commit and push to roll back.
 
 On the box, not in the repo:
 
-| File                    | Keys                                                                                                    |
-| ----------------------- | ------------------------------------------------------------------------------------------------------- |
-| `/etc/dashi/tunnel.env` | `TUNNEL_TOKEN`                                                                                          |
-| `/opt/dashi.run/.env`   | `DASHI_KV_HOST=/var/lib/dashi`, `COMPOSE_PROFILES=tunnel`, `DASHI_EMAILS_USER`, `DASHI_EMAILS_PASSWORD` |
+| File                    | Keys                                                                         |
+| ----------------------- | ---------------------------------------------------------------------------- |
+| `/etc/dashi/tunnel.env` | `TUNNEL_TOKEN` (read by host `cloudflared`)                                  |
+| `/opt/dashi.run/.env`   | `DASHI_KV_HOST=/var/lib/dashi`, `DASHI_EMAILS_USER`, `DASHI_EMAILS_PASSWORD` |
 
 `GET /emails` is a Basic-auth list of join addresses (`text/plain`). Without
 those two keys the path is 404. Bookmark `https://dashi.run/emails`.
@@ -64,9 +60,10 @@ Once, before the first green `deploy` job:
 4. DNS: apex and `ssh` CNAME to `<tunnel-id>.cfargotunnel.com`. Single Redirect
    `www` → `https://dashi.run`.
 5. Access app on `ssh.dashi.run`, policy **Service Auth**, service token.
-6. `/opt/dashi.run/compose.yml`, `/opt/dashi.run/.env` (see above),
-   `/etc/dashi/tunnel.env`, and `/var/lib/dashi` (directory owned by uid
-   `1993`).
-7. The repo secrets above. GHCR push enabled; after the first image lands, set
+6. Host `cloudflared` 2026.8.2 as a systemd unit reading
+   `/etc/dashi/tunnel.env`. `systemctl enable --now cloudflared`.
+7. `/opt/dashi.run/compose.yml`, `/opt/dashi.run/.env` (see above), and
+   `/var/lib/dashi` (directory owned by uid `1993`).
+8. The repo secrets above. GHCR push enabled; after the first image lands, set
    `ghcr.io/cookingpotco/dashi.run` public. Cloudflare Web Analytics automatic
    injection on the zone.
