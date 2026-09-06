@@ -2,10 +2,13 @@ import { patch, type ReadArgs, type WriteArgs } from "dashi";
 import { Button } from "../components/mod.ts";
 import type { AppState } from "../state.ts";
 
+let emailsKv: Promise<Deno.Kv> | undefined;
+
 function openEmailsKv() {
-  return Deno.openKv(
+  emailsKv ??= Deno.openKv(
     Deno.env.get("DASHI_KV_PATH") ?? `${import.meta.dirname}/.kv`,
   );
+  return emailsKv;
 }
 
 export function getJoin({ html }: ReadArgs<{ state: AppState }>) {
@@ -48,11 +51,7 @@ export async function postSubmitJoinRequest(
     ]);
   }
   const kv = await openEmailsKv();
-  try {
-    await kv.set(["emails", email], { email, at: Date.now() });
-  } finally {
-    kv.close();
-  }
+  await kv.set(["emails", email], { email, at: Date.now() });
   return patches([
     patch.replace("#join", <Button success type="submit">JOINED!</Button>),
   ]);
@@ -91,25 +90,21 @@ export async function getEmails({ ctx }: ReadArgs<{ state: AppState }>) {
   }
   const kv = await openEmailsKv();
   const lines: string[] = [];
-  try {
-    for await (const entry of kv.list({ prefix: ["emails"] })) {
-      const value = entry.value;
-      if (
-        value === null ||
-        typeof value !== "object" ||
-        !("email" in value) ||
-        typeof value.email !== "string"
-      ) {
-        continue;
-      }
-      if ("at" in value && typeof value.at === "number") {
-        lines.push(`${value.email}\t${new Date(value.at).toISOString()}`);
-      } else {
-        lines.push(value.email);
-      }
+  for await (const entry of kv.list({ prefix: ["emails"] })) {
+    const value = entry.value;
+    if (
+      value === null ||
+      typeof value !== "object" ||
+      !("email" in value) ||
+      typeof value.email !== "string"
+    ) {
+      continue;
     }
-  } finally {
-    kv.close();
+    if ("at" in value && typeof value.at === "number") {
+      lines.push(`${value.email}\t${new Date(value.at).toISOString()}`);
+    } else {
+      lines.push(value.email);
+    }
   }
   lines.sort();
   const body = lines.length === 0 ? "" : `${lines.join("\n")}\n`;

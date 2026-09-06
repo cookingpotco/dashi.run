@@ -14,11 +14,9 @@ Open http://localhost:8000.
 
 `dev` is the watch loop: hashed stylesheet plus the app.
 
-To exercise the image you ship — healthcheck, loopback publish, KV mount — build
-CSS into the context, then Compose:
+To exercise the image you ship — healthcheck, loopback publish, KV mount:
 
 ```sh
-deno task css
 docker compose up --build
 ```
 
@@ -28,10 +26,12 @@ profile is only for the VPS (`COMPOSE_PROFILES=tunnel` in
 
 ## Deploy
 
-A merge to `main` (or a `workflow_dispatch` on `main`) is the deploy. CI builds
-CSS, pushes `ghcr.io/cookingpotco/dashi.run:main`, rsyncs `compose.yml` over
-Access SSH, and runs `docker compose pull && docker compose up -d --wait` (the
-box `.env` enables the tunnel profile).
+A merge to `main` is the deploy. After CI succeeds, the Deploy workflow builds
+the image (CSS in the Dockerfile), pushes `ghcr.io/cookingpotco/dashi.run:main`,
+rsyncs `compose.yml` over Access SSH, and runs
+`docker compose pull && docker compose up -d --wait` (the box `.env` enables the
+tunnel profile). `workflow_dispatch` on Deploy retries that without an empty
+commit.
 
 A dashi bump is a PR that updates `deno.json` and the lockfile. Revert that
 commit and push to roll back.

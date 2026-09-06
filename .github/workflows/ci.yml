@@ -5,7 +5,6 @@ on:
   push:
     branches: [main]
   pull_request:
-  workflow_dispatch:
 
 # PRs replace an in-flight run. A second push to main does not cancel.
 concurrency:
@@ -53,82 +52,3 @@ jobs:
 
       - name: Test
         run: deno task test
-
-  deploy:
-    needs: check
-    if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    permissions:
-      contents: read
-      packages: write
-    steps:
-      - uses: actions/checkout@v5
-
-      - uses: denoland/setup-deno@v2
-        with:
-          deno-version-file: .tool-versions
-
-      - uses: actions/cache@v5
-        with:
-          path: ${{ env.DENO_DIR }}
-          key: deno-${{ runner.os }}-${{ hashFiles('deno.lock') }}
-          restore-keys: |
-            deno-${{ runner.os }}-
-
-      - name: Install locked dependencies
-        run: deno ci
-
-      - name: Build CSS
-        run: deno task css
-
-      - uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - uses: docker/setup-buildx-action@v3
-
-      - uses: docker/build-push-action@v6
-        with:
-          context: .
-          push: true
-          tags: |
-            ghcr.io/cookingpotco/dashi.run:main
-            ghcr.io/cookingpotco/dashi.run:${{ github.sha }}
-
-      - name: Install cloudflared
-        # 2026.6.0 ignored Access service tokens and fell back to a browser prompt.
-        run: |
-          curl -fsSL -o /tmp/cloudflared.deb \
-            https://github.com/cloudflare/cloudflared/releases/download/2026.8.2/cloudflared-linux-amd64.deb
-          sudo dpkg -i /tmp/cloudflared.deb
-
-      - name: Deploy
-        env:
-          TUNNEL_SERVICE_TOKEN_ID: ${{ secrets.CF_ACCESS_CLIENT_ID }}
-          TUNNEL_SERVICE_TOKEN_SECRET: ${{ secrets.CF_ACCESS_CLIENT_SECRET }}
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        run: |
-          mkdir -p ~/.ssh
-          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
-          printf '%s\n' \
-            'Host ssh.dashi.run' \
-            '  User dashi' \
-            '  IdentityFile ~/.ssh/id_ed25519' \
-            '  ProxyCommand cloudflared access ssh --hostname %h' \
-            '  StrictHostKeyChecking accept-new' \
-            >> ~/.ssh/config
-          ssh dashi@ssh.dashi.run 'mkdir -p /opt/dashi.run'
-          rsync -az compose.yml dashi@ssh.dashi.run:/opt/dashi.run/
-          ssh dashi@ssh.dashi.run 'cd /opt/dashi.run && docker compose pull && docker compose up -d --wait'
-
-      - name: Purge Cloudflare cache
-        run: |
-          curl -fsS -X POST \
-            "https://api.cloudflare.com/client/v4/zones/${{ secrets.CF_ZONE_ID }}/purge_cache" \
-            -H "Authorization: Bearer ${{ secrets.CF_API_TOKEN }}" \
-            -H "Content-Type: application/json" \
-            --data '{"purge_everything":true}'

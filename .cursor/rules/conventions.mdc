@@ -164,7 +164,8 @@ write resets the submitting form. Client features assume the client runtime.
 ## Production
 
 A push to `main` deploys the GHCR image (`ghcr.io/cookingpotco/dashi.run:main`)
-through Compose on the VPS. CSS is built in CI and copied into that image. The
+through Compose on the VPS. CSS is built in the image (`deno task css` in the
+Dockerfile). The
 published port is host loopback only. Email storage is the `/var/lib/dashi`
 bind-mount (`DASHI_KV_HOST`) and `DASHI_KV_PATH`. `GET /emails` lists them
 behind Basic auth (`DASHI_EMAILS_USER` / `DASHI_EMAILS_PASSWORD`); unset
