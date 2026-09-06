@@ -95,4 +95,5 @@ The `dashi` import map is one key. Import `dashi` / `dashi/jsx-runtime` /
 `dashi/client` only. App dependencies are allowed here (Tailwind, later a
 markdown parser). Do not path-override `dashi` onto a framework checkout. Use
 the Cursor Cloud Agents **v1** REST API if you touch
-`scripts/review_followup.ts`; v1 rejects `branchName`.
+`scripts/review_followup.ts`; v1 rejects `branchName`. GitHub Actions pins are
+the current major of each action; check releases when you touch a workflow.

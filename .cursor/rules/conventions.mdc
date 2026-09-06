@@ -161,6 +161,13 @@ There is no per-element submit listener and no nearest-host targeting. GET
 navigates the page; a write goes through the registry. An applied patch-list
 write resets the submitting form. Client features assume the client runtime.
 
+## GitHub Actions
+
+Pin the current major of each action (`actions/checkout@v7`, not an older
+major). When you add or touch a workflow, check that action's releases page
+and bump every pin in the file that is behind. Do not copy majors from an
+older ticket.
+
 ## Production
 
 A push to `main` deploys the GHCR image (`ghcr.io/cookingpotco/dashi.run:main`)
