@@ -19,7 +19,7 @@ function ErrorWell({ code, message }: { code: string; message: string }) {
 
 export function notFound({ ctx, html }: NotFoundArgs<AppState>) {
   ctx.state.seo = {
-    title: "404 — Dashi",
+    title: "404 / Dashi",
     description: "That page isn't here.",
     index: false,
   };
@@ -28,7 +28,7 @@ export function notFound({ ctx, html }: NotFoundArgs<AppState>) {
 
 export function error({ ctx, html }: ErrorArgs<AppState>) {
   ctx.state.seo = {
-    title: "500 — Dashi",
+    title: "500 / Dashi",
     description: "Something went wrong.",
     index: false,
   };

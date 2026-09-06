@@ -14,7 +14,7 @@ export function getHome(
   { ctx, html }: ReadArgs<{ state: AppState }>,
 ) {
   ctx.state.seo = {
-    title: "Dashi — Modern framework built on old ideas",
+    title: "Dashi / Modern framework built on old ideas",
     description: heroSubtitle,
     index: true,
   };
