@@ -1,5 +1,7 @@
 import { CommandSnippet } from "../../components/mod.ts";
 
+export const heroSubtitle = "Built for fast, simple server-driven apps.";
+
 export function Hero() {
   return (
     <section className="flex w-full flex-col items-center gap-6 pb-8 md:pb-0">
@@ -20,8 +22,7 @@ export function Hero() {
         </span>
       </h1>
       <p className="max-w-xl pb-2 text-center text-body-small text-body-text md:max-w-none md:text-body">
-        Built for composable pages that drive precise updates through the
-        server.
+        {heroSubtitle}
       </p>
       <CommandSnippet
         id="install-command"
