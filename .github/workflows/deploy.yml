@@ -79,9 +79,9 @@ jobs:
             "https://api.cloudflare.com/client/v4/zones/${CF_ZONE_ID}/purge_cache" \
             -H "Authorization: Bearer ${CF_API_TOKEN}" \
             -H "Content-Type: application/json" \
-            --data '{"prefixes":["dashi.run/users","dashi.run/static"]}'
+            --data '{"prefixes":["dashi.run/docs","dashi.run/users","dashi.run/static"]}'
           curl -fsS -X POST \
             "https://api.cloudflare.com/client/v4/zones/${CF_ZONE_ID}/purge_cache" \
             -H "Authorization: Bearer ${CF_API_TOKEN}" \
             -H "Content-Type: application/json" \
-            --data '{"files":["https://dashi.run/","https://dashi.run/docs"]}'
+            --data '{"files":["https://dashi.run/"]}'
