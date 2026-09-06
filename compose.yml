@@ -1,0 +1,33 @@
+services:
+  dashi:
+    build: .
+    image: ghcr.io/cookingpotco/dashi.run:main
+    ports:
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - ${DASHI_KV_HOST:-./data}:/var/lib/dashi
+    environment:
+      DASHI_EMAILS_USER: ${DASHI_EMAILS_USER:-}
+      DASHI_EMAILS_PASSWORD: ${DASHI_EMAILS_PASSWORD:-}
+    restart: unless-stopped
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "deno",
+          "eval",
+          "const r = await fetch('http://127.0.0.1:8000/health'); if (r.status !== 204) Deno.exit(1);",
+        ]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 40s
+
+  cloudflared:
+    profiles: [tunnel]
+    image: cloudflare/cloudflared:2026.8.2
+    network_mode: host
+    env_file:
+      - ${TUNNEL_ENV:-/etc/dashi/tunnel.env}
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run

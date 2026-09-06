@@ -2,7 +2,7 @@ import { CacheStrategy, serve, staticFile } from "dashi";
 import { getDocs } from "./docs/mod.tsx";
 import { error, fatal, notFound } from "./errors.tsx";
 import { getHome } from "./home/mod.tsx";
-import { getJoin, postSubmitJoinRequest } from "./join/mod.tsx";
+import { getEmails, getJoin, postSubmitJoinRequest } from "./join/mod.tsx";
 import { RootLayout } from "./root/mod.ts";
 import type { AppState } from "./state.ts";
 import { getTodoList, postSubmitTodo } from "./todos/mod.tsx";
@@ -24,8 +24,16 @@ export const createSite: SiteBuild = ({ route }) => ({
     route("/", { GET: getHome }),
     route("/docs", { GET: getDocs }),
     route("/join", { GET: getJoin, POST: postSubmitJoinRequest }),
+    route("/emails", { GET: getEmails }),
     route("/todos", { GET: getTodoList, POST: postSubmitTodo }),
     users,
+    route("/health", {
+      GET: () =>
+        new Response(null, {
+          status: 204,
+          headers: { "cache-control": "no-store" },
+        }),
+    }),
     route("/robots.txt", {
       GET: ({ ctx }) => staticFile(ctx, crawlDir, "robots.txt", crawlCache),
     }),
@@ -48,5 +56,5 @@ export const createSite: SiteBuild = ({ route }) => ({
 });
 
 if (import.meta.main) {
-  serve(createSite, { fatal });
+  serve(createSite, { fatal, hostname: "0.0.0.0", port: 8000 });
 }

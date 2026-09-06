@@ -1,0 +1,87 @@
+name: Deploy
+
+# After CI succeeds on main, build the image and roll the VPS. Same shape as
+# dashi publish: a second workflow, not a job on CI.
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: docker/setup-buildx-action@v3
+
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: |
+            ghcr.io/cookingpotco/dashi.run:main
+            ghcr.io/cookingpotco/dashi.run:${{ github.event.workflow_run.head_sha || github.sha }}
+
+      - name: Install cloudflared
+        # 2026.6.0 ignored Access service tokens and fell back to a browser prompt.
+        run: |
+          curl -fsSL -o /tmp/cloudflared.deb \
+            https://github.com/cloudflare/cloudflared/releases/download/2026.8.2/cloudflared-linux-amd64.deb
+          sudo dpkg -i /tmp/cloudflared.deb
+
+      - name: Deploy
+        env:
+          TUNNEL_SERVICE_TOKEN_ID: ${{ secrets.CF_ACCESS_CLIENT_ID }}
+          TUNNEL_SERVICE_TOKEN_SECRET: ${{ secrets.CF_ACCESS_CLIENT_SECRET }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          printf '%s\n' \
+            'Host ssh.dashi.run' \
+            '  User dashi' \
+            '  IdentityFile ~/.ssh/id_ed25519' \
+            '  ProxyCommand cloudflared access ssh --hostname %h' \
+            '  StrictHostKeyChecking accept-new' \
+            >> ~/.ssh/config
+          ssh dashi@ssh.dashi.run 'mkdir -p /opt/dashi.run'
+          rsync -az compose.yml dashi@ssh.dashi.run:/opt/dashi.run/
+          ssh dashi@ssh.dashi.run 'cd /opt/dashi.run && docker compose pull && docker compose up -d --wait'
+
+      - name: Purge Cloudflare cache
+        env:
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CF_ZONE_ID: ${{ secrets.CF_ZONE_ID }}
+        run: |
+          # files and prefixes cannot share a body.
+          curl -fsS -X POST \
+            "https://api.cloudflare.com/client/v4/zones/${CF_ZONE_ID}/purge_cache" \
+            -H "Authorization: Bearer ${CF_API_TOKEN}" \
+            -H "Content-Type: application/json" \
+            --data '{"prefixes":["dashi.run/docs","dashi.run/users","dashi.run/static"]}'
+          curl -fsS -X POST \
+            "https://api.cloudflare.com/client/v4/zones/${CF_ZONE_ID}/purge_cache" \
+            -H "Authorization: Bearer ${CF_API_TOKEN}" \
+            -H "Content-Type: application/json" \
+            --data '{"files":["https://dashi.run/"]}'

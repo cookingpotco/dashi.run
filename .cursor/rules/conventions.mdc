@@ -160,3 +160,22 @@ imported by file. One document-level submit listener owns interception.
 There is no per-element submit listener and no nearest-host targeting. GET
 navigates the page; a write goes through the registry. An applied patch-list
 write resets the submitting form. Client features assume the client runtime.
+
+## Production
+
+A push to `main` deploys the GHCR image (`ghcr.io/cookingpotco/dashi.run:main`)
+through Compose on the VPS. CSS is built in the image (`deno task css` in the
+Dockerfile). The
+published port is host loopback only. Email storage is the `/var/lib/dashi`
+bind-mount (`DASHI_KV_HOST`) and `DASHI_KV_PATH`. `GET /emails` lists them
+behind Basic auth (`DASHI_EMAILS_USER` / `DASHI_EMAILS_PASSWORD`); unset
+credentials make that path 404. Root `deno.json` includes
+`kv` in `unstable` so `Deno.openKv` is available. `GET /health` is the compose
+probe (204, no layout). The probe uses `deno eval` with no permission flags;
+`eval` already has implicit permissions.
+
+`deno task dev` is the watch loop. `docker compose up --build` is how you run
+that same image on a laptop (no tunnel profile, local `./data`). The box
+`.env` sets `COMPOSE_PROFILES=tunnel` and `DASHI_KV_HOST=/var/lib/dashi`. Do
+not point a laptop compose at production tokens. Do not add a second host or
+a host-Deno unit.
