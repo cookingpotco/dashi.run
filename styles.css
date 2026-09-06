@@ -120,7 +120,8 @@ html {
 
 button,
 a,
-input {
+input,
+navigation-root {
   outline: none;
   -webkit-tap-highlight-color: transparent;
 }
