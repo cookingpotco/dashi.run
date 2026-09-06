@@ -2,7 +2,7 @@ import { client, type ReadArgs, RouteFragment } from "dashi";
 import { pageCache } from "../cache.ts";
 import type { AppState } from "../state.ts";
 import { Closer } from "./closer/mod.tsx";
-import { Hero } from "./hero/mod.tsx";
+import { Hero, heroSubtitle } from "./hero/mod.tsx";
 import { SectionBoard } from "./section_board/mod.tsx";
 
 const FormValidity = client.element(
@@ -15,8 +15,7 @@ export function getHome(
 ) {
   ctx.state.seo = {
     title: "Dashi — Modern framework built on old ideas",
-    description:
-      "Built for composable pages that drive precise updates through the server.",
+    description: heroSubtitle,
     index: true,
   };
   return html(
