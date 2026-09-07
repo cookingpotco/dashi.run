@@ -39,9 +39,7 @@ export async function postSubmitTodo(
     if (item === undefined) {
       return patches([countPatch()]);
     }
-    if (!item.done) {
-      item.done = true;
-    }
+    item.done = !item.done;
     return patches([
       patch.replace(`#todo-${item.id}`, <TodoCheck item={item} />),
       countPatch(),
