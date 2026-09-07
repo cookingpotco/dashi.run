@@ -1,7 +1,7 @@
 class PatchesForm extends HTMLElement {
   #onInput = (event: Event) => {
     const target = event.target;
-    if (!(target instanceof HTMLInputElement) || target.id !== "todo-title") {
+    if (!(target instanceof HTMLInputElement) || target.value === "") {
       return;
     }
     target.classList.remove("placeholder:text-error");

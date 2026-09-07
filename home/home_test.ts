@@ -48,14 +48,14 @@ Deno.test({
     if (form[0].includes("user-invalid")) {
       throw new Error("patches form still styles :user-invalid");
     }
-    const title = body.match(/id="todo-title"[^>]*>/);
+    const title = body.match(/name="title"[^>]*>/);
     if (title === null) {
-      throw new Error("missing todo-title input");
+      throw new Error("missing title input");
     }
     if (title[0].includes("required") || title[0].includes("user-invalid")) {
-      throw new Error("todo-title still uses native invalid styling");
+      throw new Error("title input still uses native invalid styling");
     }
-    if (!body.includes("<patches-form")) {
+    if (!body.includes('<patches-form id="todo-title"')) {
       throw new Error("missing patches-form host");
     }
   },
