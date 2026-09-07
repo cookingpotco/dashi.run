@@ -42,7 +42,7 @@ Deno.test({
     if (response.status !== 200) {
       throw new Error(`expected 200, got ${response.status}`);
     }
-    if (!body.includes("h-[14.125rem]")) {
+    if (!body.includes("h-[15.125rem]")) {
       throw new Error("patches form is not tall enough for four rows");
     }
     if (body.includes("h-[10.125rem]")) {
