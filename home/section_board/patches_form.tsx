@@ -25,7 +25,7 @@ export function PatchesForm() {
           />
         </div>
         <span id="count" className="pb-2 font-mono text-code-small">
-          2/2
+          1/2
         </span>
       </div>
     </form>

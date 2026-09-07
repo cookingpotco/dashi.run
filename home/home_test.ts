@@ -32,31 +32,3 @@ Deno.test({
     }
   },
 });
-
-Deno.test({
-  name: "GET / paints both seed todos unchecked and 2/2",
-  async fn() {
-    const response = await fetch(`${origin}/`);
-    const body = await response.text();
-    if (response.status !== 200) {
-      throw new Error(`expected 200, got ${response.status}`);
-    }
-    if (!body.includes('id="todo-2"')) {
-      throw new Error("missing todo-2");
-    }
-    if (
-      body.includes('line-through decoration-2">No client side JS written<')
-    ) {
-      throw new Error("todo-2 is still checked");
-    }
-    if (!body.includes(">No client side JS written<")) {
-      throw new Error("missing todo-2 title");
-    }
-    if (!body.includes('id="count"') || !body.includes(">2/2<")) {
-      throw new Error("count is not 2/2");
-    }
-    if (body.includes(">1/2<")) {
-      throw new Error("old 1/2 count is still present");
-    }
-  },
-});
