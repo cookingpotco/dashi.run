@@ -4,6 +4,21 @@ export interface TodoItem {
   done: boolean;
 }
 
+export function TodoTitle({ error }: { error?: boolean }) {
+  let placeholder = "placeholder:text-black";
+  if (error === true) {
+    placeholder = "placeholder:text-error";
+  }
+  return (
+    <input
+      id="todo-title"
+      name="title"
+      placeholder="Something to do..."
+      className={`min-w-0 flex-1 cursor-text bg-transparent font-mono text-code-title outline-none ${placeholder}`}
+    />
+  );
+}
+
 export function TodoCheck({ item }: { item: TodoItem }) {
   const mark = item.done ? "bg-green" : "bg-transparent";
   const done = item.done ? "line-through decoration-2" : "";
