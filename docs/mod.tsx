@@ -1,11 +1,14 @@
-import type { ReadArgs } from "dashi";
+import { group, type ReadArgs } from "dashi";
 import { pageCache } from "../cache.ts";
 import { Button } from "../components/mod.ts";
+import { NotFound } from "../errors.tsx";
 import type { AppState } from "../state.ts";
+import { getArticleBySlug } from "./articles.ts";
+import { DocsLayout } from "./docs_layout.tsx";
 
 export function getDocs({ html }: ReadArgs<{ state: AppState }>) {
   return html(
-    <main className="mx-auto flex w-full max-w-main flex-col items-center gap-6 px-4 py-8 lg:px-6 lg:pb-16">
+    <main className="mx-auto flex w-full max-w-main flex-col items-center gap-6 py-8 lg:pb-16">
       <p className="rotate-1 rounded-button border-2 border-black bg-yellow px-3 py-1 font-mono text-button uppercase shadow-regular">
         Coming soon
       </p>
@@ -26,3 +29,35 @@ export function getDocs({ html }: ReadArgs<{ state: AppState }>) {
     { cache: pageCache },
   );
 }
+
+export function getArticle(
+  { ctx, html }: ReadArgs<{ state: AppState; params: { slug: string } }>,
+) {
+  const article = getArticleBySlug(ctx.params.slug);
+  if (article === undefined) {
+    ctx.state.seo = {
+      title: "404 / Dashi",
+      description: "That page isn't here.",
+      index: false,
+    };
+    return html(<NotFound />, { status: 404 });
+  }
+  ctx.state.seo = {
+    title: `${article.title} / Docs / Dashi`,
+    description: `${article.title} in the Dashi handbook.`,
+    index: false,
+  };
+  return html(
+    <>
+      {article.nodes}
+    </>,
+    { cache: pageCache },
+  );
+}
+
+export const docsArticles = group<AppState>("/docs", ({ route }) => ({
+  layouts: [DocsLayout],
+  routes: [
+    route("/:slug", { GET: getArticle }),
+  ],
+}));

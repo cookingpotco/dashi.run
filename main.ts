@@ -1,5 +1,5 @@
 import { CacheStrategy, serve, staticFile } from "dashi";
-import { getDocs } from "./docs/mod.tsx";
+import { docsArticles, getDocs } from "./docs/mod.tsx";
 import { error, fatal, notFound } from "./errors.tsx";
 import { getHome } from "./home/mod.tsx";
 import { getEmails, getJoin, postSubmitJoinRequest } from "./join/mod.tsx";
@@ -23,6 +23,7 @@ export const createSite: SiteBuild = ({ route }) => ({
   routes: [
     route("/", { GET: getHome }),
     route("/docs", { GET: getDocs }),
+    docsArticles,
     route("/join", { GET: getJoin, POST: postSubmitJoinRequest }),
     route("/emails", { GET: getEmails }),
     route("/todos", { GET: getTodoList, POST: postSubmitTodo }),

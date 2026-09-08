@@ -5,7 +5,7 @@ import styles from "./styles.json" with { type: "json" };
 
 function ErrorWell({ code, message }: { code: string; message: string }) {
   return (
-    <main className="mx-auto flex w-full max-w-main flex-1 flex-col items-center justify-center gap-6 px-4 py-8 lg:px-6 lg:pb-16">
+    <main className="mx-auto flex w-full max-w-main flex-1 flex-col items-center justify-center gap-6 py-8 lg:pb-16">
       <p className="font-mono text-status-compact lg:text-status">{code}</p>
       <p className="text-center text-body-small text-body-text lg:text-body">
         {message}

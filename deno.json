@@ -37,6 +37,7 @@
   },
   "imports": {
     "dashi": "jsr:@cookingpot/dashi@^0.12.2",
+    "marked": "npm:marked@^18.0.12",
     "tailwindcss": "npm:tailwindcss@4",
     "@tailwindcss/cli": "npm:@tailwindcss/cli@4"
   }

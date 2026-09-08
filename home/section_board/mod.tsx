@@ -1,9 +1,13 @@
 import { client, RouteFragment } from "dashi";
-import { LoadingCard } from "../../components/mod.ts";
+import {
+  LoadingCard,
+  Snippet,
+  SnippetStack,
+  SnippetTone,
+} from "../../components/mod.ts";
 import { HeartButton } from "./heart_button.tsx";
 import { PatchesForm } from "./patches_form.tsx";
 import { Section, SectionMark } from "./section.tsx";
-import { Snippet, SnippetStack, SnippetTone } from "./snippet.tsx";
 
 const Host = client.element(
   "section-board",
@@ -33,6 +37,7 @@ export function SectionBoard() {
           <Snippet
             title="component.tsx"
             tone={SnippetTone.Pink}
+            copyId="home-snippet-component"
             code={`export function Hello() {
   return (
     <div className="greeting">
@@ -46,6 +51,7 @@ export function SectionBoard() {
           <Snippet
             title="output.html"
             tone={SnippetTone.Green}
+            copyId="home-snippet-output"
             code={`<div class="greeting">
   <h1>Hello, World</h1>
 </div>`}
@@ -70,6 +76,7 @@ export function SectionBoard() {
           <Snippet
             title="page.tsx"
             tone={SnippetTone.Green}
+            copyId="home-snippet-page"
             code={`export function getPage({ html }): Response {
   return html(
     <main>
@@ -83,6 +90,7 @@ export function SectionBoard() {
           <Snippet
             title="jsonEndpoint.ts"
             tone={SnippetTone.Pink}
+            copyId="home-snippet-json"
             code={`export function getJson(): Response {
   return Response.json({ ok: true });
 }`}
@@ -101,6 +109,7 @@ export function SectionBoard() {
             <Snippet
               title="userRoute.tsx"
               tone={SnippetTone.Pink}
+              copyId="home-snippet-user-route"
               code={`export async function UserProfile({ ctx, html }) {
   const user = await service.getUser(ctx);
   return html(
@@ -111,6 +120,7 @@ export function SectionBoard() {
             <Snippet
               title="home.tsx"
               tone={SnippetTone.Green}
+              copyId="home-snippet-home"
               code={`<RouteFragment src="/users/USER_ID" />
 <RouteFragment src="/users/USER_ID" lazy />`}
             />
@@ -139,6 +149,7 @@ export function SectionBoard() {
           <Snippet
             title="postTodo.tsx"
             tone={SnippetTone.Pink}
+            copyId="home-snippet-post-todo"
             code={`export async function addTodo({ ctx, patches }) {
   const { todo } = ctx.state;
   const count = await service.addTodo(todo);
@@ -163,6 +174,7 @@ export function SectionBoard() {
             <Snippet
               title="page.tsx"
               tone={SnippetTone.Pink}
+              copyId="home-snippet-client-page"
               code={`const HeartButton = client.element("heart-button", new URL(...));
 export function Page() {
 ...
@@ -173,6 +185,7 @@ export function Page() {
             <Snippet
               title="heart_client.ts"
               tone={SnippetTone.Green}
+              copyId="home-snippet-heart-client"
               code={`// Native custom elements!
 customElements.define(
   "heart-button",

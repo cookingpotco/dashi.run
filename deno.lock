@@ -3,6 +3,7 @@
   "specifiers": {
     "jsr:@cookingpot/dashi@~0.12.2": "0.12.2",
     "npm:@tailwindcss/cli@4": "4.3.3",
+    "npm:marked@^18.0.12": "18.0.12",
     "npm:tailwindcss@4": "4.3.3"
   },
   "jsr": {
@@ -354,6 +355,10 @@
         "@jridgewell/sourcemap-codec"
       ]
     },
+    "marked@18.0.12": {
+      "integrity": "sha512-LEm4ga2YeI2T3GVHj9b0BaDPPk93LLTHMFeMyQbNIzPxc8vCI0y/scy0ZA6z6lXKyT9j9Nhl/OC6ZYKYGuFScA==",
+      "bin": true
+    },
     "micromatch@4.0.8": {
       "integrity": "sha512-PXwfBhYu0hBCPw8Dn0E+WDYb7af3dSLVWKi3HGv84IdF4TyFoC0ysxFd0Goxw7nSv4T/PzEJQxsYsEiFCKo2BA==",
       "dependencies": [
@@ -393,6 +398,7 @@
     "dependencies": [
       "jsr:@cookingpot/dashi@~0.12.2",
       "npm:@tailwindcss/cli@4",
+      "npm:marked@^18.0.12",
       "npm:tailwindcss@4"
     ]
   }
