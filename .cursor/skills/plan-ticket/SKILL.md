@@ -78,8 +78,8 @@ stop: tell the human rather than silently substituting another issue.
 - **Figma is local.** Cloud Agents cannot open the file. Design tickets and
   tickets that must match a Figma file run in a local session with `use-figma`
   and `.cursor/rules/figma.mdc`. Do not `@Cursor` them.
-- **Do not plan tests.** Follow **Tests** in `AGENTS.md`. Do not add or extend
-  tests until we decide how they should work.
+- **Do not plan tests.** Follow **Tests** in `AGENTS.md`. This repo has no tests
+  until we define how they work.
 - **Prefer the simpler design**, even when it repeats. If a bit extra work could
   simplify this or additional areas, consider it as well.
 - **Conventions.** Agents already follow `.cursor/rules/conventions.mdc`.
