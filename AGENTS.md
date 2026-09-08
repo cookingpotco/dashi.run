@@ -28,30 +28,8 @@ finish.
 
 ## Tests
 
-This scaffold has none. When behaviour exists, cover it at the layer that
-actually runs:
-
-- HTTP (status, headers, HTML bytes / parsed response): in this repo
-- Live DOM after JS (custom element upgrade, fetch, swap, History): e2e only if
-  client JS exists
-
-**The path that happens.** Drive real inputs through the public surface a user
-hits. Do not stub, mock, or stand up a narrower entry point to approximate a
-flow whose natural test is further out. If that outer layer is HTTP, add a case
-here. If that outer layer is the live document after JS, add e2e. Do not invent
-a second harness. Do not export a private helper so a unit test can import it.
-
-**Don't test what never happens.** A situation the product never produces is not
-coverage.
-
-**One flow per test.** Cover as much of that flow as will hold. Several asserts
-on one input are right; running the same input again for each detail of the
-output is not. Unrelated flows stay in separate tests so a failure names the
-path and an early assert cannot hide another.
-
-**Black-box.** Assert on what a caller sees (HTML, an HTTP response, a thrown
-error). Constructing a `Request` or `Ctx` to call a route handler is a narrower
-entry point; if the user hits it over HTTP, the case belongs in an HTTP test.
+Do not add tests in this repo until we decide how they should work. Existing
+`*_test.ts` files stay; do not extend them and do not add new ones.
 
 ## Simpler
 
