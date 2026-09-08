@@ -31,8 +31,8 @@ If you hit a failure that is not yours, quarantine it so CI stays green, as
 narrowly as possible and naming the issue that owns it. Do not fix unrelated
 failures you did not cause.
 
-The change is covered by tests when behaviour exists, following **Tests** in
-`AGENTS.md`. Dead code, debug output and commented-out experiments are gone.
+Do not add or extend tests. Follow **Tests** in `AGENTS.md`. Dead code, debug
+output and commented-out experiments are gone.
 
 The change does not add a second way to do something the repo already does. No
 alias props, no twin types, no parallel pattern. Follow **One way** in
