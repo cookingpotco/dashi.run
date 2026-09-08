@@ -28,8 +28,8 @@ finish.
 
 ## Tests
 
-Do not add tests in this repo until we decide how they should work. Existing
-`*_test.ts` files stay; do not extend them and do not add new ones.
+This repo has no tests until we define how they work. Do not add `*_test.ts`,
+e2e suites, or a `test` task. Do not plan or ship coverage here.
 
 ## Simpler
 
