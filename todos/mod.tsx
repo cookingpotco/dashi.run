@@ -1,6 +1,8 @@
 import { patch, type ReadArgs, type WriteArgs } from "dashi";
 import type { AppState } from "../state.ts";
-import { TodoCheck, type TodoItem, TodoRow } from "./item.tsx";
+import { TodoCheck, type TodoItem, TodoRow, TodoTitle } from "./item.tsx";
+
+export { TodoTitle } from "./item.tsx";
 
 function seed(): TodoItem[] {
   return [
@@ -47,7 +49,10 @@ export async function postSubmitTodo(
   }
   const title = data.get("title");
   if (typeof title !== "string" || title.trim() === "") {
-    return patches([countPatch()]);
+    return patches([
+      patch.replace("#todo-title", <TodoTitle error />),
+      countPatch(),
+    ]);
   }
   const item: TodoItem = {
     id: String(nextId++),
@@ -57,6 +62,7 @@ export async function postSubmitTodo(
   items.push(item);
   return patches([
     patch.append("/todos", <TodoRow item={item} />),
+    patch.replace("#todo-title", <TodoTitle />),
     countPatch(),
   ]);
 }

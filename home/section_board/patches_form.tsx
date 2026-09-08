@@ -1,5 +1,11 @@
 import { client, RouteFragment } from "dashi";
 import { Button } from "../../components/mod.ts";
+import { TodoTitle } from "../../todos/mod.tsx";
+
+const PatchesFormHost = client.element(
+  "patches-form",
+  new URL("./patches_form_client.ts", import.meta.url),
+);
 
 const ListPane = client.element(
   "patches-list",
@@ -11,15 +17,12 @@ export function PatchesForm() {
     <form
       method="POST"
       action="/todos"
-      className="flex h-[15.125rem] w-full flex-col overflow-hidden rounded-card border-2 border-black bg-code-background has-[:user-invalid]:border-error lg:absolute lg:inset-0 lg:h-auto"
+      className="flex h-[15.125rem] w-full flex-col overflow-hidden rounded-card border-2 border-black bg-code-background lg:absolute lg:inset-0 lg:h-auto"
     >
       <div className="flex items-center justify-between gap-2 border-b border-black bg-blue px-4 py-3">
-        <input
-          name="title"
-          required
-          placeholder="Something to do..."
-          className="min-w-0 flex-1 cursor-text bg-transparent font-mono text-code-title outline-none placeholder:text-black user-invalid:text-error"
-        />
+        <PatchesFormHost id="todo-title" className="contents">
+          <TodoTitle />
+        </PatchesFormHost>
         <Button type="submit">ADD</Button>
       </div>
       <div className="flex min-h-0 flex-1 flex-col items-end px-4">
