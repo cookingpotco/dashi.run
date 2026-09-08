@@ -1,6 +1,7 @@
 import { group, type ReadArgs } from "dashi";
 import { pageCache } from "../cache.ts";
 import { ProfileCard } from "../components/mod.ts";
+import { NotFound } from "../errors.tsx";
 import type { AppState } from "../state.ts";
 import { UsersLayout } from "./users_layout.tsx";
 
@@ -28,7 +29,12 @@ export async function getProfile(
 ) {
   const name = ctx.params.name;
   if (name !== ProfileName.Jorji && name !== ProfileName.Duck) {
-    return html(<p>Page not found</p>, { status: 404 });
+    ctx.state.seo = {
+      title: "404 / Dashi",
+      description: "That page isn't here.",
+      index: false,
+    };
+    return html(<NotFound />, { status: 404 });
   }
   if (name === ProfileName.Duck && ctx.isFragment) {
     await new Promise((resolve) => setTimeout(resolve, 3000));
