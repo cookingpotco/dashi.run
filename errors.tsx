@@ -17,13 +17,17 @@ function ErrorWell({ code, message }: { code: string; message: string }) {
   );
 }
 
+export function NotFound() {
+  return <ErrorWell code="404" message="That page isn't here." />;
+}
+
 export function notFound({ ctx, html }: NotFoundArgs<AppState>) {
   ctx.state.seo = {
     title: "404 / Dashi",
     description: "That page isn't here.",
     index: false,
   };
-  return html(<ErrorWell code="404" message="That page isn't here." />);
+  return html(<NotFound />, { status: 404 });
 }
 
 export function error({ ctx, html }: ErrorArgs<AppState>) {

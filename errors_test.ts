@@ -44,24 +44,36 @@ async function get(path: string) {
   return { response, body };
 }
 
+function assertNotFoundPage(response: Response, body: string) {
+  if (response.status !== 404) {
+    throw new Error(`expected 404, got ${response.status}`);
+  }
+  if (
+    !body.includes(">404<") || !body.includes("That page isn&#39;t here.")
+  ) {
+    throw new Error("missing notFound copy");
+  }
+  if (!body.includes("go home") || !body.includes("get started")) {
+    throw new Error("missing notFound chrome");
+  }
+  if (!body.includes("© 2026 Cooking Pot Co.")) {
+    throw new Error("missing site footer");
+  }
+}
+
 Deno.test({
   name: "a missing path returns the notFound page",
   async fn() {
     const { response, body } = await get("/no-such-page");
-    if (response.status !== 404) {
-      throw new Error(`expected 404, got ${response.status}`);
-    }
-    if (
-      !body.includes(">404<") || !body.includes("That page isn&#39;t here.")
-    ) {
-      throw new Error("missing notFound copy");
-    }
-    if (!body.includes("go home") || !body.includes("get started")) {
-      throw new Error("missing notFound chrome");
-    }
-    if (!body.includes("© 2026 Cooking Pot Co.")) {
-      throw new Error("missing site footer");
-    }
+    assertNotFoundPage(response, body);
+  },
+});
+
+Deno.test({
+  name: "an unknown user returns the notFound page",
+  async fn() {
+    const { response, body } = await get("/users/nope");
+    assertNotFoundPage(response, body);
   },
 });
 
