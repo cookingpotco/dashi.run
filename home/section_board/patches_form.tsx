@@ -2,7 +2,7 @@ import { client, RouteFragment } from "dashi";
 import { Button } from "../../components/mod.ts";
 import { TodoTitle } from "../../todos/mod.tsx";
 
-const Host = client.element(
+const PatchesFormHost = client.element(
   "patches-form",
   new URL("./patches_form_client.ts", import.meta.url),
 );
@@ -15,9 +15,9 @@ export function PatchesForm() {
       className="flex h-[10.125rem] w-full flex-col overflow-hidden rounded-card border-2 border-black bg-code-background lg:absolute lg:inset-0 lg:h-auto"
     >
       <div className="flex items-center justify-between gap-2 border-b border-black bg-blue px-4 py-3">
-        <Host id="todo-title" className="contents">
+        <PatchesFormHost id="todo-title" className="contents">
           <TodoTitle />
-        </Host>
+        </PatchesFormHost>
         <Button type="submit">ADD</Button>
       </div>
       <div className="flex min-h-0 flex-1 flex-col items-end px-4">

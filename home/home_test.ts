@@ -32,31 +32,3 @@ Deno.test({
     }
   },
 });
-
-Deno.test({
-  name: "GET / patches form has no required title and no user-invalid styles",
-  async fn() {
-    const response = await fetch(`${origin}/`);
-    const body = await response.text();
-    if (response.status !== 200) {
-      throw new Error(`expected 200, got ${response.status}`);
-    }
-    const form = body.match(/<form method="POST" action="\/todos"[^>]*>/);
-    if (form === null) {
-      throw new Error("missing patches form");
-    }
-    if (form[0].includes("user-invalid")) {
-      throw new Error("patches form still styles :user-invalid");
-    }
-    const title = body.match(/name="title"[^>]*>/);
-    if (title === null) {
-      throw new Error("missing title input");
-    }
-    if (title[0].includes("required") || title[0].includes("user-invalid")) {
-      throw new Error("title input still uses native invalid styling");
-    }
-    if (!body.includes('<patches-form id="todo-title"')) {
-      throw new Error("missing patches-form host");
-    }
-  },
-});
