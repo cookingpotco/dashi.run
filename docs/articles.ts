@@ -3,7 +3,6 @@ import clientJs from "./content/client-js.md" with { type: "text" };
 import patches from "./content/patches.md" with { type: "text" };
 import routing from "./content/routing.md" with { type: "text" };
 import { type ArticleHash, parseMarkdown } from "./parse.tsx";
-import type { Element } from "dashi/jsx-runtime";
 
 interface ArticleRow {
   slug: string;
@@ -27,7 +26,7 @@ export interface Article {
   navTitle: string;
   title: string;
   hashes: ArticleHash[];
-  nodes: Element[];
+  markdown: string;
 }
 
 let articles: Article[] | undefined;
@@ -44,7 +43,7 @@ function loadArticles(): Article[] {
       navTitle: row.navTitle,
       title: parsed.title,
       hashes: parsed.hashes,
-      nodes: parsed.nodes,
+      markdown: row.markdown,
     };
   });
   articlesBySlug = new Map(articles.map((article) => [article.slug, article]));

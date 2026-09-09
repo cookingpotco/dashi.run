@@ -4,6 +4,7 @@ import { Button } from "../components/mod.ts";
 import { NotFound } from "../errors.tsx";
 import type { AppState } from "../state.ts";
 import { getArticleBySlug } from "./articles.ts";
+import { ArticleContent } from "./article_content.tsx";
 import { DocsLayout } from "./docs_layout.tsx";
 
 export function getDocs({ html }: ReadArgs<{ state: AppState }>) {
@@ -48,9 +49,7 @@ export function getArticle(
     index: false,
   };
   return html(
-    <>
-      {article.nodes}
-    </>,
+    <ArticleContent markdown={article.markdown} slug={ctx.params.slug} />,
     { cache: pageCache },
   );
 }
