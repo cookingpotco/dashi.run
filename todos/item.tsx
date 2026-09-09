@@ -11,6 +11,7 @@ export function TodoTitle({ error }: { error?: boolean }) {
   }
   return (
     <input
+      id="todo-title"
       name="title"
       placeholder="Something to do..."
       className={`min-w-0 flex-1 cursor-text bg-transparent font-mono text-code-title outline-none ${placeholder}`}
