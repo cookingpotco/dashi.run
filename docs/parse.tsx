@@ -63,10 +63,6 @@ function parseFenceMeta(
   return { language, title: title === "" ? undefined : title };
 }
 
-function inlineTokens(token: { tokens?: Token[] }): Token[] {
-  return token.tokens ?? [];
-}
-
 function renderInline(tokens: Token[]): Element[] {
   const nodes: Element[] = [];
   for (const token of tokens) {
@@ -77,13 +73,13 @@ function renderInline(tokens: Token[]): Element[] {
       case "strong":
         nodes.push(
           <strong className="font-extrabold">
-            {renderInline(inlineTokens(token))}
+            {renderInline(token.tokens ?? [])}
           </strong>,
         );
         break;
       case "em":
         nodes.push(
-          <em className="italic">{renderInline(inlineTokens(token))}</em>,
+          <em className="italic">{renderInline(token.tokens ?? [])}</em>,
         );
         break;
       case "codespan":
@@ -97,7 +93,7 @@ function renderInline(tokens: Token[]): Element[] {
             href={token.href}
             className="text-body-text underline decoration-blue decoration-[12%]"
           >
-            {renderInline(inlineTokens(token))}
+            {renderInline(token.tokens ?? [])}
           </a>,
         );
         break;
@@ -115,7 +111,7 @@ function renderListItem(item: Tokens.ListItem): Element[] {
   const nodes: Element[] = [];
   for (const token of item.tokens) {
     if (token.type === "paragraph") {
-      nodes.push(...renderInline(inlineTokens(token)));
+      nodes.push(...renderInline(token.tokens ?? []));
       continue;
     }
     if (token.type === "text") {
@@ -131,7 +127,7 @@ function renderBlockquote(tokens: Token[]): Element[] {
   const nodes: Element[] = [];
   for (const token of tokens) {
     if (token.type === "paragraph") {
-      nodes.push(...renderInline(inlineTokens(token)));
+      nodes.push(...renderInline(token.tokens ?? []));
       continue;
     }
     if (token.type === "text") {
@@ -155,7 +151,7 @@ export function parseMarkdown(markdown: string, slug: string): ParsedArticle {
       case "space":
         break;
       case "heading": {
-        const text = headingText(inlineTokens(token));
+        const text = headingText(token.tokens ?? []);
         if (token.depth === 1) {
           title = text;
           nodes.push(<ArticleH1>{text}</ArticleH1>);
@@ -174,12 +170,12 @@ export function parseMarkdown(markdown: string, slug: string): ParsedArticle {
         throw new Error(`Unsupported heading depth: ${token.depth}`);
       }
       case "paragraph":
-        nodes.push(<ArticleP>{renderInline(inlineTokens(token))}</ArticleP>);
+        nodes.push(<ArticleP>{renderInline(token.tokens ?? [])}</ArticleP>);
         break;
       case "blockquote":
         nodes.push(
           <ArticleBlockquote>
-            {renderBlockquote(inlineTokens(token))}
+            {renderBlockquote(token.tokens ?? [])}
           </ArticleBlockquote>,
         );
         break;
