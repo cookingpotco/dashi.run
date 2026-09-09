@@ -132,6 +132,11 @@ call site.
 
 Do not chain ternary operators. Use `if`.
 
+Prefer truthiness (`if (value)`, `value ? a : b`) over `=== undefined` or
+`!== undefined` when the value cannot legitimately be another falsy value
+(`0`, `""`, `false`). Reserve explicit undefined checks for when those
+distinctions matter.
+
 ## Client JS
 
 Client TypeScript attaches only via `client.module` / `client.element` at
@@ -145,7 +150,12 @@ Relative imports in compiled files are rewritten to the matching
 bundler path. The import map is bundler path → flat hashed URL.
 Documents get one `<script type="importmap">` for that graph;
 a module script is added only when a host rendered. A lazy fragment
-`import()`s its `Link` modulepreloads before swap.
+`import()`s its `Link` modulepreloads before swap. The import map alone
+is not enough: if JSX with `client.element` hosts is built outside the
+handler render (cached `Element[]`, parse-at-import, a helper that ran
+before `html()`), the tags can land in the HTML without the module
+script. Build that tree inside a component the handler renders, or call
+the builder from the handler body on each response.
 `DASHI_MINIFY_CLIENT=1` minifies the bundle; `deno task dev` sets it to `0`.
 `staticFile` is app-mounted disk files. `/_dashi/*` is reserved.
 Client code names the DOM the way the HTML spec does. Prefer IDL properties

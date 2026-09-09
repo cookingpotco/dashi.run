@@ -21,6 +21,14 @@ reviewing, or matching — and the running UI when the other side is
 code — and judge that image. A node dump is not a review. A write is
 not done until the screenshot looks right.
 
+**Pixel-perfect matching** means reading the plugin fields that matter
+for the element (size, padding, gap, rotation, corner radius,
+decoration, wrap mode) and verifying them on a side-by-side screenshot
+of Figma and the running page. For links, `getStyledTextSegments` —
+`textDecorationColor` is often not the same as `fills`. Generic Tailwind
+that is merely close is wrong when the file specifies something else
+(bullet rotation, wrap grid, underline thickness, overlay positioning).
+
 ## Read the thing, not the label
 
 A node's `name` is a label. It is not the copy, the type role, the

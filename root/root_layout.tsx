@@ -5,6 +5,7 @@ import type { AppState } from "../state.ts";
 import styles from "../styles.json" with { type: "json" };
 import { SiteFooter } from "./site_footer.tsx";
 import { SiteHeader } from "./site_header.tsx";
+import { SiteShell } from "./site_shell.tsx";
 
 export function RootLayout({ ctx, children }: LayoutArgs<AppState>): Element {
   const seo = ctx.state.seo;
@@ -63,11 +64,13 @@ export function RootLayout({ ctx, children }: LayoutArgs<AppState>): Element {
         <link rel="stylesheet" href={styles.href} />
       </head>
       <body className="flex min-h-screen flex-col overflow-x-hidden">
-        <SiteHeader path={ctx.url.pathname} />
-        <NavigationRoot className="flex grow flex-col">
-          {children}
-        </NavigationRoot>
-        <SiteFooter />
+        <SiteShell>
+          <SiteHeader path={ctx.url.pathname} />
+          <NavigationRoot className="flex grow flex-col">
+            {children}
+          </NavigationRoot>
+          <SiteFooter />
+        </SiteShell>
       </body>
     </html>
   );

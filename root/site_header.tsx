@@ -8,7 +8,7 @@ const NavLinkHost = client.element(
 
 export function SiteHeader({ path }: { path: string }) {
   return (
-    <header className="mx-auto w-full max-w-header px-4 py-4">
+    <header className="w-full py-4">
       <div className="flex items-center justify-between border-black md:border-b-2 md:pb-4">
         <a href="/" className="block">
           <img
