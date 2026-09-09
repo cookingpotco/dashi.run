@@ -20,7 +20,7 @@ export function PatchesForm() {
       className="flex h-[15.125rem] w-full flex-col overflow-hidden rounded-card border-2 border-black bg-code-background lg:absolute lg:inset-0 lg:h-auto"
     >
       <div className="flex items-center justify-between gap-2 border-b border-black bg-blue px-4 py-3">
-        <PatchesFormHost id="todo-title" className="contents">
+        <PatchesFormHost className="contents">
           <TodoTitle />
         </PatchesFormHost>
         <Button type="submit">ADD</Button>
