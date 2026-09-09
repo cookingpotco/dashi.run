@@ -19,7 +19,7 @@ export function getHome(
     index: true,
   };
   return html(
-    <main className="mx-auto flex w-full max-w-main flex-col items-center gap-12 px-4 py-8 lg:gap-16 lg:px-6 lg:pb-16">
+    <main className="mx-auto flex w-full max-w-main flex-col items-center gap-12 py-8 lg:gap-16 lg:pb-16">
       <FormValidity className="hidden" />
       <Hero />
       <div className="flex w-full flex-col items-center gap-8 lg:gap-16">

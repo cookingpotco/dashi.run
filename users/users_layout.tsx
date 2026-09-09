@@ -39,7 +39,7 @@ export function UsersLayout({ ctx, children }: LayoutArgs<AppState>): Element {
   }
   const profile = copy[name];
   return (
-    <div className="mx-auto flex w-full max-w-main flex-col items-center gap-10 px-4 py-8">
+    <div className="mx-auto flex w-full max-w-main flex-col items-center gap-10 py-8">
       {children}
       <section className="flex w-full max-w-md flex-col gap-3">
         <h1 className="text-heading-1">About</h1>

@@ -2,7 +2,7 @@ const link = "font-normal no-underline hover:underline";
 
 export function SiteFooter() {
   return (
-    <footer className="flex w-full flex-col items-center gap-4 p-4 md:flex-row md:justify-center md:gap-2">
+    <footer className="flex w-full flex-col items-center gap-4 py-4 md:flex-row md:justify-center md:gap-2">
       <div className="flex h-20 items-center gap-2 md:h-8">
         <img
           src="/static/logo-icon-transp.png"

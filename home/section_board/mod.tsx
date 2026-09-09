@@ -1,9 +1,9 @@
 import { client, RouteFragment } from "dashi";
-import { LoadingCard } from "../../components/mod.ts";
+import { LoadingCard, Snippet, SnippetTone } from "../../components/mod.ts";
 import { HeartButton } from "./heart_button.tsx";
 import { PatchesForm } from "./patches_form.tsx";
 import { Section, SectionMark } from "./section.tsx";
-import { Snippet, SnippetStack, SnippetTone } from "./snippet.tsx";
+import { SnippetStack } from "./snippet_stack.tsx";
 
 const Host = client.element(
   "section-board",
