@@ -97,10 +97,11 @@ surfaces.
    the image. If it is mid-pan, blank, or cropped oddly, wait and shoot again.
 3. A frame taller than the viewport needs a zoomed-to-fit shot of the whole
    thing plus closer shots of each section.
-4. Matching code: run the site locally, screenshot the same section at
-   the same width, and compare Figma and the page side by side. Read
-   plugin fields for bullets, underlines, radii, and overlays — not
-   just colors and font sizes. Make sure both computed css, as well as actual website appearance match Figma plugin + screenshot.
+4. Matching code: run the site locally, screenshot the same section at the same
+   width, and compare Figma and the page side by side. Read plugin fields for
+   bullets, underlines, radii, and overlays — not just colors and font sizes.
+   Make sure both computed css, as well as actual website appearance match Figma
+   plugin + screenshot.
 
 Fix what you see through the plugin API, then screenshot again. Do not finish on
 properties you have not looked at.
