@@ -16,7 +16,7 @@ import {
   ArticleP,
   ArticleUl,
   ArticleUlRow,
-} from "./components/mod.ts";
+} from "./article.tsx";
 
 export interface ArticleHash {
   id: string;
@@ -231,11 +231,7 @@ export function parseMarkdown(markdown: string, slug: string): ParsedArticle {
         }
         nodes.push(
           <div className="py-2">
-            <Snippet
-              title={fenceTitle}
-              tone={SnippetTone.Green}
-              copyId={copyId}
-            >
+            <Snippet title={fenceTitle} tone={SnippetTone.Green}>
               {highlightCode(token.text.trimEnd())}
             </Snippet>
           </div>,

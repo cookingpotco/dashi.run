@@ -8,7 +8,7 @@ export function PrevNext(
 ) {
   return (
     <div className="flex gap-4 py-4">
-      {previous !== undefined
+      {previous
         ? (
           <div className="flex flex-col gap-1">
             <span className="text-body-smallest text-body-text">Previous</span>
@@ -21,17 +21,19 @@ export function PrevNext(
           </div>
         )
         : <div className="flex-1" />}
-      {next !== undefined && (
-        <div className="ml-auto flex flex-col gap-1 text-right">
-          <span className="text-body-smallest text-body-text">Next</span>
-          <a
-            href={next.href}
-            className="text-nav-link font-bold text-black no-underline"
-          >
-            {next.label} →
-          </a>
-        </div>
-      )}
+      {next
+        ? (
+          <div className="ml-auto flex flex-col gap-1 text-right">
+            <span className="text-body-smallest text-body-text">Next</span>
+            <a
+              href={next.href}
+              className="text-nav-link font-bold text-black no-underline"
+            >
+              {next.label} →
+            </a>
+          </div>
+        )
+        : null}
     </div>
   );
 }

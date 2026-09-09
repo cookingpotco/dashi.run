@@ -34,7 +34,7 @@ export function getArticle(
   { ctx, html }: ReadArgs<{ state: AppState; params: { slug: string } }>,
 ) {
   const article = getArticleBySlug(ctx.params.slug);
-  if (article === undefined) {
+  if (!article) {
     ctx.state.seo = {
       title: "404 / Dashi",
       description: "That page isn't here.",

@@ -34,7 +34,7 @@ let articles: Article[] | undefined;
 let articlesBySlug: Map<string, Article> | undefined;
 
 function loadArticles(): Article[] {
-  if (articles !== undefined) {
+  if (articles) {
     return articles;
   }
   articles = rows.map((row) => {

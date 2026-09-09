@@ -2,12 +2,13 @@ import type { LayoutArgs } from "dashi";
 import type { Element } from "dashi/jsx-runtime";
 import type { AppState } from "../state.ts";
 import { adjacentArticles, getArticleBySlug, getArticles } from "./articles.ts";
-import { PrevNext, SidebarHash, SidebarItem } from "./components/mod.ts";
+import { PrevNext } from "./prev_next.tsx";
+import { SidebarHash, SidebarItem } from "./sidebar.tsx";
 
 export function DocsLayout({ ctx, children }: LayoutArgs<AppState>): Element {
   const slug = ctx.params.slug;
   const article = getArticleBySlug(slug);
-  if (article === undefined) {
+  if (!article) {
     return children;
   }
   const { previous, next } = adjacentArticles(slug);
@@ -46,14 +47,12 @@ export function DocsLayout({ ctx, children }: LayoutArgs<AppState>): Element {
           {children}
         </div>
         <PrevNext
-          previous={previous === undefined ? undefined : {
-            href: `/docs/${previous.slug}`,
-            label: previous.navTitle,
-          }}
-          next={next === undefined ? undefined : {
-            href: `/docs/${next.slug}`,
-            label: next.navTitle,
-          }}
+          previous={previous
+            ? { href: `/docs/${previous.slug}`, label: previous.navTitle }
+            : undefined}
+          next={next
+            ? { href: `/docs/${next.slug}`, label: next.navTitle }
+            : undefined}
         />
       </article>
     </main>

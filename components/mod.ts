@@ -4,4 +4,4 @@ export { CopyButton } from "./copy_button.tsx";
 export { highlightCode } from "./highlight.tsx";
 export { LoadingCard } from "./loading_card.tsx";
 export { ProfileCard } from "./profile_card.tsx";
-export { Snippet, SnippetStack, SnippetTone } from "./snippet.tsx";
+export { Snippet, SnippetTone } from "./snippet.tsx";

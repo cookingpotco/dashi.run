@@ -132,6 +132,11 @@ call site.
 
 Do not chain ternary operators. Use `if`.
 
+Prefer truthiness (`if (value)`, `value ? a : b`) over `=== undefined` or
+`!== undefined` when the value cannot legitimately be another falsy value
+(`0`, `""`, `false`). Reserve explicit undefined checks for when those
+distinctions matter.
+
 ## Client JS
 
 Client TypeScript attaches only via `client.module` / `client.element` at
