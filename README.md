@@ -1,6 +1,7 @@
 # dashi.run
 
 Website for the [dashi](https://jsr.io/@cookingpot/dashi) web framework.
+The code is quite SLOPPy, please don't judge :)
 
 ## Run locally
 
