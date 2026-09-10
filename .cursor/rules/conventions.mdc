@@ -50,8 +50,8 @@ Application code never calls a handler. The router is what invokes one: a
 direct call skips the target's middleware and error boundary, applies its
 cache policy to the caller's response, and leaves it reading the caller's
 `ctx`. Share markup as a component, including between two methods of one
-route, and use `<RouteFragment src>` to include another route's rendered
-output.
+route. Same-request composition imports the component; a later GET uses
+`<RouteSlot src>`.
 
 ## Crawl files
 
@@ -149,7 +149,7 @@ table route. Public URLs are flat `/_dashi/client/<name>-<hash>.js`.
 Relative imports in compiled files are rewritten to the matching
 bundler path. The import map is bundler path → flat hashed URL.
 Documents get one `<script type="importmap">` for that graph;
-a module script is added only when a host rendered. A lazy fragment
+a module script is added only when a host rendered. A `RouteSlot`
 `import()`s its `Link` modulepreloads before swap. The import map alone
 is not enough: if JSX with `client.element` hosts is built outside the
 handler render (cached `Element[]`, parse-at-import, a helper that ran

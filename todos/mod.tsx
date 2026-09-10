@@ -25,9 +25,9 @@ export function getTodoList(
   items = seed();
   nextId = 3;
   return html(
-    <>
+    <div id="todos" className="flex w-full flex-col gap-4">
       {items.map((item) => <TodoRow item={item} />)}
-    </>,
+    </div>,
   );
 }
 
@@ -61,7 +61,7 @@ export async function postSubmitTodo(
   };
   items.push(item);
   return patches([
-    patch.append("/todos", <TodoRow item={item} />),
+    patch.append("#todos", <TodoRow item={item} />),
     patch.replace("#todo-title", <TodoTitle />),
     countPatch(),
   ]);

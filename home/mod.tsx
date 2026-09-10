@@ -1,5 +1,6 @@
-import { client, type ReadArgs, RouteFragment } from "dashi";
+import { client, type ReadArgs } from "dashi";
 import { pageCache } from "../cache.ts";
+import { JoinForm } from "../join/mod.tsx";
 import type { AppState } from "../state.ts";
 import { Closer } from "./closer/mod.tsx";
 import { Hero, heroSubtitle } from "./hero/mod.tsx";
@@ -25,7 +26,7 @@ export function getHome(
       <div className="flex w-full flex-col items-center gap-8 lg:gap-16">
         <SectionBoard />
         <Closer />
-        <RouteFragment src="/join" />
+        <JoinForm />
       </div>
     </main>,
     { cache: pageCache },

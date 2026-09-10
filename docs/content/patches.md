@@ -1,7 +1,7 @@
 # Patches
 
-A patch is HTML aimed at a fragment or an element. A form POST can return
-several, and the page updates in place.
+A patch is HTML aimed at an element. A form POST can return several, and the
+page updates in place.
 
 ## Forms
 

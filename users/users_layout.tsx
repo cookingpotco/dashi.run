@@ -16,7 +16,7 @@ const copy: Record<ProfileName, ProfileCopy> = {
   [ProfileName.Jorji]: {
     about: "Jorji builds pages out of routes.",
     posts: [
-      ["A fragment is just a URL", "The card on the homepage is this page."],
+      ["A slot is just a URL", "The card on the homepage is this page."],
       [
         "Cached independently",
         "If I load on my own, I can be cached by myself!",
@@ -26,7 +26,10 @@ const copy: Record<ProfileName, ProfileCopy> = {
   [ProfileName.Duck]: {
     about: "A duck who fetched in after you scrolled.",
     posts: [
-      ["Waited for the fold", 'lazy="visible" held the fallback until here.'],
+      [
+        "Waited for the fold",
+        'fetchWhen="visible" held the fallback until here.',
+      ],
       ["Hello from /users/duck", "Thanks for scrolling."],
     ],
   },

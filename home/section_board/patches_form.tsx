@@ -1,4 +1,4 @@
-import { client, RouteFragment } from "dashi";
+import { client, RouteSlot } from "dashi";
 import { Button } from "../../components/mod.ts";
 import { TodoTitle } from "../../todos/mod.tsx";
 
@@ -27,7 +27,7 @@ export function PatchesForm() {
       </div>
       <div className="flex min-h-0 flex-1 flex-col items-end px-4">
         <ListPane className="min-h-0 w-full flex-1 overflow-y-auto py-4">
-          <RouteFragment
+          <RouteSlot
             src="/todos"
             className="flex w-full flex-col gap-4"
           />

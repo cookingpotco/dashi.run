@@ -24,6 +24,21 @@ const profiles: Record<
   },
 };
 
+export function LinkedProfileCard(
+  { name }: { name: "jorji" | "duck" },
+) {
+  const profile = profiles[name];
+  return (
+    <a href={`/users/${name}`} className="no-underline">
+      <ProfileCard
+        handle={profile.handle}
+        photo={profile.photo}
+        clickMe
+      />
+    </a>
+  );
+}
+
 export async function getProfile(
   { ctx, html }: ReadArgs<{ state: AppState; params: { name: string } }>,
 ) {
@@ -36,23 +51,22 @@ export async function getProfile(
     };
     return html(<NotFound />, { status: 404 });
   }
-  if (name === ProfileName.Duck && ctx.isFragment) {
+  const isSlot = ctx.req.headers.get("x-slot") !== null;
+  if (name === ProfileName.Duck && isSlot) {
     await new Promise((resolve) => setTimeout(resolve, 3000));
   }
+  if (isSlot) {
+    return html(<LinkedProfileCard name={name} />);
+  }
   const profile = profiles[name];
-  const card = (
+  return html(
     <ProfileCard
       handle={profile.handle}
       photo={profile.photo}
-      clickMe={ctx.isFragment}
-    />
+      clickMe={false}
+    />,
+    { cache: pageCache },
   );
-  if (ctx.isFragment) {
-    return html(
-      <a href={`/users/${name}`} className="no-underline">{card}</a>,
-    );
-  }
-  return html(card, { cache: pageCache });
 }
 
 export const users = group<AppState>("/users", ({ route }) => ({

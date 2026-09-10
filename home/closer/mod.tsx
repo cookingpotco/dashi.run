@@ -11,7 +11,7 @@ export function Closer() {
       />
       <Point
         label="Caching"
-        description="Each page and fragment is cached on its own"
+        description="Each page and slot is cached on its own"
         color={PointColor.Yellow}
         rotate="rotate-[5deg]"
       />

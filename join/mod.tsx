@@ -11,8 +11,8 @@ function openEmailsKv() {
   return emailsKv;
 }
 
-export function getJoin({ html }: ReadArgs<{ state: AppState }>) {
-  return html(
+export function JoinForm() {
+  return (
     <form
       method="POST"
       action="/join"
@@ -33,8 +33,12 @@ export function getJoin({ html }: ReadArgs<{ state: AppState }>) {
           <Button type="submit">join</Button>
         </span>
       </div>
-    </form>,
+    </form>
   );
+}
+
+export function getJoin({ html }: ReadArgs<{ state: AppState }>) {
+  return html(<JoinForm />);
 }
 
 export async function postSubmitJoinRequest(

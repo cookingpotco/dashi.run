@@ -1,5 +1,6 @@
-import { client, RouteFragment } from "dashi";
+import { client, RouteSlot } from "dashi";
 import { LoadingCard, Snippet, SnippetTone } from "../../components/mod.ts";
+import { LinkedProfileCard } from "../../users/mod.tsx";
 import { HeartButton } from "./heart_button.tsx";
 import { PatchesForm } from "./patches_form.tsx";
 import { Section, SectionMark } from "./section.tsx";
@@ -91,15 +92,15 @@ export function SectionBoard() {
       />
       <Section
         badge="03"
-        title="Fragments"
-        description="A fragment is a route. Compose pages through eager or lazy server-rendered UI."
+        title="Slots"
+        description="Pages leave slots pointing at other routes, for separate cache or expensive work."
         rotate="rotate-[1.2deg]"
         slide="right"
         top="lg:top-[59.75rem]"
         left={
           <SnippetStack>
             <Snippet
-              title="userRoute.tsx"
+              title="user_page.tsx"
               tone={SnippetTone.Pink}
               code={`export async function UserProfile({ ctx, html }) {
   const user = await service.getUser(ctx);
@@ -111,17 +112,17 @@ export function SectionBoard() {
             <Snippet
               title="home.tsx"
               tone={SnippetTone.Green}
-              code={`<RouteFragment src="/users/USER_ID" />
-<RouteFragment src="/users/USER_ID" lazy />`}
+              code={`<User userData={user} />
+<RouteSlot src="/users/USER_ID" fetchWhen="visible" />`}
             />
           </SnippetStack>
         }
         right={
           <div className="flex w-[18rem] gap-4 overflow-visible">
-            <RouteFragment src="/users/jorji" />
-            <RouteFragment
+            <LinkedProfileCard name="jorji" />
+            <RouteSlot
               src="/users/duck"
-              lazy="visible"
+              fetchWhen="visible"
               fallback={<LoadingCard />}
             />
           </div>
@@ -130,7 +131,7 @@ export function SectionBoard() {
       <Section
         badge="04"
         title="Patches"
-        description="A patch is HTML aimed at a fragment or an element. A form POST can return several, and the page updates in place."
+        description="A patch is HTML aimed at an element. A form POST can return several, and the page updates in place."
         rotate="-rotate-[0.5deg]"
         slide="left"
         top="lg:top-[93.8125rem]"
@@ -143,7 +144,7 @@ export function SectionBoard() {
   const { todo } = ctx.state;
   const count = await service.addTodo(todo);
   return patches([
-    patch.append("/todos", <Todo data={todo} />),
+    patch.append("#todos", <Todo data={todo} />),
     patch.update("#count", <Count c={count} />),
   ]);
 }`}
