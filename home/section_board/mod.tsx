@@ -144,7 +144,7 @@ export function SectionBoard() {
   const count = await service.addTodo(todo);
   return patches([
     patch.append("/todos", <Todo data={todo} />),
-    patch.replace("#count", <Count c={count} />),
+    patch.update("#count", <Count c={count} />),
   ]);
 }`}
           />

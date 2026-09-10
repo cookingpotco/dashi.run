@@ -16,7 +16,7 @@ let nextId = 3;
 
 function countPatch() {
   const left = items.filter((item) => !item.done).length;
-  return patch.replace("#count", <>{`${left}/${items.length}`}</>);
+  return patch.update("#count", <>{`${left}/${items.length}`}</>);
 }
 
 export function getTodoList(
@@ -43,7 +43,7 @@ export async function postSubmitTodo(
     }
     item.done = !item.done;
     return patches([
-      patch.replace(`#todo-${item.id}`, <TodoCheck item={item} />),
+      patch.update(`#todo-${item.id}`, <TodoCheck item={item} />),
       countPatch(),
     ]);
   }

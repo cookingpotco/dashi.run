@@ -47,13 +47,13 @@ export async function postSubmitJoinRequest(
     !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
   ) {
     return patches([
-      patch.replace("#join", <Button type="submit">join</Button>),
+      patch.update("#join", <Button type="submit">join</Button>),
     ]);
   }
   const kv = await openEmailsKv();
   await kv.set(["emails", email], { email, at: Date.now() });
   return patches([
-    patch.replace("#join", <Button success type="submit">JOINED!</Button>),
+    patch.update("#join", <Button success type="submit">JOINED!</Button>),
   ]);
 }
 
