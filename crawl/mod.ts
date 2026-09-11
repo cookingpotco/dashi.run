@@ -1,5 +1,5 @@
 import type { ReadArgs } from "dashi";
-import { getArticles } from "../docs/articles.ts";
+import { getArticles } from "../docs/mod.tsx";
 import { siteOrigin } from "../seo.ts";
 import type { AppState } from "../state.ts";
 

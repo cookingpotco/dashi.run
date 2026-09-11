@@ -7,8 +7,6 @@
 deno create jsr:@cookingpot/dashi
 ```
 
-```bash
-deno task dev
-```
-
 Follow the command output.
+
+Your new app is running. Edit `home/mod.tsx` and this page updates on save.

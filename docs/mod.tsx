@@ -6,6 +6,8 @@ import { getArticleBySlug } from "./articles.ts";
 import { ArticleContent } from "./article_content.tsx";
 import { DocsLayout } from "./docs_layout.tsx";
 
+export { getArticles } from "./articles.ts";
+
 export function getDocs({ ctx }: ReadArgs<{ state: AppState }>) {
   return Response.redirect(new URL("/docs/introduction", ctx.url), 301);
 }

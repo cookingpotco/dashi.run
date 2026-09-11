@@ -68,6 +68,10 @@ function renderInline(tokens: Token[]): Element[] {
   for (const token of tokens) {
     switch (token.type) {
       case "text":
+        if ("tokens" in token && token.tokens !== undefined) {
+          nodes.push(...renderInline(token.tokens));
+          break;
+        }
         nodes.push(token.text as Element);
         break;
       case "strong":
