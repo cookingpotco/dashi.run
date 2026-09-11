@@ -3,8 +3,7 @@
 ## serve()
 
 The root table is pathless. `route()` and `group()` values go in `routes`.
-`serve()` forwards `Deno.serve` options, plus `fatal`. `/_dashi` is reserved: an
-app route there throws at boot.
+`serve()` forwards `Deno.serve` options, plus `fatal`.
 
 ```tsx main.ts
 import { serve } from "dashi";
@@ -20,27 +19,25 @@ serve(({ route }) => ({
 }), { fatal });
 ```
 
+`/_dashi` is reserved by the framework for compiled JS and internals.
+
 ## route()
 
-A path literal and per-method handlers. GET and POST share one row. Two
-`route()` calls for the same joined path, or the same shape (`/posts/:id` and
-`/posts/:slug`), throw when the table compiles.
+Declare handlers for a given pattern, per HTTP method.
 
 GET also answers HEAD. Every matched path answers OPTIONS. Neither is a handler
 key.
 
-- static
-- `:name`
-- `:name?` (last only)
-- `:name*` (last only, and named)
+1. `path` - static.
+2. `path/:name/to` - required segment.
+3. `path/to/:name?` - optional segment (last only).
+4. `path/to/:name*` - catch-all segment (last only, and named).
 
-Match order is static, then param, then catch-all. Declared paths have no
-trailing slash except `/`.
+Routes are matched in this order. Optional compiles to static and required routes.
 
 ## group()
 
-Pass a prefix to join onto child paths, or omit it for a pathless wrap.
-`group("/")` is illegal. A prefix cannot end in `?` or `*`.
+Group routes, layouts, middleware, and errors together by a prefix.
 
 ```tsx posts.ts
 import { group } from "dashi";
@@ -53,12 +50,11 @@ export const posts = group("/posts", ({ route }) => ({
 }));
 ```
 
-Drop that value into the parent `routes`. Layouts, middleware, and errors on a
-group are on [Layouts, middleware, errors](/docs/layouts-middleware-errors).
+Drop that value into the parent `routes`, like in the root `serve()`.
 
-## params
+## Params
 
-Typed from the path literal (`ParamsOf`). Joined inside one group. A group
-boundary does not type ancestor params. Shared values go on `ctx.state`.
+Typed from the path literal (`ParamsOf`) into string records. e.g. `{ id: string }`.
+Groups are not aware of ancestor params. Shared values go on `ctx.state`.
 
 See [Handlers](/docs/handlers) for `ctx.params`.

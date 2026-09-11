@@ -51,6 +51,10 @@ function headingText(tokens: Token[]): string {
   return text;
 }
 
+function isBreakTag(html: string): boolean {
+  return /^<br\s*\/?\s*>$/i.test(html.trim());
+}
+
 function parseFenceMeta(
   lang: string | undefined,
 ): { language: string; title?: string } {
@@ -106,6 +110,12 @@ function renderInline(tokens: Token[]): Element[] {
         break;
       }
       case "br":
+        nodes.push(<br />);
+        break;
+      case "html":
+        if (!isBreakTag(token.text)) {
+          throw new Error(`Unsupported inline token: html`);
+        }
         nodes.push(<br />);
         break;
       default:
@@ -179,6 +189,12 @@ export function parseMarkdown(markdown: string, slug: string): ParsedArticle {
       }
       case "paragraph":
         nodes.push(<ArticleP>{renderInline(token.tokens ?? [])}</ArticleP>);
+        break;
+      case "html":
+        if (!isBreakTag(token.text)) {
+          throw new Error(`Unsupported markdown token: html`);
+        }
+        nodes.push(<br />);
         break;
       case "blockquote":
         nodes.push(
