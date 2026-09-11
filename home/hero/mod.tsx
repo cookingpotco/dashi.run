@@ -26,8 +26,7 @@ export function Hero() {
       </p>
       <CommandSnippet
         id="install-command"
-        command={`deno create jsr:@cookingpot/dashi -- my-dashi-app
-cd my-dashi-app
+        command={`deno create jsr:@cookingpot/dashi
 deno task dev`}
       />
     </section>
