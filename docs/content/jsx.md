@@ -4,7 +4,7 @@
 
 JSX is precompiled to static HTML on the wire. Built for fast, simple SSR.
 
-`style` is a CSS string, not an object. There are no event-handler props — use
+`style` is a CSS string, not an object. There are no event-handler props - use
 [Client JS](/docs/client-js).
 
 ```tsx hello.tsx
@@ -29,6 +29,6 @@ export function Field() {
 
 Import these from `dashi/jsx-runtime`.
 
-- **`Element`.** The HTML JSX returns.
-- **`DashiNode`.** A JSX child: `Element`, `number`, `string`, etc.
-- **`HTMLAttributes` and `SVGAttributes`.** Shared props for HTML and SVG tags.
+- `Element`. The HTML JSX returns.
+- `DashiNode`. A JSX child: `Element`, `number`, `string`, etc.
+- `HTMLAttributes` and `SVGAttributes`. Shared props for HTML and SVG tags.
