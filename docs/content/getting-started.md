@@ -4,9 +4,9 @@
 > there.
 
 ```bash
-deno create jsr:@cookingpot/dashi
+deno create jsr:@cookingpot/dashi -- my-dashi-app
+cd my-dashi-app
+deno task dev
 ```
-
-Follow the command output.
 
 Your new app is running. Edit `home/mod.tsx` and this page updates on save.

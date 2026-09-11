@@ -23,7 +23,7 @@ serve(({ route }) => ({
 
 I built dashi after Next.js 16: too much magic, spending too much time fighting
 the framework than shipping. I wanted a small tool that keeps the ideas I
-actually like — server-rendered HTML, patches, only as much JS as you ask for.
+actually like - server-rendered HTML, patches, only as much JS as you ask for.
 
 - **Speed.** JSX is precompiled into plain HTML and sent as-is for every render.
 - **Server-driven.** Update the UI through targeted HTML patches.
@@ -31,7 +31,7 @@ actually like — server-rendered HTML, patches, only as much JS as you ask for.
 - **Composition.** A page can include other routes, each fetched and cached on
   its own.
 - **Small API.** No magic, one way to do each thing, no runtime dependencies.
-- **Web APIs.** Built on standards — `Request`, `Response`, `fetch()`, etc.
+- **Web APIs.** Built on standards - `Request`, `Response`, `fetch()`, etc.
 
 ## Community
 

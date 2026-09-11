@@ -15,7 +15,7 @@ Open http://localhost:8000.
 
 `dev` is the watch loop: hashed stylesheet plus the app.
 
-To exercise the image you ship — healthcheck, loopback publish, KV mount:
+To exercise the image you ship - healthcheck, loopback publish, KV mount:
 
 ```sh
 docker compose up --build
