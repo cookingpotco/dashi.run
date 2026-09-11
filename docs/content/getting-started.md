@@ -1,14 +1,12 @@
 # Getting started
 
-Dashi is a Deno framework for HTML-first apps. This page is a stub until the
-handbook outline lands.
-
-## Install
+> Requires [Deno](https://deno.com) 2.9.5. Follow the install instructions
+> there.
 
 ```bash
-deno add jsr:@cookingpot/dashi
+deno create jsr:@cookingpot/dashi -- my-dashi-app
+cd my-dashi-app
+deno task dev
 ```
 
-## Next steps
-
-Read [Routing](/docs/routing) for how paths bind to handlers.
+Your new app is running. Edit `home/mod.tsx` and this page updates on save.

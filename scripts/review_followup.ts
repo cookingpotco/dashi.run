@@ -37,7 +37,7 @@ interface ReviewComment {
  * GitHub records a thread reply as a submitted review with an empty body
  * whose comments all set `in_reply_to_id`. Forwarding those re-queues the
  * agent on its own answers. A review with a body, or with a top-level inline
- * comment, is still forwarded — including Bugbot.
+ * comment, is still forwarded - including Bugbot.
  */
 export function shouldForwardReview(
   state: string,

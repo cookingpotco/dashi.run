@@ -34,7 +34,7 @@ e2e suites, or a `test` task. Do not plan or ship coverage here.
 ## Simpler
 
 Prefer the simpler version, even when it repeats a few lines. Do not extract a
-helper that is a short, obvious check or a few straightforward lines used once —
+helper that is a short, obvious check or a few straightforward lines used once -
 inline it until extraction earns its keep. Extract when the code is not obvious,
 or when the same non-trivial shape is repeated. A longer or non-obvious body is
 a function even at one call site. If the plan specified machinery you then see

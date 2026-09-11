@@ -27,7 +27,7 @@ export function SiteFooter() {
           <div className="flex flex-col font-mono text-body-smallest">
             <p className="text-code-title">Sections</p>
             <a href="/" className={link}>Home</a>
-            <a href="/docs" className={link}>Docs</a>
+            <a href="/docs/introduction" className={link}>Docs</a>
           </div>
           <div className="flex flex-col font-mono text-body-smallest">
             <p className="text-code-title">Links</p>

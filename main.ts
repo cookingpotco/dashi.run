@@ -1,4 +1,5 @@
 import { CacheStrategy, serve, staticFile } from "dashi";
+import { getSitemap } from "./crawl/mod.ts";
 import { getDiscord } from "./discord/mod.tsx";
 import { docsArticles, getDocs } from "./docs/mod.tsx";
 import { error, fatal, notFound } from "./errors.tsx";
@@ -40,9 +41,7 @@ export const createSite: SiteBuild = ({ route }) => ({
     route("/robots.txt", {
       GET: ({ ctx }) => staticFile(ctx, crawlDir, "robots.txt", crawlCache),
     }),
-    route("/sitemap.xml", {
-      GET: ({ ctx }) => staticFile(ctx, crawlDir, "sitemap.xml", crawlCache),
-    }),
+    route("/sitemap.xml", { GET: getSitemap }),
     route("/static/:file", {
       GET: ({ ctx }) =>
         staticFile(ctx, `${import.meta.dirname}/static`, ctx.params.file, {

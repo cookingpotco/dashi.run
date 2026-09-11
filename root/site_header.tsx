@@ -30,7 +30,7 @@ export function SiteHeader({ path }: { path: string }) {
           </NavLinkHost>
           <NavLinkHost>
             <a
-              href="/docs"
+              href="/docs/introduction"
               className="relative px-0 py-1 text-nav-link no-underline after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:origin-left after:scale-x-0 after:bg-pink after:transition-transform after:duration-200 after:ease-out after:content-[''] hover:after:scale-x-100 aria-[current=page]:after:scale-x-100"
               aria-current={path === "/docs" || path.startsWith("/docs/")
                 ? "page"
@@ -40,7 +40,7 @@ export function SiteHeader({ path }: { path: string }) {
             </a>
           </NavLinkHost>
         </nav>
-        <a href="/docs" className="no-underline">
+        <a href="/docs/introduction" className="no-underline">
           <Button>get started</Button>
         </a>
       </div>

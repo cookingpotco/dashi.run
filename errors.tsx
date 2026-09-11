@@ -43,7 +43,7 @@ export function fatal({ html }: FatalArgs) {
   return html(
     <html lang="en">
       <head>
-        <title>500 — Dashi</title>
+        <title>500 / Dashi</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="robots" content="noindex" />
         <link
