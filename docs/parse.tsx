@@ -91,16 +91,20 @@ function renderInline(tokens: Token[]): Element[] {
           <code className="font-mono text-error">{`\`${token.text}\``}</code>,
         );
         break;
-      case "link":
+      case "link": {
+        const external = /^[a-z][a-z0-9+.-]*:/i.test(token.href);
         nodes.push(
           <a
             href={token.href}
             className="text-body-text underline decoration-blue decoration-[12%]"
+            target={external ? "_blank" : undefined}
+            rel={external ? "noopener noreferrer" : undefined}
           >
             {renderInline(token.tokens ?? [])}
           </a>,
         );
         break;
+      }
       case "br":
         nodes.push(<br />);
         break;
