@@ -52,6 +52,11 @@
   --text-status-compact--font-weight: 800;
   --text-status-compact--letter-spacing: 0em;
 
+  --text-countdown: 8rem;
+  --text-countdown--line-height: 8rem;
+  --text-countdown--font-weight: 800;
+  --text-countdown--letter-spacing: 0em;
+
   --text-heading-1: 1.5rem;
   --text-heading-1--line-height: 2rem;
   --text-heading-1--font-weight: 800;
