@@ -1,30 +1,34 @@
+import introduction from "./content/introduction.md" with { type: "text" };
 import gettingStarted from "./content/getting-started.md" with { type: "text" };
-import clientJs from "./content/client-js.md" with { type: "text" };
-import patches from "./content/patches.md" with { type: "text" };
-import routing from "./content/routing.md" with { type: "text" };
 import { type ArticleHash, parseMarkdown } from "./parse.tsx";
 
 interface ArticleRow {
   slug: string;
   navTitle: string;
+  description: string;
   markdown: string;
 }
 
 const rows: ArticleRow[] = [
   {
+    slug: "introduction",
+    navTitle: "Introduction",
+    description: "A server-first Deno framework. JSX is precompiled to HTML.",
+    markdown: introduction,
+  },
+  {
     slug: "getting-started",
     navTitle: "Getting started",
+    description: "Create a Dashi app and run the dev server.",
     markdown: gettingStarted,
   },
-  { slug: "routing", navTitle: "Routing", markdown: routing },
-  { slug: "patches", navTitle: "Patches", markdown: patches },
-  { slug: "client-js", navTitle: "Client JS", markdown: clientJs },
 ];
 
 export interface Article {
   slug: string;
   navTitle: string;
   title: string;
+  description: string;
   hashes: ArticleHash[];
   markdown: string;
 }
@@ -42,6 +46,7 @@ function loadArticles(): Article[] {
       slug: row.slug,
       navTitle: row.navTitle,
       title: parsed.title,
+      description: row.description,
       hashes: parsed.hashes,
       markdown: row.markdown,
     };

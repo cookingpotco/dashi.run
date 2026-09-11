@@ -1,34 +1,13 @@
 import { group, type ReadArgs } from "dashi";
 import { pageCache } from "../cache.ts";
-import { Button } from "../components/mod.ts";
 import { NotFound } from "../errors.tsx";
 import type { AppState } from "../state.ts";
 import { getArticleBySlug } from "./articles.ts";
 import { ArticleContent } from "./article_content.tsx";
 import { DocsLayout } from "./docs_layout.tsx";
 
-export function getDocs({ html }: ReadArgs<{ state: AppState }>) {
-  return html(
-    <main className="mx-auto flex w-full max-w-main flex-col items-center gap-6 py-8 lg:pb-16">
-      <p className="rotate-1 rounded-button border-2 border-black bg-yellow px-3 py-1 font-mono text-button uppercase shadow-regular">
-        Coming soon
-      </p>
-      <p className="text-center text-body-small text-body-text lg:text-body">
-        For now, check out the{" "}
-        <a
-          href="https://github.com/cookingpotco/dashi"
-          className="font-bold no-underline hover:underline"
-        >
-          README on GitHub
-        </a>
-        .
-      </p>
-      <a href="/" className="no-underline">
-        <Button>go home</Button>
-      </a>
-    </main>,
-    { cache: pageCache },
-  );
+export function getDocs({ ctx }: ReadArgs<{ state: AppState }>) {
+  return Response.redirect(new URL("/docs/introduction", ctx.url), 301);
 }
 
 export function getArticle(
@@ -45,8 +24,8 @@ export function getArticle(
   }
   ctx.state.seo = {
     title: `${article.title} / Docs / Dashi`,
-    description: `${article.title} in the Dashi handbook.`,
-    index: false,
+    description: article.description,
+    index: true,
   };
   return html(
     <ArticleContent markdown={article.markdown} slug={ctx.params.slug} />,
