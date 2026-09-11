@@ -41,10 +41,14 @@ function DiscordJoin() {
           <div className="relative w-40 text-center">
             <span className="relative inline-block text-countdown font-mono leading-none">
               <span
-                className="pointer-events-none absolute top-[-0.4375rem] left-1/2 z-0 h-[3.875rem] w-[7.25rem] -translate-x-1/2 rotate-[5deg] bg-blue/75 blur-[5px] [background-blend-mode:overlay]"
-                style={`background-image: ${countdownMarkNoise}`}
+                className="pointer-events-none absolute top-1/2 left-1/2 z-0 -translate-x-1/2 -translate-y-1/2"
                 aria-hidden
-              />
+              >
+                <span
+                  className="block h-[3.875rem] w-[7.25rem] -rotate-[5deg] bg-blue/75 blur-[5px] [background-blend-mode:overlay]"
+                  style={`background-image: ${countdownMarkNoise}`}
+                />
+              </span>
               <span data-count className="relative z-10 block">
                 3
               </span>
