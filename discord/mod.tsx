@@ -9,6 +9,9 @@ const DiscordCountdown = client.element(
 
 const discordInvite = "https://discord.gg/9CRz82PrQq";
 
+const countdownMarkNoise =
+  "url(\"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='128'%20height='128'%3E%3Cfilter%20id='n'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.85'%20numOctaves='4'%20stitchTiles='stitch'/%3E%3C/filter%3E%3Crect%20width='100%25'%20height='100%25'%20filter='url(%23n)'%20opacity='0.45'/%3E%3C/svg%3E\")";
+
 function DiscordJoin() {
   return (
     <DiscordCountdown className="flex flex-1 flex-col">
@@ -36,15 +39,15 @@ function DiscordJoin() {
         </div>
         <div className="flex flex-1 items-center justify-center">
           <div className="relative w-40 text-center">
-            <div
-              className="absolute top-[-0.25rem] left-1/2 h-[3.875rem] w-[7.25rem] -translate-x-1/2 bg-blue/75"
-              aria-hidden
-            />
-            <span
-              data-count
-              className="relative z-10 text-countdown font-mono"
-            >
-              3
+            <span className="relative inline-block text-countdown font-mono leading-none">
+              <span
+                className="pointer-events-none absolute top-[-0.4375rem] left-1/2 z-0 h-[3.875rem] w-[7.25rem] -translate-x-1/2 rotate-[5deg] bg-blue/75 blur-[5px] [background-blend-mode:overlay]"
+                style={`background-image: ${countdownMarkNoise}`}
+                aria-hidden
+              />
+              <span data-count className="relative z-10 block">
+                3
+              </span>
             </span>
           </div>
         </div>
