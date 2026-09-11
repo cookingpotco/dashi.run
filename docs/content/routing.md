@@ -33,7 +33,8 @@ key.
 3. `path/to/:name?` - optional segment (last only).
 4. `path/to/:name*` - catch-all segment (last only, and named).
 
-Routes are matched in this order. Optional compiles to static and required routes.
+Routes are matched in this order. Optional compiles to static and required
+routes.
 
 ## group()
 
@@ -54,7 +55,8 @@ Drop that value into the parent `routes`, like in the root `serve()`.
 
 ## Params
 
-Typed from the path literal (`ParamsOf`) into string records. e.g. `{ id: string }`.
-Groups are not aware of ancestor params. Shared values go on `ctx.state`.
+Typed from the path literal (`ParamsOf`) into string records. e.g.
+`{ id: string }`. Groups are not aware of ancestor params. Shared values go on
+`ctx.state`.
 
 See [Handlers](/docs/handlers) for `ctx.params`.
