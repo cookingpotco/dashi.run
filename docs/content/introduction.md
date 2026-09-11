@@ -2,9 +2,9 @@
 
 ## What is dashi?
 
-dashi is a server-first web framework for Deno. JSX is precompiled to HTML
-strings. No VDOM, no hydration, no client framework. Pages update by swapping
-server-rendered HTML, in the spirit of [Hotwire](https://hotwired.dev/) and
+dashi is a server-first web framework for Deno. JSX is precompiled to HTML with
+no VDOM intermediary or hydration. Pages update by swapping server-rendered
+HTML, in the spirit of [Hotwire](https://hotwired.dev/) and
 [htmx](https://htmx.org/).
 
 ```tsx main.ts
@@ -21,7 +21,7 @@ serve(({ route }) => ({
 
 ## Features
 
-I built dashi after Next.js 16: too much magic, and I spent more time fighting
+I built dashi after Next.js 16: too much magic, spending too much time fighting
 the framework than shipping. I wanted a small tool that keeps the ideas I
 actually like — server-rendered HTML, patches, only as much JS as you ask for.
 

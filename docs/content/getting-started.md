@@ -10,3 +10,5 @@ deno create jsr:@cookingpot/dashi
 ```bash
 deno task dev
 ```
+
+Follow the command output.
