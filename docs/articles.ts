@@ -4,6 +4,9 @@ import jsx from "./content/jsx.md" with { type: "text" };
 import routing from "./content/routing.md" with { type: "text" };
 import handlers from "./content/handlers.md" with { type: "text" };
 import forms from "./content/forms.md" with { type: "text" };
+import layoutsMiddlewareErrors from "./content/layouts-middleware-errors.md" with {
+  type: "text",
+};
 import { type ArticleHash, parseMarkdown } from "./parse.tsx";
 
 interface ArticleRow {
@@ -50,6 +53,13 @@ const rows: ArticleRow[] = [
     navTitle: "Forms",
     description: "GET forms navigate. POST forms apply patches.",
     markdown: forms,
+  },
+  {
+    slug: "layouts-middleware-errors",
+    navTitle: "Layouts, middleware, errors",
+    description:
+      "Layouts wrap the route. Middleware. notFound, error, and fatal.",
+    markdown: layoutsMiddlewareErrors,
   },
 ];
 
