@@ -43,7 +43,7 @@ Page folders export handlers from `mod.ts` (`mod.tsx` when the file contains
 JSX), not a `Group`. `home/mod.tsx` exports `Home`. Later pages are the same
 (`Docs` from `docs/`). The root table in `main.ts` is the only place that
 calls `route()` and names the path and methods. One-offs (`staticFile`) stay
-on `main.ts`. Pathless `group()` is a wrap shell, not the `/` page. Shared
+on `main.ts`. `group("/", cb)` is a wrap shell, not the `/` page. Shared
 values live in a module that is not a route.
 
 Application code never calls a handler. The router is what invokes one: a

@@ -12,9 +12,10 @@ page-local components live in that folder. `main.ts` binds
 `route("/path", { GET: Home })`. One module = one path. One-offs such as
 `staticFile` stay on `main.ts`.
 
-`group()` is only for a prefixed subtree (nested paths, or layouts /
-middleware / `notFound` on that prefix) or a pathless wrap shell. A one-path
-page, including `/` and `/docs`, is handlers bound on the root table.
+`group()` is only a prefixed subtree (nested paths, or layouts /
+middleware / `notFound` on that prefix) or a pathless wrap. `group("/", …)`
+is the wrap. A one-path page, including `/` and `/docs`, is handlers bound
+on the root table.
 
 ## File names
 
@@ -60,8 +61,8 @@ export function Home() {
 }
 ```
 
-`group("/", …)` is illegal. Pathless `group(({ route }) => …)` is a
-layout/middleware shell with no extra prefix. A pre-built `Group` types
+`group("/", ({ route }) => …)` is a layout/middleware shell with no extra
+prefix. A pre-built `Group` types
 `ctx.params` from its own prefix; nested groups do not read ancestor params
 they did not declare. Shared data goes on `ctx.state`.
 
