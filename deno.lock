@@ -1,6 +1,7 @@
 {
   "version": "5",
   "specifiers": {
+    "jsr:@cookingpot/dashi@*": "0.18.0",
     "jsr:@cookingpot/dashi@0.18": "0.18.0",
     "npm:@tailwindcss/cli@4": "4.3.3",
     "npm:marked@^18.0.12": "18.0.12",
