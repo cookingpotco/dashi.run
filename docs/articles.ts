@@ -3,6 +3,7 @@ import gettingStarted from "./content/getting-started.md" with { type: "text" };
 import jsx from "./content/jsx.md" with { type: "text" };
 import routing from "./content/routing.md" with { type: "text" };
 import handlers from "./content/handlers.md" with { type: "text" };
+import forms from "./content/forms.md" with { type: "text" };
 import { type ArticleHash, parseMarkdown } from "./parse.tsx";
 
 interface ArticleRow {
@@ -43,6 +44,12 @@ const rows: ArticleRow[] = [
     navTitle: "Handlers",
     description: "Read and write handlers: html(), patches(), and ctx.",
     markdown: handlers,
+  },
+  {
+    slug: "forms",
+    navTitle: "Forms",
+    description: "GET forms navigate. POST forms apply patches.",
+    markdown: forms,
   },
 ];
 
