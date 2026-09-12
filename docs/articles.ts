@@ -7,6 +7,7 @@ import forms from "./content/forms.md" with { type: "text" };
 import layoutsMiddlewareErrors from "./content/layouts-middleware-errors.md" with {
   type: "text",
 };
+import clientJs from "./content/client-js.md" with { type: "text" };
 import { type ArticleHash, parseMarkdown } from "./parse.tsx";
 
 interface ArticleRow {
@@ -60,6 +61,13 @@ const rows: ArticleRow[] = [
     description:
       "Layouts wrap the route. Middleware. notFound, error, and fatal.",
     markdown: layoutsMiddlewareErrors,
+  },
+  {
+    slug: "client-js",
+    navTitle: "Client JS",
+    description:
+      "Register client TypeScript with client.module and client.element.",
+    markdown: clientJs,
   },
 ];
 
