@@ -70,8 +70,8 @@ Receives `ctx`, `thrown`, and `html()`. `html()` wraps remaining layouts, with
 1. Handler throw - this group's `error`
 2. Omitted, or this `error` throws - parent
 3. This group's layouts throw - skip this `error`, parent
-4. Slot throw - that group's `error` if present, no layouts, no parent. No
-   `fatal` fallback otherwise.
+4. Slot throw - that group's `error` only, no layouts, no parent. No `error` or
+   it throws, empty 500.
 
 ### fatal
 
