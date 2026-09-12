@@ -7,6 +7,7 @@ import forms from "./content/forms.md" with { type: "text" };
 import layoutsMiddlewareErrors from "./content/layouts-middleware-errors.md" with {
   type: "text",
 };
+import andMore from "./content/and-more.md" with { type: "text" };
 import { type ArticleHash, parseMarkdown } from "./parse.tsx";
 
 interface ArticleRow {
@@ -60,6 +61,12 @@ const rows: ArticleRow[] = [
     description:
       "Layouts wrap the route. Middleware. notFound, error, and fatal.",
     markdown: layoutsMiddlewareErrors,
+  },
+  {
+    slug: "and-more",
+    navTitle: "And More",
+    description: "Static files, CORS, and CSS notes.",
+    markdown: andMore,
   },
 ];
 
