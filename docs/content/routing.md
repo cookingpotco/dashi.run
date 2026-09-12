@@ -41,8 +41,16 @@ routes.
 Group routes, layouts, middleware, and errors together by a prefix. A bare `"/"`
 means no prefix.
 
-```tsx posts.ts
-import { group } from "dashi";
+```tsx posts.tsx
+import { group, type ReadArgs } from "dashi";
+
+function list({ html }: ReadArgs) {
+  return html(<h1>Posts</h1>);
+}
+
+function show({ ctx, html }: ReadArgs<{ params: { id: string } }>) {
+  return html(<p>{ctx.params.id}</p>);
+}
 
 export const posts = group("/posts", ({ route }) => ({
   routes: [

@@ -8,7 +8,9 @@ JSX is precompiled to static HTML on the wire. Built for fast, simple SSR.
 [Client JS](/docs/client-js).
 
 ```tsx hello.tsx
-export function Field() {
+import type { Element } from "dashi/jsx-runtime";
+
+export function Field(): Element {
   return (
     <label className="field" htmlFor="email">
       Email

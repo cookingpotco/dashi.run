@@ -1,5 +1,10 @@
 import { client, RouteSlot } from "dashi";
-import { LoadingCard, Snippet, SnippetTone } from "../../components/mod.ts";
+import {
+  Code,
+  LoadingCard,
+  Snippet,
+  SnippetTone,
+} from "../../components/mod.ts";
 import { LinkedProfileCard } from "../../users/mod.tsx";
 import { HeartButton } from "./heart_button.tsx";
 import { PatchesForm } from "./patches_form.tsx";
@@ -59,8 +64,7 @@ export function SectionBoard() {
         description={
           <>
             A page is a GET handler that returns{" "}
-            <span className="text-error">`Response`</span>, same as JSON, one
-            helper seals HTML.
+            <Code>Response</Code>, same as JSON, one helper seals HTML.
           </>
         }
         rotate="-rotate-[1.2deg]"

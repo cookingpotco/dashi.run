@@ -1,4 +1,5 @@
 import {
+  Code,
   CommandSnippet,
   highlightCode,
   Snippet,
@@ -92,7 +93,7 @@ function renderInline(tokens: Token[]): Element[] {
         break;
       case "codespan":
         nodes.push(
-          <code className="font-mono text-error">{`\`${token.text}\``}</code>,
+          <Code>{token.text}</Code>,
         );
         break;
       case "link": {

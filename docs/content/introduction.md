@@ -8,13 +8,15 @@ HTML, in the spirit of [Hotwire](https://hotwired.dev/) and
 [htmx](https://htmx.org/).
 
 ```tsx main.ts
-import { serve } from "dashi";
+import { type ReadArgs, serve } from "dashi";
+
+function Home({ html }: ReadArgs) {
+  return html(<h1>Hello</h1>);
+}
 
 serve(({ route }) => ({
   routes: [
-    route("/", {
-      GET: ({ html }) => html(<h1>Hello</h1>),
-    }),
+    route("/", { GET: Home }),
   ],
 }));
 ```
