@@ -1,25 +1,28 @@
 # Slots
 
-Same-request UI is a component import. `<RouteSlot src>` GETs that route later
-and fills the host. Use it when the shell can be cached but part of the page
-cannot, or when work should wait until after first paint - a heavy slot, or
-content below the fold with `fetchWhen="visible"` and a `fallback`.
+A `<RouteSlot>` GETs another route after the page lands, on connect or when it
+becomes visible. Use that to keep dynamic data off a cached shell, or to defer
+heavy or below-the-fold work.
 
 ## RouteSlot
 
-`<RouteSlot src="/todos" />` fetches after the host connects. `fallback` is
+`<RouteSlot src="/cart" />` fetches after the host connects. `fallback` is
 optional then. The GET fills the host (`innerHTML`). The host stays, so
-`patch.refresh` can re-GET that `src`. See
+`patch.refresh` can re-fetch that `src`. See
 [Write handler](/docs/handlers#write-handler).
 
-```tsx home.tsx
-import { RouteSlot } from "dashi";
+`html()` on slot requests doesn't render any layouts. See
+[Layouts](/docs/layouts-middleware-errors#layouts).
 
-export function Home() {
-  return (
+```tsx home.tsx
+import { CacheStrategy, type ReadArgs, RouteSlot } from "dashi";
+
+export function Home({ html }: ReadArgs) {
+  return html(
     <main>
-      <RouteSlot src="/todos" />
-    </main>
+      <RouteSlot src="/cart" />
+    </main>,
+    { cache: { strategy: CacheStrategy.Immutable } },
   );
 }
 ```
@@ -29,7 +32,7 @@ export function Home() {
 `fetchWhen="visible"` waits for the first intersection. `fallback` is required.
 `patch.refresh` on the same `src` may fetch before the slot intersects.
 
-```tsx lazy.tsx
+```tsx components/panel.tsx
 import { RouteSlot } from "dashi";
 
 export function Panel() {
@@ -50,10 +53,10 @@ connect, omit it and the host is empty until the GET lands.
 
 ## As a page
 
-The same `src` is a normal document when you visit it. Layouts run on that hit
-and skip the slot GET. See [Layouts](/docs/layouts-middleware-errors#layouts).
+The same `src` is a normal document when you visit it. Layouts run on that
+request.
 
-The client sends `X-Slot` on the slot GET. Check that header when the slot
+The client sends `X-Slot` on the slot GET. You can use that header when the slot
 markup should differ from the page.
 
 ```tsx profile.tsx
@@ -74,8 +77,5 @@ URL can share one entry. See [Read handler](/docs/handlers#read-handler).
 
 ## Nested slots
 
-A slot body can render another `<RouteSlot>`. Page to panel to chart is fine.
-
-A cycle is the author's problem. The framework does not stop it. Nesting a slot
-that re-fetches an ancestor, or looping the same `src`, shows up as endless GETs
-in Network. Do not do that.
+A slot body can render another `<RouteSlot>`. Each waits for its parent, so a
+deep nest waterfalls. A slot that includes itself, or an ancestor, loops.
