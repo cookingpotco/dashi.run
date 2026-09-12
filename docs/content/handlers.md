@@ -1,11 +1,11 @@
 # Handlers
 
-Every handler returns a `Response`, HTML or anything else (JSON, a redirect,
+Every handler returns a `Response` - HTML or anything else (JSON, a redirect,
 204). The routing runtime is what executes a handler.
 
 ## Read handler
 
-A GET handler, receives `html()` in its args.
+A GET handler with `html()` in its args.
 
 ### html()
 
@@ -32,7 +32,7 @@ export function getJson(): Response {
 
 ### Status
 
-Pass `{ status }` to set the status of the response, 200 by default.
+Pass `{ status }` to set the status of the `html()` response. Default 200.
 
 ### Cache
 
@@ -46,7 +46,7 @@ POST, PUT, PATCH, or DELETE. Call `patches()` or return a raw `Response`.
 
 ### Patches
 
-A patch is HTML aimed at an element. By `#id` or `/path` (refresh).
+A patch is HTML aimed at an element, by `#id` or `/path` (refresh).
 
 - `update` - replace the target's children
 - `replace` - replace the target node
@@ -70,9 +70,13 @@ export async function addTodo({ ctx, patches }: WriteArgs) {
 }
 ```
 
+### Status
+
+Pass `{ status }` to set the status of the `patches()` response. Default 200.
+
 ### Forms
 
-Form submissions are the main mechanism for patches. See [forms](/docs/forms)
+Form submissions are the main mechanism for patches. See [Forms](/docs/forms)
 for more details.
 
 ## ctx
@@ -80,9 +84,9 @@ for more details.
 1. `req` - `Request` object.
 2. `url` - `URL` object.
 3. `params` - Typed params from that route. e.g. `{ id: string }`
-4. `state` - Partial app defined state object, mutate in-place. e.g.
+4. `state` - Partial app-defined state object. Mutate it in place. e.g.
    `{ user?: MyUser }`
 
-Middleware and errors see `WrapperCtx` (wide params). Layouts see `LayoutCtx`
-(`state` is readonly). More in
+Middleware and errors get `WrapperCtx` (wide params). Layouts get `LayoutCtx`
+(`state` is readonly). See
 [Layouts, middleware, errors](/docs/layouts-middleware-errors).
