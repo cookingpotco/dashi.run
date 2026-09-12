@@ -5,8 +5,9 @@ error handlers.
 
 ## Layouts
 
-Shared UI only. No gating or state change. They run after the route, outermost
-first. Document hits only - slot hits skip them. See [Slots](/docs/slots).
+Rendered by [`html()`](/docs/handlers#read-handler) calls, outermost first. Use
+for shared UI only, with no gating or state change. Slot hits skip them. See
+[Slots](/docs/slots).
 
 `ctx.state` is readonly. Set state in middleware or the handler. See
 [Handlers](/docs/handlers#ctx).
@@ -51,37 +52,39 @@ Attach `middleware: [session]` on `serve()` or a `group()`. Outermost first.
 ## Errors
 
 `notFound` and `error` live on `serve()` or a `group()`. `fatal` is only on
-`serve()` options.
+`serve()` options. Just like regular handlers, they return `Response`. Directly
+or sealed through `html()`.
 
 ### notFound
 
-A document miss. Receives `ctx` and `html()`. `html()` wraps remaining layouts.
-Omitted walks to the parent.
+A document miss. Receives `ctx` and `html()`. `html()` wraps remaining layouts,
+with 404 as the default status. Omitted walks to the parent.
 
 A slot miss is an empty 404. `notFound` does not run.
 
 ### error
 
-A handler throw, or an inner group's failure. Receives `ctx`, `thrown`, and
-`html()`. Document `html()` wraps remaining layouts from that group. This
-group's `error` does not catch this group's layouts.
+Receives `ctx`, `thrown`, and `html()`. `html()` wraps remaining layouts, with
+500 as the default status.
 
-A slot `error` is that group only - no layouts, and no parent `error`. If that
-group has no `error`, or it throws, the slot is an empty 500.
+1. Handler throw - this group's `error`
+2. Omitted, or this `error` throws - parent
+3. This group's layouts throw - skip this `error`, parent
+4. Slot throw - that group's `error` if present, no layouts, no parent. No
+   `fatal` fallback otherwise.
 
 ### fatal
 
 Last-resort 500. Receives `html()` only - no `ctx`, no `thrown`, no layouts. A
 slot last-resort is an empty 500, not `fatal`.
 
-A throw in middleware skips `error`. On a document it goes to `fatal`. On a slot
-it is an empty 500.
+A throw in middleware skips `error` and follows the `fatal` path.
 
 ```tsx errors.tsx
 import type { ErrorArgs, FatalArgs, NotFoundArgs } from "dashi";
 
 export function notFound({ html }: NotFoundArgs) {
-  return html(<p>Not found</p>, { status: 404 });
+  return html(<p>Not found</p>);
 }
 
 export function error({ html }: ErrorArgs) {
@@ -96,5 +99,11 @@ export function fatal({ html }: FatalArgs) {
       </body>
     </html>,
   );
+}
+```
+
+```ts api/errors.ts
+export function error() {
+  return Response.json({ msg: "Something went wrong." });
 }
 ```
