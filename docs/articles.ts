@@ -7,6 +7,7 @@ import forms from "./content/forms.md" with { type: "text" };
 import layoutsMiddlewareErrors from "./content/layouts-middleware-errors.md" with {
   type: "text",
 };
+import notYet from "./content/not-yet.md" with { type: "text" };
 import { type ArticleHash, parseMarkdown } from "./parse.tsx";
 
 interface ArticleRow {
@@ -60,6 +61,12 @@ const rows: ArticleRow[] = [
     description:
       "Layouts wrap the route. Middleware. notFound, error, and fatal.",
     markdown: layoutsMiddlewareErrors,
+  },
+  {
+    slug: "not-yet",
+    navTitle: "Not yet",
+    description: "In-progress work that is not shipping yet.",
+    markdown: notYet,
   },
 ];
 
