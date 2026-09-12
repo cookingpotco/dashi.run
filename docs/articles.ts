@@ -7,6 +7,7 @@ import forms from "./content/forms.md" with { type: "text" };
 import layoutsMiddlewareErrors from "./content/layouts-middleware-errors.md" with {
   type: "text",
 };
+import slots from "./content/slots.md" with { type: "text" };
 import clientJs from "./content/client-js.md" with { type: "text" };
 import { type ArticleHash, parseMarkdown } from "./parse.tsx";
 
@@ -61,6 +62,12 @@ const rows: ArticleRow[] = [
     description:
       "Layouts wrap the route. Middleware. notFound, error, and fatal.",
     markdown: layoutsMiddlewareErrors,
+  },
+  {
+    slug: "slots",
+    navTitle: "Slots",
+    description: "A RouteSlot GETs a route later. The same src is a page.",
+    markdown: slots,
   },
   {
     slug: "client-js",
