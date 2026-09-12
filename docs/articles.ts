@@ -8,6 +8,7 @@ import layoutsMiddlewareErrors from "./content/layouts-middleware-errors.md" wit
   type: "text",
 };
 import slots from "./content/slots.md" with { type: "text" };
+import clientJs from "./content/client-js.md" with { type: "text" };
 import { type ArticleHash, parseMarkdown } from "./parse.tsx";
 
 interface ArticleRow {
@@ -67,6 +68,13 @@ const rows: ArticleRow[] = [
     navTitle: "Slots",
     description: "A RouteSlot GETs a route later. The same src is a page.",
     markdown: slots,
+  },
+  {
+    slug: "client-js",
+    navTitle: "Client JS",
+    description:
+      "Register client TypeScript with client.module and client.element.",
+    markdown: clientJs,
   },
 ];
 
