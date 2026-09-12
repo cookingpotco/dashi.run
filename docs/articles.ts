@@ -7,6 +7,7 @@ import forms from "./content/forms.md" with { type: "text" };
 import layoutsMiddlewareErrors from "./content/layouts-middleware-errors.md" with {
   type: "text",
 };
+import softNavigation from "./content/soft-navigation.md" with { type: "text" };
 import { type ArticleHash, parseMarkdown } from "./parse.tsx";
 
 interface ArticleRow {
@@ -60,6 +61,13 @@ const rows: ArticleRow[] = [
     description:
       "Layouts wrap the route. Middleware. notFound, error, and fatal.",
     markdown: layoutsMiddlewareErrors,
+  },
+  {
+    slug: "soft-navigation",
+    navTitle: "Soft navigation",
+    description:
+      "Swap the main region in place with NavigationRoot and navigate().",
+    markdown: softNavigation,
   },
 ];
 
