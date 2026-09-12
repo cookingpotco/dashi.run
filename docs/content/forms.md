@@ -1,14 +1,16 @@
 # Forms
 
-Same-origin form submits are intercepted. GET navigates. POST applies patches.
+Same-origin form submits are intercepted. Use GET forms to navigate and POST to
+drive UI updates through patches.
 
 ## GET forms
 
-Fields become the query string, then `navigate()`. Useful for search with URL
-state - shareable, back and forward.
+Fields become the query string, then
+[`navigate()`](/docs/soft-navigation#client). Useful for search with URL state -
+shareable, back and forward.
 
 When `<navigation-root>` is present, that is a soft navigation. See
-[Soft navigation](/docs/soft-navigation).
+[Soft Navigation](/docs/soft-navigation).
 
 ```tsx search.tsx
 export function SearchForm() {
@@ -32,8 +34,8 @@ export function Search({ ctx, html }: ReadArgs) {
 
 ## POST forms
 
-Intercepted. The form can sit anywhere on the page. The form gets `aria-busy`
-while the write is in flight. A second submit is dropped.
+The form can sit anywhere on the page. While the write is in flight `aria-busy`
+is set and a second submit is dropped.
 
 ### Patches
 
@@ -57,7 +59,9 @@ import { patch, type WriteArgs } from "dashi";
 export async function addTodo({ ctx, patches }: WriteArgs) {
   const title = (await ctx.req.formData()).get("title");
   if (typeof title !== "string") {
-    return patches([]);
+    return patches([
+      patch.replace("#error", <p>Title is required</p>),
+    ], { status: 400 });
   }
   return patches([
     patch.append("#todos", <li>{title}</li>),
@@ -71,12 +75,22 @@ When the result cannot stay on the page, the browser loads the document.
 
 ### Redirect
 
-A same-origin redirect swaps in place when `<navigation-root>` is present. GET
-goes through `navigate()`. POST goes through the write. Without the host, or
-when the body is not HTML, the browser does a real document load. See
-[Soft navigation](/docs/soft-navigation).
+A same-origin redirect swaps in place when `<navigation-root>` is present.
+Without the host, or when the body is not HTML, the browser does a real document
+load. See [Soft Navigation](/docs/soft-navigation).
 
 ### hardNavigation
 
 `hardNavigation` on the `<form>` or the submitter skips intercept and does a
-real document load. On `<a>`, see [Soft navigation](/docs/soft-navigation).
+real document load. Same as on `<a>`, see
+[Soft Navigation](/docs/soft-navigation).
+
+```tsx navigate_away.tsx
+export function NavigateForm() {
+  return (
+    <form method="GET" action="/elsewhere" hardNavigation>
+      <button type="submit">Go elsewhere</button>
+    </form>
+  );
+}
+```
