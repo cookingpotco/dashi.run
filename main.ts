@@ -8,7 +8,6 @@ import { getEmails, getJoin, postSubmitJoinRequest } from "./join/mod.tsx";
 import { RootLayout } from "./root/mod.ts";
 import type { AppState } from "./state.ts";
 import { getTodoList, postSubmitTodo } from "./todos/mod.tsx";
-import { stripTrailingSlash } from "./trailing_slash_middleware.ts";
 import { users } from "./users/mod.tsx";
 
 const crawlDir = `${import.meta.dirname}/crawl`;
@@ -21,7 +20,6 @@ type SiteBuild = Parameters<typeof serve<AppState>>[0];
 
 export const createSite: SiteBuild = ({ route }) => ({
   layouts: [RootLayout],
-  middleware: [stripTrailingSlash],
   notFound,
   error,
   routes: [
