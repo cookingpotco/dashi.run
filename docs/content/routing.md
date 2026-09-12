@@ -39,6 +39,7 @@ routes.
 ## group()
 
 Group routes, layouts, middleware, and errors together by a prefix.
+A bare `"/"` means no prefix.
 
 ```tsx posts.ts
 import { group } from "dashi";
