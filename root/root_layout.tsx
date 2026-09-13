@@ -1,6 +1,6 @@
 import { type LayoutArgs, NavigationRoot } from "dashi";
 import type { Element } from "dashi/jsx-runtime";
-import { defaultTitle, siteOrigin } from "../seo.ts";
+import { defaultTitle, rootJsonLd, siteOrigin } from "../seo.ts";
 import type { AppState } from "../state.ts";
 import styles from "../styles.json" with { type: "json" };
 import { SiteFooter } from "./site_footer.tsx";
@@ -18,21 +18,24 @@ export function RootLayout({ ctx, children }: LayoutArgs<AppState>): Element {
   return (
     <html lang="en" className="overflow-x-hidden scrollbar-gutter-stable">
       <head>
+        <meta charSet="utf-8" />
         <title>{title}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         {description !== undefined && (
           <meta name="description" content={description} />
         )}
         {index === false && <meta name="robots" content="noindex" />}
-        <link rel="canonical" href={canonical} />
+        {index === true && <link rel="canonical" href={canonical} />}
         <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="Dashi" />
+        <meta property="og:site_name" content="dashi" />
         <meta property="og:title" content={title} />
-        <meta property="og:url" content={canonical} />
+        {index === true && <meta property="og:url" content={canonical} />}
+        <meta property="og:locale" content="en_US" />
         {description !== undefined && (
           <meta property="og:description" content={description} />
         )}
         <meta property="og:image" content={image} />
+        <meta property="og:image:alt" content="dashi" />
         <meta property="og:image:width" content="2000" />
         <meta property="og:image:height" content="1000" />
         <meta name="twitter:card" content="summary_large_image" />
@@ -42,6 +45,7 @@ export function RootLayout({ ctx, children }: LayoutArgs<AppState>): Element {
           <meta name="twitter:description" content={description} />
         )}
         <meta name="twitter:image" content={image} />
+        <script type="application/ld+json">{rootJsonLd}</script>
         <link
           rel="icon"
           href="/static/favicon.ico"
