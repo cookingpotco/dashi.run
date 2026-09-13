@@ -20,8 +20,8 @@ route("/static/:file", {
 });
 ```
 
-Cache defaults to `CacheStrategy.NoStore`. Omitted paths and traversal outside `dir`
-return 404.
+Cache defaults to `CacheStrategy.NoStore`. Omitted paths and traversal outside
+`dir` return 404.
 
 ## CORS
 
@@ -50,4 +50,5 @@ For cache-friendly CSS, build to a hashed filename and serve it with
 `staticFile` on a route such as `/generated/:file`. The URL changes when the
 file changes, so you can set `CacheStrategy.Immutable`.
 
-The `deno create jsr:@cookingpot/dashi` scaffold implements Tailwind v4 like this.
+The `deno create jsr:@cookingpot/dashi` scaffold implements Tailwind v4 like
+this.
