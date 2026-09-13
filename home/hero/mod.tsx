@@ -12,7 +12,7 @@ export function Hero() {
         Modern framework
         <br className="md:hidden" /> built on <br className="hidden md:block" />
         <span className="relative inline-block">
-          <span className="absolute bottom-2 left-0 hidden h-3 w-full -rotate-1 bg-yellow md:block" />
+          <span className="absolute bottom-2 left-0 h-3 w-full -rotate-1 bg-yellow" />
           <span className="relative">old ideas.</span>
         </span>
       </h1>

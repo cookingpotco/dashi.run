@@ -27,7 +27,7 @@ export function RootLayout({ ctx, children }: LayoutArgs<AppState>): Element {
         {index === false && <meta name="robots" content="noindex" />}
         {index === true && <link rel="canonical" href={canonical} />}
         <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="Dashi" />
+        <meta property="og:site_name" content="dashi" />
         <meta property="og:title" content={title} />
         {index === true && <meta property="og:url" content={canonical} />}
         <meta property="og:locale" content="en_US" />
@@ -35,7 +35,7 @@ export function RootLayout({ ctx, children }: LayoutArgs<AppState>): Element {
           <meta property="og:description" content={description} />
         )}
         <meta property="og:image" content={image} />
-        <meta property="og:image:alt" content="Dashi" />
+        <meta property="og:image:alt" content="dashi" />
         <meta property="og:image:width" content="2000" />
         <meta property="og:image:height" content="1000" />
         <meta name="twitter:card" content="summary_large_image" />

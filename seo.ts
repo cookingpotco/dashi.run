@@ -1,5 +1,5 @@
 export const siteOrigin = "https://dashi.run";
-export const defaultTitle = "Dashi Web Framework";
+export const defaultTitle = "dashi Web Framework";
 
 export interface Seo {
   title: string;
@@ -12,7 +12,7 @@ export const rootJsonLd = JSON.stringify({
   "@graph": [
     {
       "@type": "SoftwareApplication",
-      "name": "Dashi",
+      "name": "dashi",
       "applicationCategory": "DeveloperApplication",
       "operatingSystem": "Deno",
       "url": siteOrigin,
@@ -25,7 +25,7 @@ export const rootJsonLd = JSON.stringify({
     },
     {
       "@type": "WebSite",
-      "name": "Dashi",
+      "name": "dashi",
       "url": siteOrigin,
     },
   ],
