@@ -20,13 +20,14 @@ route("/static/:file", {
 });
 ```
 
-Pass `cache` for long-lived assets. Omitted paths and traversal outside `dir`
+Cache defaults to `CacheStrategy.NoStore`. Omitted paths and traversal outside `dir`
 return 404.
 
 ## CORS
 
-`cors()` is middleware for a `group()`. OPTIONS returns 204 with CORS headers;
-other methods pass through and get the same headers on the response.
+`cors()` is middleware for `serve()` and `group()`. OPTIONS returns 204 with
+CORS headers; other methods pass through and get the same headers on the
+response.
 
 `credentials: true` requires an explicit `origin`. Wildcard `*` is not allowed
 with credentials.
@@ -43,8 +44,10 @@ export const api = group("/api", ({ route }) => ({
 
 ## CSS
 
-Dashi is CSS-agnostic. Link a stylesheet from your layout like any other app.
+dashi is CSS-agnostic. Link a stylesheet from your layout like any other app.
 
 For cache-friendly CSS, build to a hashed filename and serve it with
 `staticFile` on a route such as `/generated/:file`. The URL changes when the
 file changes, so you can set `CacheStrategy.Immutable`.
+
+The `deno create jsr:@cookingpot/dashi` scaffold implements Tailwind v4 like this.
