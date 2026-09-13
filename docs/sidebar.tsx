@@ -33,7 +33,11 @@ export function SidebarItem(
 }
 
 export function SidebarHash(
-  { href, label, selected }: { href: string; label: string; selected?: boolean },
+  { href, label, selected }: {
+    href: string;
+    label: string;
+    selected?: boolean;
+  },
 ) {
   if (selected) {
     return (
