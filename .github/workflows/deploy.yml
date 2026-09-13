@@ -74,12 +74,17 @@ jobs:
           CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
           CF_ZONE_ID: ${{ secrets.CF_ZONE_ID }}
         run: |
+          # HTML is cached with a long s-maxage (see cache.ts). During a deploy the
+          # new image only built styles-<new>.css; stale HTML still links
+          # styles-<old>.css. Retained hashes in the image cover that window;
+          # purge every HTML route so CF does not serve HTML past the retention
+          # depth. /generated/ is not purged: those URLs are immutable.
           # files and prefixes cannot share a body.
           curl -fsS -X POST \
             "https://api.cloudflare.com/client/v4/zones/${CF_ZONE_ID}/purge_cache" \
             -H "Authorization: Bearer ${CF_API_TOKEN}" \
             -H "Content-Type: application/json" \
-            --data '{"prefixes":["dashi.run/docs","dashi.run/users","dashi.run/static"]}'
+            --data '{"prefixes":["dashi.run/docs","dashi.run/users","dashi.run/static","dashi.run/discord","dashi.run/join","dashi.run/todos"]}'
           curl -fsS -X POST \
             "https://api.cloudflare.com/client/v4/zones/${CF_ZONE_ID}/purge_cache" \
             -H "Authorization: Bearer ${CF_API_TOKEN}" \
