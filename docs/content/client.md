@@ -13,9 +13,9 @@ Register a client file that runs as a side effect. Call `client.module` at
 module scope, not inside a handler or component. Render the returned component
 on the page to attach the script.
 
-Client files can import each other. The convention is to name them `*_client.ts` and keep them beside
-the file that registers them. Import browser APIs from `dashi/client`, not
-`dashi`.
+Client files can import each other. The convention is to name them `*_client.ts`
+and keep them beside the file that registers them. Import browser APIs from
+`dashi/client`, not `dashi`.
 
 The module runs on first page load, when a [RouteSlot](/docs/slots) brings it
 in, or after [soft navigation](/docs/soft-navigation).
