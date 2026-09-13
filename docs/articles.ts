@@ -83,6 +83,7 @@ const rows: ArticleRow[] = [
     navTitle: "Soft navigation",
     description:
       "Swap the main region in place with NavigationRoot and navigate().",
+    contentFile: "soft-navigation.md",
     markdown: softNavigation,
   },
 ];
