@@ -10,10 +10,17 @@ export function Hero() {
       </p>
       <h1 className="text-center text-title-compact md:text-title">
         Modern framework
-        <br className="md:hidden" /> built on <br className="hidden md:block" />
-        <span className="relative inline-block">
-          <span className="absolute bottom-2 left-0 h-3 w-full -rotate-1 bg-yellow" />
-          <span className="relative">old ideas.</span>
+        <br className="md:hidden" />
+        <span className="relative inline max-md:block">
+          <span className="absolute bottom-2 left-0 h-3 w-full -rotate-1 bg-yellow md:hidden" />
+          <span className="relative">
+            built on
+            <br className="hidden md:block" />{" "}
+            <span className="relative inline-block">
+              <span className="absolute bottom-2 left-0 hidden h-3 w-full -rotate-1 bg-yellow md:block" />
+              <span className="relative">old ideas.</span>
+            </span>
+          </span>
         </span>
       </h1>
       <p className="max-w-xl pb-2 text-center text-body-small text-body-text md:max-w-none md:text-body">
