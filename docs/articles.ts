@@ -11,6 +11,7 @@ import slots from "./content/slots.md" with { type: "text" };
 import softNavigation from "./content/soft-navigation.md" with { type: "text" };
 import client from "./content/client.md" with { type: "text" };
 import andMore from "./content/and-more.md" with { type: "text" };
+import notYet from "./content/not-yet.md" with { type: "text" };
 
 import { type ArticleHash, parseMarkdown } from "./parse.tsx";
 
@@ -104,6 +105,13 @@ const rows: ArticleRow[] = [
     description: "Static files, CORS, and CSS notes.",
     contentFile: "and-more.md",
     markdown: andMore,
+  },
+  {
+    slug: "not-yet",
+    navTitle: "Not yet",
+    description: "In-progress work that is not shipped yet.",
+    contentFile: "not-yet.md",
+    markdown: notYet,
   },
 ];
 
