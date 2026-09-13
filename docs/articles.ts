@@ -8,6 +8,7 @@ import layoutsMiddlewareErrors from "./content/layouts-middleware-errors.md" wit
   type: "text",
 };
 import slots from "./content/slots.md" with { type: "text" };
+import softNavigation from "./content/soft-navigation.md" with { type: "text" };
 import { type ArticleHash, parseMarkdown } from "./parse.tsx";
 
 interface ArticleRow {
@@ -76,6 +77,13 @@ const rows: ArticleRow[] = [
     description: "A RouteSlot GETs a route later. The same src is a page.",
     contentFile: "slots.md",
     markdown: slots,
+  },
+  {
+    slug: "soft-navigation",
+    navTitle: "Soft navigation",
+    description:
+      "Swap the main region in place with NavigationRoot and navigate().",
+    markdown: softNavigation,
   },
 ];
 
