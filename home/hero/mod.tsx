@@ -7,15 +7,14 @@ export function Hero() {
         Pure code, zero magic
       </p>
       <h1 className="text-center text-title-compact md:text-title">
-        Modern framework
-        <br className="md:hidden" />
+        Modern framework <br className="lg:hidden" />
         <span className="relative inline max-md:block">
-          <span className="absolute bottom-2 left-0 h-3 w-full -rotate-1 bg-yellow md:hidden" />
+          <span className="absolute bottom-1.5 left-4 h-3 w-73.75 -rotate-1 bg-yellow lg:hidden md:w-full md:left-0 md:bottom-4" />
           <span className="relative">
             built on
-            <br className="hidden md:block" />{" "}
+            <br className="hidden lg:block" />{" "}
             <span className="relative inline-block">
-              <span className="absolute bottom-2 left-0 hidden h-3 w-full -rotate-1 bg-yellow md:block" />
+              <span className="absolute bottom-2 left-0 hidden h-3 w-full -rotate-1 bg-yellow lg:block" />
               <span className="relative">old ideas.</span>
             </span>
           </span>
