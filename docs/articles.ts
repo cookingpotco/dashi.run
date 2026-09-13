@@ -30,7 +30,8 @@ const rows: ArticleRow[] = [
   {
     slug: "getting-started",
     navTitle: "Getting started",
-    description: "Create a dashi app and run the dev server.",
+    description:
+      "Scaffold with deno create jsr:@cookingpot/dashi, run the dev server, and ship your first route in minutes.",
     contentFile: "getting-started.md",
     markdown: gettingStarted,
   },
