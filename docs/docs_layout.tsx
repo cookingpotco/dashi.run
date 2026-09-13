@@ -1,6 +1,6 @@
 import type { LayoutArgs } from "dashi";
 import type { Element } from "dashi/jsx-runtime";
-import { docsBreadcrumbJsonLd } from "../seo.ts";
+import { docsBreadcrumbJsonLd, jsonLdHtml } from "../seo.ts";
 import type { AppState } from "../state.ts";
 import { adjacentArticles, getArticleBySlug, getArticles } from "./articles.ts";
 import { PrevNext } from "./prev_next.tsx";
@@ -16,9 +16,12 @@ export function DocsLayout({ ctx, children }: LayoutArgs<AppState>): Element {
 
   return (
     <>
-      <script type="application/ld+json">
-        {docsBreadcrumbJsonLd(article)}
-      </script>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: jsonLdHtml(docsBreadcrumbJsonLd(article)),
+        }}
+      />
       <main className="flex w-full flex-col gap-4 py-6 md:flex-row md:gap-16 md:pt-8 md:pb-16">
         <nav className="w-40 shrink-0">
           <div className="flex flex-col">
