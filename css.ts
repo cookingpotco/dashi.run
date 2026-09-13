@@ -26,6 +26,19 @@ function runCli(outPath: string, watch: boolean): Deno.ChildProcess {
   }).spawn();
 }
 
+async function purgeStyles(keep: Set<string>): Promise<void> {
+  for await (const entry of Deno.readDir(GENERATED_DIR)) {
+    if (
+      entry.isFile &&
+      entry.name.startsWith("styles-") &&
+      entry.name.endsWith(".css") &&
+      !keep.has(entry.name)
+    ) {
+      await Deno.remove(`${GENERATED_DIR}/${entry.name}`);
+    }
+  }
+}
+
 async function build(cssPath: string, watch: boolean): Promise<void> {
   const bytes = await Deno.readFile(cssPath);
   const digest = new Uint8Array(await crypto.subtle.digest("SHA-256", bytes));
@@ -51,21 +64,13 @@ async function build(cssPath: string, watch: boolean): Promise<void> {
     MANIFEST,
     `${JSON.stringify({ href }, null, 2)}\n`,
   );
-  if (watch) {
-    if (previousHref !== href) {
-      console.log(`[css] ${href}`);
-    }
-    return;
+  const keep = new Set([name]);
+  if (watch && previousHref !== undefined && previousHref !== href) {
+    keep.add(previousHref.replace(/^\/generated\//, ""));
   }
-  for await (const entry of Deno.readDir(GENERATED_DIR)) {
-    if (
-      entry.isFile &&
-      entry.name.startsWith("styles-") &&
-      entry.name.endsWith(".css") &&
-      entry.name !== name
-    ) {
-      await Deno.remove(`${GENERATED_DIR}/${entry.name}`);
-    }
+  await purgeStyles(keep);
+  if (watch && previousHref !== href) {
+    console.log(`[css] ${href}`);
   }
 }
 
