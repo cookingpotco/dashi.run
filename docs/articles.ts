@@ -9,7 +9,7 @@ import layoutsMiddlewareErrors from "./content/layouts-middleware-errors.md" wit
 };
 import slots from "./content/slots.md" with { type: "text" };
 import softNavigation from "./content/soft-navigation.md" with { type: "text" };
-import clientJs from "./content/client-js.md" with { type: "text" };
+import client from "./content/client.md" with { type: "text" };
 
 import { type ArticleHash, parseMarkdown } from "./parse.tsx";
 
@@ -81,6 +81,7 @@ const rows: ArticleRow[] = [
     contentFile: "slots.md",
     markdown: slots,
   },
+  {
     slug: "soft-navigation",
     navTitle: "Soft navigation",
     description:
@@ -89,12 +90,12 @@ const rows: ArticleRow[] = [
     markdown: softNavigation,
   },
   {
-    slug: "client-js",
-    navTitle: "Client JS",
+    slug: "client",
+    navTitle: "Client",
     description:
       "Register client TypeScript with client.module and client.element.",
-    contentFile: "client-js.md",
-    markdown: clientJs,
+    contentFile: "client.md",
+    markdown: client,
   },
 ];
 

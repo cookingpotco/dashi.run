@@ -158,7 +158,7 @@ export function SectionBoard() {
       />
       <Section
         badge="05"
-        title="Client JS"
+        title="Client"
         description="Progressive enhancement by design. Add client-side logic only where needed using TS and standard Web APIs."
         rotate="rotate-[0.75deg]"
         slide="right"
