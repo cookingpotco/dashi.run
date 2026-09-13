@@ -9,12 +9,13 @@ export function Hero() {
       <h1 className="text-center text-title-compact md:text-title">
         <span className="block md:inline">Modern framework</span>
         <span className="relative mx-auto block w-fit md:mx-0 md:inline-block md:w-auto">
-          <span className="absolute bottom-2 left-0 -z-10 h-3 w-full -rotate-1 bg-yellow md:hidden" />
-          <span className="relative z-10 whitespace-nowrap md:whitespace-normal">
-            built on <br className="hidden md:block" />
+          <span className="absolute bottom-2 left-0 h-3 w-full -rotate-1 bg-yellow md:hidden" />
+          <span className="whitespace-nowrap md:whitespace-normal">
+            built on
+            <br className="hidden md:block" />
             <span className="relative inline md:inline-block">
-              <span className="absolute bottom-2 left-0 -z-10 hidden h-3 w-full -rotate-1 bg-yellow md:block" />
-              <span className="relative z-10">old ideas.</span>
+              <span className="absolute bottom-2 left-0 hidden h-3 w-full -rotate-1 bg-yellow md:block" />
+              <span className="relative">old ideas.</span>
             </span>
           </span>
         </span>
