@@ -24,23 +24,24 @@ export function DocsLayout({ ctx, children }: LayoutArgs<AppState>): Element {
       />
       <main className="flex w-full flex-col gap-4 py-6 md:flex-row md:gap-16 md:pt-8 md:pb-16">
         <nav className="w-40 shrink-0">
-          <div className="flex flex-col">
+          <div className="flex flex-col gap-3">
             {getArticles().map((entry) => {
               const selected = entry.slug === slug;
               return (
-                <div>
+                <div className="flex flex-col gap-1">
                   <SidebarItem
                     href={`/docs/${entry.slug}`}
                     selected={selected}
                   >
                     {entry.navTitle}
                   </SidebarItem>
-                  {selected && entry.hashes.length > 0 && (
-                    <div className="flex flex-col gap-1 pt-1">
+                  {entry.hashes.length > 0 && (
+                    <div className="flex flex-col gap-1">
                       {entry.hashes.map((hash) => (
                         <SidebarHash
                           href={`/docs/${entry.slug}#${hash.id}`}
                           label={hash.label}
+                          selected={selected}
                         />
                       ))}
                     </div>

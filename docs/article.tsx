@@ -26,7 +26,7 @@ export function ArticleH3({ children }: { children: DashiNode }) {
 
 export function ArticleP({ children }: { children: DashiNode | DashiNode[] }) {
   return (
-    <p className="py-1 text-body-small text-body-text md:text-body">
+    <p className="hyphens-auto [hyphenate-limit-chars:10_3_3] break-words py-1 text-body-small text-body-text md:text-body">
       {children}
     </p>
   );

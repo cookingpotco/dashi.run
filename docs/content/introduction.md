@@ -27,7 +27,7 @@ I built dashi after Next.js 16: too much magic, spending too much time fighting
 the framework than shipping. I wanted a small tool that keeps the ideas I
 actually like - server-rendered HTML, patches, only as much JS as you ask for.
 
-- **Speed.** JSX is precompiled into plain HTML and sent as-is for every render.
+- **Fast.** JSX is precompiled into plain HTML and sent as-is for every render.
 - **Server-driven.** Update the UI through targeted HTML patches.
 - **No JS bloat.** The page is HTML. You add JS only for the bits that need it.
 - **Composition.** A page can include other routes, each fetched and cached on

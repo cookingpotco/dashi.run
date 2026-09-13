@@ -13,21 +13,19 @@ export function SidebarItem(
 ) {
   if (selected) {
     return (
-      <div className="py-1">
-        <a href={href} className="flex items-center gap-2 no-underline">
-          <span
-            className="h-5 w-1 shrink-0 rounded bg-pink"
-            aria-hidden
-          />
-          <span className="text-nav-link font-bold text-black">{children}</span>
-        </a>
-      </div>
+      <a href={href} className="flex items-center gap-2 no-underline">
+        <span
+          className="h-5 w-1 shrink-0 rounded bg-pink"
+          aria-hidden
+        />
+        <span className="text-nav-link font-bold text-black">{children}</span>
+      </a>
     );
   }
   return (
     <a
       href={href}
-      className="block py-1 text-nav-link font-bold text-black no-underline"
+      className="block text-nav-link font-bold text-black no-underline"
     >
       {children}
     </a>
@@ -35,8 +33,18 @@ export function SidebarItem(
 }
 
 export function SidebarHash(
-  { href, label }: { href: string; label: string },
+  { href, label, selected }: { href: string; label: string; selected?: boolean },
 ) {
+  if (selected) {
+    return (
+      <a
+        href={href}
+        className="block pr-2 pl-4 text-body-small font-bold text-body-text no-underline"
+      >
+        # {label}
+      </a>
+    );
+  }
   return (
     <a
       href={href}
