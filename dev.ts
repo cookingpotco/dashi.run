@@ -36,9 +36,10 @@ while (true) {
   await new Promise((resolve) => setTimeout(resolve, 50));
 }
 
-const server = spawn(["run", "-A", "--watch", `${ROOT}/main.ts`], {
-  DASHI_MINIFY_CLIENT: "0",
-});
+const server = spawn(
+  ["run", "-A", `--watch=${ROOT}/styles.json`, `${ROOT}/main.ts`],
+  { DASHI_MINIFY_CLIENT: "0" },
+);
 
 function stop() {
   try {
