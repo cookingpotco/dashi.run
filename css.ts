@@ -26,7 +26,7 @@ function runCli(outPath: string, watch: boolean): Deno.ChildProcess {
   }).spawn();
 }
 
-async function build(cssPath: string): Promise<void> {
+async function build(cssPath: string, watch: boolean): Promise<void> {
   const bytes = await Deno.readFile(cssPath);
   const digest = new Uint8Array(await crypto.subtle.digest("SHA-256", bytes));
   let binary = "";
@@ -36,12 +36,27 @@ async function build(cssPath: string): Promise<void> {
   const hash = btoa(binary).replaceAll("+", "-").replaceAll("/", "_")
     .replaceAll("=", "");
   const name = `styles-${hash}.css`;
+  const href = `/generated/${name}`;
+  let previousHref: string | undefined;
+  try {
+    previousHref = JSON.parse(await Deno.readTextFile(MANIFEST)).href;
+  } catch (error) {
+    if (!(error instanceof Deno.errors.NotFound)) {
+      throw error;
+    }
+  }
   await Deno.mkdir(GENERATED_DIR, { recursive: true });
   await Deno.writeFile(`${GENERATED_DIR}/${name}`, bytes);
   await Deno.writeTextFile(
     MANIFEST,
-    `${JSON.stringify({ href: `/generated/${name}` }, null, 2)}\n`,
+    `${JSON.stringify({ href }, null, 2)}\n`,
   );
+  if (watch) {
+    if (previousHref !== href) {
+      console.log(`[css] ${href}`);
+    }
+    return;
+  }
   for await (const entry of Deno.readDir(GENERATED_DIR)) {
     if (
       entry.isFile &&
@@ -64,7 +79,7 @@ if (!watch) {
   if (!onceStatus.success) {
     Deno.exit(onceStatus.code);
   }
-  await build(tempPath);
+  await build(tempPath, false);
   await Deno.remove(tempDir, { recursive: true });
 } else {
   const child = runCli(tempPath, true);
@@ -75,7 +90,7 @@ if (!watch) {
       continue;
     }
     try {
-      await build(tempPath);
+      await build(tempPath, true);
     } catch (error) {
       if (!(error instanceof Deno.errors.NotFound)) {
         throw error;
