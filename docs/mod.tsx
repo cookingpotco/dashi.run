@@ -19,14 +19,14 @@ export function getArticle(
   const article = getArticleBySlug(ctx.params.slug);
   if (!article) {
     ctx.state.seo = {
-      title: "404 / Dashi",
+      title: "404 - dashi",
       description: "That page isn't here.",
       index: false,
     };
     return html(<NotFound />, { status: 404 });
   }
   ctx.state.seo = {
-    title: `${article.title} / Docs / Dashi`,
+    title: `${article.title} - Docs - dashi`,
     description: article.description,
     index: true,
   };

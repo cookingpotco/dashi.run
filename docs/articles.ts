@@ -30,7 +30,7 @@ const rows: ArticleRow[] = [
   {
     slug: "getting-started",
     navTitle: "Getting started",
-    description: "Create a Dashi app and run the dev server.",
+    description: "Create a dashi app and run the dev server.",
     contentFile: "getting-started.md",
     markdown: gettingStarted,
   },

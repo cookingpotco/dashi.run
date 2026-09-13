@@ -45,7 +45,7 @@ export async function getProfile(
   const name = ctx.params.name;
   if (name !== ProfileName.Jorji && name !== ProfileName.Duck) {
     ctx.state.seo = {
-      title: "404 / Dashi",
+      title: "404 - dashi",
       description: "That page isn't here.",
       index: false,
     };
