@@ -64,7 +64,7 @@ export function getDiscord(
   { ctx, html }: ReadArgs<{ state: AppState }>,
 ) {
   ctx.state.seo = {
-    title: "Join the community / Dashi",
+    title: "Join the community - dashi",
     description: "Taking you to Discord.",
     index: false,
   };

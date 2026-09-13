@@ -84,7 +84,7 @@ Source is `styles.css` at the app root (`@import "tailwindcss"` and
 `@source`). `css.ts` runs `@tailwindcss/cli`, SHA-256s the bytes, writes
 `generated/styles-<hash>.css`, and writes `styles.json` as
 `{ "href": "/generated/styles-<hash>.css" }`. The hash alphabet matches dashi
-client JS: `+` → `-`, `/` → `_`, `=` stripped. Layout imports the JSON and
+client: `+` → `-`, `/` → `_`, `=` stripped. Layout imports the JSON and
 emits `<link rel="stylesheet" href={styles.href} />`. `@font-face` lives in
 that hashed sheet. Layout preloads the two WOFF2s (`rel="preload"`
 `as="font"` `crossOrigin`, before the stylesheet). Do not add a second
@@ -137,7 +137,7 @@ Prefer truthiness (`if (value)`, `value ? a : b`) over `=== undefined` or
 (`0`, `""`, `false`). Reserve explicit undefined checks for when those
 distinctions matter.
 
-## Client JS
+## Client
 
 Client TypeScript attaches only via `client.module` / `client.element` at
 module scope. Browser-safe APIs import from `dashi/client`; client modules

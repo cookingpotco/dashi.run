@@ -5,7 +5,7 @@
 JSX is precompiled to static HTML on the wire. Built for fast, simple SSR.
 
 `style` is a CSS string, not an object. There are no event-handler props - use
-[Client JS](/docs/client-js).
+[Client](/docs/client).
 
 ```tsx hello.tsx
 import type { Element } from "dashi/jsx-runtime";

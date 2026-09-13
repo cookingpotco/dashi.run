@@ -3,7 +3,7 @@ import { pageCache } from "../cache.ts";
 import { JoinForm } from "../join/mod.tsx";
 import type { AppState } from "../state.ts";
 import { Closer } from "./closer/mod.tsx";
-import { Hero, heroSubtitle } from "./hero/mod.tsx";
+import { Hero } from "./hero/mod.tsx";
 import { SectionBoard } from "./section_board/mod.tsx";
 
 const FormValidity = client.element(
@@ -15,8 +15,9 @@ export function getHome(
   { ctx, html }: ReadArgs<{ state: AppState }>,
 ) {
   ctx.state.seo = {
-    title: "Dashi / Modern framework built on old ideas",
-    description: heroSubtitle,
+    title: "dashi - server-first web framework for Deno",
+    description:
+      "A Deno framework for fast, simple server-driven apps. No client runtime.",
     index: true,
   };
   return html(
