@@ -2,6 +2,7 @@ const ROOT = import.meta.dirname;
 const SOURCE = `${ROOT}/styles.css`;
 const GENERATED_DIR = `${ROOT}/generated`;
 const MANIFEST = `${ROOT}/styles.json`;
+const RETAINED_GENERATIONS = 3;
 
 function runCli(outPath: string, watch: boolean): Deno.ChildProcess {
   const args = ["run", "-A"];
@@ -42,13 +43,31 @@ async function build(cssPath: string): Promise<void> {
     MANIFEST,
     `${JSON.stringify({ href: `/generated/${name}` }, null, 2)}\n`,
   );
+  await pruneRetainedCss(name);
+}
+
+async function pruneRetainedCss(currentName: string): Promise<void> {
+  const entries: { name: string; mtime: number }[] = [];
   for await (const entry of Deno.readDir(GENERATED_DIR)) {
     if (
       entry.isFile &&
       entry.name.startsWith("styles-") &&
-      entry.name.endsWith(".css") &&
-      entry.name !== name
+      entry.name.endsWith(".css")
     ) {
+      const stat = await Deno.stat(`${GENERATED_DIR}/${entry.name}`);
+      entries.push({
+        name: entry.name,
+        mtime: stat.mtime?.getTime() ?? 0,
+      });
+    }
+  }
+  entries.sort((a, b) => b.mtime - a.mtime);
+  const keep = new Set(
+    entries.slice(0, RETAINED_GENERATIONS).map((entry) => entry.name),
+  );
+  keep.add(currentName);
+  for (const entry of entries) {
+    if (!keep.has(entry.name)) {
       await Deno.remove(`${GENERATED_DIR}/${entry.name}`);
     }
   }
