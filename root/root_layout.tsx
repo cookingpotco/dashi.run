@@ -1,6 +1,6 @@
 import { type LayoutArgs, NavigationRoot } from "dashi";
 import type { Element } from "dashi/jsx-runtime";
-import { defaultTitle, rootJsonLd, siteOrigin } from "../seo.ts";
+import { defaultTitle, jsonLdHtml, rootJsonLd, siteOrigin } from "../seo.ts";
 import type { AppState } from "../state.ts";
 import styles from "../styles.json" with { type: "json" };
 import { SiteFooter } from "./site_footer.tsx";
@@ -45,7 +45,10 @@ export function RootLayout({ ctx, children }: LayoutArgs<AppState>): Element {
           <meta name="twitter:description" content={description} />
         )}
         <meta name="twitter:image" content={image} />
-        <script type="application/ld+json">{rootJsonLd}</script>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: jsonLdHtml(rootJsonLd) }}
+        />
         <link
           rel="icon"
           href="/static/favicon.ico"

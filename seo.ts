@@ -1,6 +1,10 @@
 export const siteOrigin = "https://dashi.run";
 export const defaultTitle = "dashi Web Framework";
 
+export function jsonLdHtml(json: string): string {
+  return json.replaceAll("</", "\\u003c/");
+}
+
 export interface Seo {
   title: string;
   description: string;
