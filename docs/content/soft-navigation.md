@@ -79,4 +79,4 @@ document.addEventListener("dashi:navigated", (event) => {
 ```
 
 GET form field details live in [Forms](/docs/forms). How client modules ship is
-in [Client JS](/docs/client-js).
+in [Client](/docs/client).

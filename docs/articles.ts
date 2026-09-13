@@ -9,6 +9,8 @@ import layoutsMiddlewareErrors from "./content/layouts-middleware-errors.md" wit
 };
 import slots from "./content/slots.md" with { type: "text" };
 import softNavigation from "./content/soft-navigation.md" with { type: "text" };
+import client from "./content/client.md" with { type: "text" };
+
 import { type ArticleHash, parseMarkdown } from "./parse.tsx";
 
 interface ArticleRow {
@@ -86,6 +88,14 @@ const rows: ArticleRow[] = [
       "Swap the main region in place with NavigationRoot and navigate().",
     contentFile: "soft-navigation.md",
     markdown: softNavigation,
+  },
+  {
+    slug: "client",
+    navTitle: "Client",
+    description:
+      "Register client TypeScript with client.module and client.element.",
+    contentFile: "client.md",
+    markdown: client,
   },
 ];
 
